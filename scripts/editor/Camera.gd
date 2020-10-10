@@ -2,7 +2,7 @@ extends Camera
 
 
 const MOUSE_SENSITIVITY: float = 0.02
-const MOVEMENT_SENSITIVITY: float = 0.2
+const MOVEMENT_SENSITIVITY: float = 1.0
 
 var active_toggle: bool
 var active_button: bool

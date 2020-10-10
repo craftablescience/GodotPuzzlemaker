@@ -7,12 +7,12 @@ assignees: ''
 
 ---
 
-**Godot Version and Puzzlemaker Version**
+**Godot Version & Plugin Version**
 Godot: *x.x.x*
-Puzzlemaker: *x.x.x*
+Plugin: *x.x.x*
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
 **Screenshots**
-A clear picture or video of the bug happening.
+A screenshot of Godot Editor while you are encountering this bug, or a clear screenshot of Editor/External console.

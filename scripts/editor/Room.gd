@@ -79,7 +79,6 @@ func get_placed_cube_pos(cubeid: int, plane: int) -> Vector3:
 
 func remove_null_cubes() -> void:
 	var i: int = 0
-	
 	while i < len(self.cubes):
 		var cube: Spatial = self.cubes[i]
 		if cube == null:
@@ -90,21 +89,16 @@ func remove_null_cubes() -> void:
 
 func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 	match self.toolSelected:
+		
 		Globals.TOOL.SELECT:
 			if key == BUTTON_LEFT:
-				var highlighted: bool = self.cubes[cubeid].get_face_highlight(plane)
-				if !highlighted:
-					self.unhighlight_all()
-					self.cubes[cubeid].set_face_highlight(plane, true)
-					self.actionGizmo.show()
+				var highlight: bool = !self.cubes[cubeid].get_face_highlight(plane)
+				self.unhighlight_all()
+				self.cubes[cubeid].set_face_highlight(plane, highlight)
+				if highlight:
 					self.set_actionGizmo_pos(cubeid, plane)
-				else:
-					self.cubes[cubeid].set_face_highlight(plane, false)
-					self.actionGizmo.hide()
+					self.actionGizmo.show()
 			elif key == BUTTON_RIGHT:
-				
-				# TODO START
-				
 				var highlighted: bool = self.cubes[cubeid].get_face_highlight(plane)
 				if !highlighted:
 					self.cubes[cubeid].set_face_highlight(plane, true)
@@ -113,9 +107,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 				else:
 					self.cubes[cubeid].set_face_highlight(plane, false)
 					self.actionGizmo.hide()
-				
-				# END TODO
-				
+		
 		Globals.TOOL.VOXEL:
 			if (key == BUTTON_LEFT):
 				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTURETYPE.WHITE)
@@ -125,6 +117,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 					self.cubes[cubeid].queue_free()
 					self.cubes[cubeid] = null
 					self.remove_null_cubes()
+		
 		Globals.TOOL.TEXTURE:
 			var currentTexture: int = 0
 			if key == BUTTON_LEFT:

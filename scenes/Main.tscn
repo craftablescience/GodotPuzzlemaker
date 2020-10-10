@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scenes/editor/Room.tscn" type="PackedScene" id=9]
 [ext_resource path="res://images/icons/voxel.png" type="Texture" id=10]
 [ext_resource path="res://images/icons/select.png" type="Texture" id=11]
+[ext_resource path="res://scripts/editor/ToolBar.gd" type="Script" id=12]
 [ext_resource path="res://images/icons/voxel_textured.png" type="Texture" id=13]
 
 [node name="Main" type="Spatial"]
@@ -82,9 +83,14 @@ anchor_bottom = 0.6
 margin_left = -0.560059
 margin_right = 0.199951
 margin_bottom = -0.240051
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
+anchorLeft = 0.9
+anchorRight = 1.0
+anchorLeftHidden = 0.955
+anchorRightHidden = 1.055
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/Control/ToolBar"]
 anchor_left = 0.05
@@ -121,6 +127,8 @@ text = "Texture"
 icon = ExtResource( 13 )
 align = 0
 
+[node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
+
 [node name="Crosshair" type="Sprite" parent="Menu"]
 visible = false
 scale = Vector2( 0.5, 0.5 )
@@ -144,8 +152,14 @@ script = ExtResource( 6 )
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 0 ]]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 0 ]]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Scene/Room" method="_on_Select_pressed"]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 1 ]]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 1 ]]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 2 ]]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 2 ]]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]
 [connection signal="editor_camera_inactive" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_inactive"]
