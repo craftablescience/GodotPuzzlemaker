@@ -18,8 +18,7 @@ var ZMH: Spatial
 var planes: Dictionary
 
 
-func _ready():
-	
+func __init(pos: Vector3, type: int, id: int):
 	self.XP = get_node("XP")
 	self.XM = get_node("XM")
 	self.YP = get_node("YP")
@@ -78,6 +77,10 @@ func _ready():
 			"disabled": false
 		}
 	}
+	self.set_type_all(type)
+	self.set_position_grid(pos)
+	self.set_id(id)
+	
 
 func get_id() -> int:
 	return int(self.name)
@@ -86,22 +89,21 @@ func set_id(cubeid: int) -> void:
 	self.name = str(cubeid)
 
 func get_disabled(plane: int) -> bool:
-	return planes[plane]["disabled"]
+	return self.planes[plane]["disabled"]
 
 func set_disabled(plane: int, disabled: bool) -> void:
-	planes[plane]["disabled"] = disabled
+	self.planes[plane]["disabled"] = disabled
 	if disabled:
-		planes[plane]["node"].hide()
+		self.planes[plane]["node"].hide()
 	else:
-		planes[plane]["node"].show()
+		self.planes[plane]["node"].show()
 
 func get_data() -> Dictionary:
 	return self.planes
 
 func set_type_all(type: int) -> void:
-	for plane in self.planes.values():
-		plane["node"].texture = Globals.TEXTURES[type]
-		plane["texture"] = type
+	for i in Globals.PLANEID.values():
+		self.set_type(i, type)
 
 func set_type(plane: int, type: int) -> void:
 	self.planes[plane]["node"].texture = Globals.TEXTURES[type]
@@ -111,14 +113,14 @@ func get_type(plane: int) -> int:
 	return self.planes[plane]["texture"]
 
 func set_position_grid(pos: Vector3) -> void:
-	self.global_transform.origin.x = pos.x * 10
-	self.global_transform.origin.y = pos.y * 10
-	self.global_transform.origin.z = pos.z * 10
+	self.transform.origin.x = pos.x * 10
+	self.transform.origin.y = pos.y * 10
+	self.transform.origin.z = pos.z * 10
 
 func get_position_grid() -> Vector3:
-	return Vector3( self.global_transform.origin.x / 10,
-					self.global_transform.origin.y / 10,
-					self.global_transform.origin.z / 10 )
+	return Vector3( self.transform.origin.x / 10,
+					self.transform.origin.y / 10,
+					self.transform.origin.z / 10 )
 
 func set_face_highlight(plane: int, highlighted: bool) -> void:
 	if highlighted:
@@ -136,30 +138,31 @@ func get_face_highlight(plane: int) -> bool:
 
 
 func _select_helper(event: InputEvent) -> bool:
-	if event is InputEventMouseButton:
-		return ((event.button_index == BUTTON_LEFT) and (event.pressed == true))
-	return false
+	return  (event is InputEventMouseButton) and \
+			(((event.button_index == BUTTON_LEFT) \
+			or (event.button_index == BUTTON_RIGHT)) \
+			and (event.pressed == true))
 
-func _on_XP_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_XP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.XP)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.XP, event.button_index)
 
-func _on_XM_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_XM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.XM)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.XM, event.button_index)
 
-func _on_YP_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_YP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.YP)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.YP, event.button_index)
 
-func _on_YM_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_YM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.YM)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.YM, event.button_index)
 
-func _on_ZP_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_ZP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.ZP)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.ZP, event.button_index)
 
-func _on_ZM_select(camera: Node, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+func _on_ZM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), event, Globals.PLANEID.ZM)
+		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.ZM, event.button_index)

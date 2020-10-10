@@ -18,7 +18,7 @@ func _ready() -> void:
 	active_button = false
 	pivot = get_parent()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Get movement keys,
 	var vec3: Vector3 = Vector3()
 	if (Input.is_action_pressed("editor_camera_forward")):

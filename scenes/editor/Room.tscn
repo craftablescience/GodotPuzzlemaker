@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/editor/Room.gd" type="Script" id=1]
+[ext_resource path="res://materials/action_gizmo_arrowx.material" type="Material" id=2]
+[ext_resource path="res://materials/action_gizmo_selector.material" type="Material" id=3]
+[ext_resource path="res://materials/action_gizmo_arrowy.material" type="Material" id=4]
+[ext_resource path="res://materials/action_gizmo_arrowz.material" type="Material" id=5]
 
-[sub_resource type="SpatialMaterial" id=1]
-render_priority = 100
-flags_transparent = true
-flags_no_depth_test = true
-albedo_color = Color( 0.317647, 0.423529, 0.839216, 0.498039 )
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.2, 1.4, 0.2 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.375, 0.375, 0.025 )
 
 [node name="Room" type="Spatial"]
 script = ExtResource( 1 )
@@ -15,6 +19,112 @@ script = ExtResource( 1 )
 visible = false
 
 [node name="Selector" type="CSGSphere" parent="ActionGizmo"]
+radius = 0.5
 radial_segments = 32
 rings = 32
-material = SubResource( 1 )
+material = ExtResource( 3 )
+
+[node name="ArrowX" type="CSGCylinder" parent="ActionGizmo"]
+transform = Transform( 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0, 1, 1.5, 0, 0 )
+radius = 0.1
+height = 2.5
+sides = 16
+material = ExtResource( 2 )
+
+[node name="ArrowX_Tip" type="CSGCylinder" parent="ActionGizmo/ArrowX"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78873e-08, 1.5, 0 )
+radius = 0.25
+height = 0.5
+sides = 16
+cone = true
+material = ExtResource( 2 )
+
+[node name="ArrowX_Collider" type="Area" parent="ActionGizmo/ArrowX"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/ArrowX/ArrowX_Collider"]
+shape = SubResource( 1 )
+
+[node name="ArrowY" type="CSGCylinder" parent="ActionGizmo"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+radius = 0.1
+height = 2.5
+sides = 16
+material = ExtResource( 4 )
+
+[node name="ArrowY_Tip" type="CSGCylinder" parent="ActionGizmo/ArrowY"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78873e-08, 1.5, 0 )
+radius = 0.25
+height = 0.5
+sides = 16
+cone = true
+material = ExtResource( 4 )
+
+[node name="ArrowY_Collider" type="Area" parent="ActionGizmo/ArrowY"]
+transform = Transform( -1, 3.25841e-07, 0, -3.25841e-07, -1, 0, 0, 0, 1, 0, 0.15, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/ArrowY/ArrowY_Collider"]
+shape = SubResource( 1 )
+
+[node name="ArrowZ" type="CSGCylinder" parent="ActionGizmo"]
+transform = Transform( 2.65431e-14, -1.62921e-07, -1, -1, -1.62921e-07, 0, -1.62921e-07, 1, -1.62921e-07, 0, 0, 1.5 )
+radius = 0.1
+height = 2.5
+sides = 16
+material = ExtResource( 5 )
+
+[node name="ArrowZ_Tip" type="CSGCylinder" parent="ActionGizmo/ArrowZ"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78873e-08, 1.5, 0 )
+radius = 0.25
+height = 0.5
+sides = 16
+cone = true
+material = ExtResource( 5 )
+
+[node name="ArrowZ_Collider" type="Area" parent="ActionGizmo/ArrowZ"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/ArrowZ/ArrowZ_Collider"]
+shape = SubResource( 1 )
+
+[node name="MoveXY" type="CSGBox" parent="ActionGizmo"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0 )
+width = 0.75
+height = 0.75
+depth = 0.05
+material = ExtResource( 2 )
+
+[node name="MoveXY_Collider" type="Area" parent="ActionGizmo/MoveXY"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveXY/MoveXY_Collider"]
+shape = SubResource( 2 )
+
+[node name="MoveYZ" type="CSGBox" parent="ActionGizmo"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1, 1 )
+width = 0.75
+height = 0.75
+depth = 0.05
+material = ExtResource( 4 )
+
+[node name="MoveYZ_Collider" type="Area" parent="ActionGizmo/MoveYZ"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveYZ/MoveYZ_Collider"]
+shape = SubResource( 2 )
+
+[node name="MoveXZ" type="CSGBox" parent="ActionGizmo"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 1, 0, 1 )
+width = 0.75
+height = 0.75
+depth = 0.05
+material = ExtResource( 5 )
+
+[node name="MoveXZ_Collider" type="Area" parent="ActionGizmo/MoveXZ"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveXZ/MoveXZ_Collider"]
+shape = SubResource( 2 )
+[connection signal="input_event" from="ActionGizmo/ArrowX/ArrowX_Collider" to="." method="_on_ArrowX_input_event"]
+[connection signal="input_event" from="ActionGizmo/ArrowY/ArrowY_Collider" to="." method="_on_ArrowY_input_event"]
+[connection signal="input_event" from="ActionGizmo/ArrowZ/ArrowZ_Collider" to="." method="_on_ArrowZ_input_event"]
+[connection signal="input_event" from="ActionGizmo/MoveXY/MoveXY_Collider" to="." method="_on_MoveXY_input_event"]
+[connection signal="input_event" from="ActionGizmo/MoveYZ/MoveYZ_Collider" to="." method="_on_MoveYZ_input_event"]
+[connection signal="input_event" from="ActionGizmo/MoveXZ/MoveXZ_Collider" to="." method="_on_MoveXZ_input_event"]

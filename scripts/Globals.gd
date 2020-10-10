@@ -17,10 +17,10 @@ enum PLANEID {
 
 enum TOOL {
 	SELECT,
-	VOXELADD,
-	VOXELSUBTRACT,
+	VOXEL,
 	TEXTURE
 }
 const FIRSTTOOL: int = TOOL.SELECT
 
-const TEXTURES: Array = [preload("res://images/editor/whitewall.png")]
+const TEXTURES: Array = [preload("res://images/editor/white.png"),
+						 preload("res://images/editor/black.png")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -9,9 +9,8 @@
 [ext_resource path="res://scripts/menu/Crosshair.gd" type="Script" id=7]
 [ext_resource path="res://images/editor/crosshair.png" type="Texture" id=8]
 [ext_resource path="res://scenes/editor/Room.tscn" type="PackedScene" id=9]
-[ext_resource path="res://images/icons/vovel_delete.png" type="Texture" id=10]
+[ext_resource path="res://images/icons/voxel.png" type="Texture" id=10]
 [ext_resource path="res://images/icons/select.png" type="Texture" id=11]
-[ext_resource path="res://images/icons/vovel_build.png" type="Texture" id=12]
 [ext_resource path="res://images/icons/voxel_textured.png" type="Texture" id=13]
 
 [node name="Main" type="Spatial"]
@@ -29,10 +28,8 @@ __meta__ = {
 }
 
 [node name="TopBar" type="Panel" parent="Menu/Control"]
-anchor_left = 0.01
-anchor_top = 0.02
-anchor_right = 0.99
-anchor_bottom = 0.085
+anchor_right = 1.0
+anchor_bottom = 0.065
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,30 +63,21 @@ flat = false
 switch_on_hover = true
 script = ExtResource( 5 )
 
-[node name="RightMenu" type="HBoxContainer" parent="Menu/Control/TopBar"]
-anchor_left = 0.5
+[node name="About" type="TextureRect" parent="Menu/Control/TopBar"]
+anchor_left = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
-alignment = 2
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="About" type="TextureButton" parent="Menu/Control/TopBar/RightMenu"]
-margin_left = 684.0
-margin_right = 940.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 256, 60 )
-rect_clip_content = true
-size_flags_vertical = 2
-texture_normal = ExtResource( 3 )
-expand = true
-stretch_mode = 5
-
 [node name="ToolBar" type="Panel" parent="Menu/Control"]
-anchor_left = 0.889875
-anchor_top = 0.2
-anchor_right = 0.99
+anchor_left = 0.9
+anchor_top = 0.3
+anchor_right = 1.0
 anchor_bottom = 0.6
 margin_left = -0.560059
 margin_right = 0.199951
@@ -109,34 +97,26 @@ __meta__ = {
 }
 
 [node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 63.0
+margin_top = 47.0
 margin_right = 173.0
-margin_bottom = 131.0
+margin_bottom = 115.0
 text = "Select"
 icon = ExtResource( 11 )
 clip_text = true
 align = 0
 
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 135.0
+margin_top = 119.0
 margin_right = 173.0
-margin_bottom = 203.0
-text = "Add Cube"
-icon = ExtResource( 12 )
-align = 0
-
-[node name="VoxelDelete" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 207.0
-margin_right = 173.0
-margin_bottom = 275.0
-text = "Del. Cube"
+margin_bottom = 187.0
+text = "Build"
 icon = ExtResource( 10 )
 align = 0
 
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 279.0
+margin_top = 191.0
 margin_right = 173.0
-margin_bottom = 347.0
+margin_bottom = 259.0
 text = "Texture"
 icon = ExtResource( 13 )
 align = 0
@@ -154,16 +134,18 @@ layer = 0
 [node name="Room" parent="Scene" instance=ExtResource( 9 )]
 
 [node name="CameraPivot" type="Spatial" parent="Scene"]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 15, 10, 15 )
 
 [node name="Camera" type="Camera" parent="Scene/CameraPivot"]
+transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0 )
 current = true
+far = 8192.0
 script = ExtResource( 6 )
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 1 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Scene/Room" method="_on_Select_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelDelete" to="Scene/Room" method="_on_VoxelDelete_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]
 [connection signal="editor_camera_inactive" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_inactive"]

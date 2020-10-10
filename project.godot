@@ -22,10 +22,6 @@ config/icon="res://icon.png"
 [autoload]
 
 Globals="*res://scripts/Globals.gd"
-PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
-IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
-RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
-UserData="*res://addons/github-integration/scripts/user_data.gd"
 
 [display]
 
@@ -33,10 +29,6 @@ window/size/width=1920
 window/size/height=1080
 window/size/borderless=true
 window/size/fullscreen=true
-
-[editor_plugins]
-
-enabled=PoolStringArray( "github-integration" )
 
 [input]
 
