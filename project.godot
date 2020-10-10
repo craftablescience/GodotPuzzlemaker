@@ -17,7 +17,10 @@ _global_script_class_icons={
 
 config/name="GodotPuzzlemaker"
 run/main_scene="res://scenes/Main.tscn"
-config/icon="res://icon.png"
+config/icon="res://images/logo/icon.png"
+config/windows_native_icon="res://images/logo/icon.ico"
+config/auto_accept_quit=false
+config/quit_on_go_back=false
 
 [autoload]
 
