@@ -3,6 +3,7 @@
 .import/
 addons/
 build/
+sounds/background/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
