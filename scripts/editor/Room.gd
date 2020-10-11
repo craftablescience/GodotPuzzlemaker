@@ -7,6 +7,8 @@ var CubeScene: PackedScene
 var cam: Camera
 var camPivot: Spatial
 var actionGizmo: Spatial
+var currentSave: String
+var levelName: String
 
 
 func _ready():
@@ -16,6 +18,8 @@ func _ready():
 	self.actionGizmo = get_node("ActionGizmo")
 	self.cam = get_parent().get_node("CameraPivot/Camera")
 	self.camPivot = get_parent().get_node("CameraPivot")
+	self.currentSave = ""
+	self.levelName = ""
 	
 	self.add_cube(Vector3(), Globals.TEXTURETYPE.WHITE)
 
@@ -24,12 +28,13 @@ func _process(_delta: float) -> void:
 	var xrot: float = rad2deg(camPivotRot.x)
 	
 
-func add_cube(gridPos: Vector3, type: int):
+func add_cube(gridPos: Vector3, type: int) -> Spatial:
 	var cube = self.CubeScene.instance()
 	cube.__init(gridPos, type, len(self.cubes))
 	
 	self.add_child(cube)
 	self.cubes.append(cube)
+	return cube
 
 func unhighlight_all() -> void:
 	for cube in self.cubes:
@@ -87,7 +92,68 @@ func remove_null_cubes() -> void:
 			self.cubes[i].set_id(i)
 			i += 1
 
+func serialize() -> String:
+	var savedata: String = ""
+	savedata += "{\"" + "VERSION" + "\": " + str(Globals.FILEFORMAT) + "}\n"
+	for cube in self.cubes:
+		var dict: Dictionary = cube.get_data().duplicate(true)
+		for i in range(6):
+			dict[i].erase("node")
+			dict[i].erase("highlighted")
+			dict[i].erase("highlightnode")
+		dict["posx"] = cube.get_position_grid().x
+		dict["posy"] = cube.get_position_grid().y
+		dict["posz"] = cube.get_position_grid().z
+		savedata += to_json(dict) + "\n"
+		print(len(self.cubes))
+	return savedata
+
+func clear() -> void:
+	for i in range(len(self.cubes)):
+		self.remove_child(self.cubes[i])
+		self.cubes[i].queue_free()
+		self.cubes[i] = null
+	self.remove_null_cubes()
+	self.add_cube(Vector3(), Globals.TEXTURETYPE.WHITE)
+
+func save(levelName: String) -> void:
+	self.levelName = levelName
+	var save = File.new()
+	self.currentSave = ""
+	save.open("user://" + self.levelName + ".gpz", File.WRITE)
+	self.currentSave = serialize()
+	save.store_string(self.currentSave)
+	save.close()
+
+func load_save(path: String) -> void:
+	var save = File.new()
+	save.open(path, File.READ)
+	var contents: Array = save.get_as_text().split("\n")
+	if contents != null:
+		if int(parse_json(contents[0])["VERSION"]) < Globals.FILEFORMAT:
+			get_parent().get_parent().get_node("Menu/Control/LoadFileFormatLow").popup_centered()
+		elif int(parse_json(contents[0])["VERSION"]) > Globals.FILEFORMAT:
+			get_parent().get_parent().get_node("Menu/Control/LoadFileFormatHigh").popup_centered()
+		else:
+			contents.remove(0)
+			self.currentSave = ""
+			self.clear()
+			self.remove_child(self.cubes[0])
+			self.cubes[0].queue_free()
+			self.cubes = []
+			for data in contents:
+				data = parse_json(data)
+				if data != null:
+					var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTURETYPE.WHITE)
+					for i in range(6):
+						cube.set_type(i, data[str(i)]["texture"])
+						cube.set_disabled(i, data[str(i)]["disabled"])
+			self.currentSave = self.serialize()
+	save.close()
+
 func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
+	get_parent().get_parent().get_node("Click").play()
+	
 	match self.toolSelected:
 		
 		Globals.TOOL.SELECT:

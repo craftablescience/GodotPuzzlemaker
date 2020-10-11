@@ -24,3 +24,5 @@ const FIRSTTOOL: int = TOOL.SELECT
 
 const TEXTURES: Array = [preload("res://images/editor/white.png"),
 						 preload("res://images/editor/black.png")]
+
+const FILEFORMAT: int = 12

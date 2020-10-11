@@ -98,6 +98,28 @@ func set_disabled(plane: int, disabled: bool) -> void:
 	else:
 		self.planes[plane]["node"].show()
 
+func get_plane(planeid: int):
+	match planeid:
+		Globals.PLANEID.XP:
+			return self.XP
+		Globals.PLANEID.XM:
+			return self.XM
+		Globals.PLANEID.YP:
+			return self.YP
+		Globals.PLANEID.YM:
+			return self.YM
+		Globals.PLANEID.ZP:
+			return self.ZP
+		Globals.PLANEID.ZM:
+			return self.ZM
+		_:
+			print("Room.get_plane says how?")
+
+func set_data(planes: Dictionary) -> void:
+	for i in range(6):
+		self.set_type(i, planes[i]["texture"])
+		self.set_disabled(i, planes[i]["disabled"])
+
 func get_data() -> Dictionary:
 	return self.planes
 

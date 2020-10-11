@@ -18,7 +18,7 @@ func _ready() -> void:
 	active_button = false
 	pivot = get_parent()
 
-func _process(_delta: float) -> void:
+func _process(_delta) -> void:
 	# Get movement keys,
 	var vec3: Vector3 = Vector3()
 	if (Input.is_action_pressed("editor_camera_forward")):
@@ -35,6 +35,10 @@ func _process(_delta: float) -> void:
 		vec3.y -= 1
 	vec3 = vec3.normalized() * MOVEMENT_SENSITIVITY
 	
+	if (active_toggle or active_button):
+		pivot.translate(vec3)
+
+func _input(event: InputEvent) -> void:
 	# Activate movement?
 	if Input.is_action_just_pressed("editor_camera_button"):
 		active_button = true
@@ -50,9 +54,6 @@ func _process(_delta: float) -> void:
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		self.emit_signal("editor_camera_active")
-	
-	if (active_toggle or active_button):
-		pivot.translate(vec3)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event is InputEventMouseMotion):
