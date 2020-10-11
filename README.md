@@ -1,3 +1,2 @@
----
-permalink: /index.html
----
+# Godot Puzzlemaker
+A work in progress.
