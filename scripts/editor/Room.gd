@@ -156,7 +156,9 @@ func load_save(path: String) -> void:
 	save.close()
 
 func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
-	get_parent().get_parent().get_node("Click").play()
+	var clik: AudioStreamPlayer = get_parent().get_parent().get_node("Click")
+	if !clik.get_disabled():
+		clik.play()
 	
 	match self.toolSelected:
 		

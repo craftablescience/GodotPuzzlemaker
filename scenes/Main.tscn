@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -26,6 +26,17 @@
 [ext_resource path="res://images/icons/add.png" type="Texture" id=24]
 [ext_resource path="res://images/icons/reload.png" type="Texture" id=25]
 [ext_resource path="res://images/logo/logo.png" type="Texture" id=26]
+[ext_resource path="res://scripts/menu/About.gd" type="Script" id=27]
+[ext_resource path="res://scripts/menu/Properties.gd" type="Script" id=28]
+[ext_resource path="res://scripts/editor/SoundEffect.gd" type="Script" id=29]
+[ext_resource path="res://images/icons/down.png" type="Texture" id=30]
+[ext_resource path="res://images/icons/up.png" type="Texture" id=31]
+[ext_resource path="res://images/icons/right.png" type="Texture" id=32]
+[ext_resource path="res://images/icons/left.png" type="Texture" id=33]
+[ext_resource path="res://scripts/editor/TouchControls.gd" type="Script" id=34]
+[ext_resource path="res://images/icons/mobile.png" type="Texture" id=35]
+[ext_resource path="res://images/icons/mouse_left.png" type="Texture" id=36]
+[ext_resource path="res://images/icons/mouse_right.png" type="Texture" id=37]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 127
@@ -33,6 +44,216 @@ shader = ExtResource( 14 )
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 17 )
+
+[node name="TouchControls" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="Control" type="Control" parent="TouchControls"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Up" type="Button" parent="TouchControls/Control"]
+anchor_left = 0.21
+anchor_top = 0.65
+anchor_right = 0.27
+anchor_bottom = 0.77
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 31 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Down" type="Button" parent="TouchControls/Control"]
+anchor_left = 0.21
+anchor_top = 0.78
+anchor_right = 0.27
+anchor_bottom = 0.9
+margin_left = 0.409912
+margin_top = -6.10352e-05
+margin_right = 0.409912
+margin_bottom = -0.00012207
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 30 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LeftClick" type="Button" parent="TouchControls/Control"]
+anchor_left = 0.73
+anchor_top = 0.65
+anchor_right = 0.79
+anchor_bottom = 0.77
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_mask = 3
+icon = ExtResource( 36 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RightClick" type="Button" parent="TouchControls/Control"]
+anchor_left = 0.73
+anchor_top = 0.78
+anchor_right = 0.79
+anchor_bottom = 0.9
+margin_left = 0.409912
+margin_top = -6.10352e-05
+margin_right = 0.409912
+margin_bottom = -0.00012207
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_mask = 3
+icon = ExtResource( 37 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Move" type="Panel" parent="TouchControls/Control"]
+anchor_left = -0.000208333
+anchor_top = 0.649704
+anchor_right = 0.2
+anchor_bottom = 0.899704
+margin_left = -0.6
+margin_top = 0.319946
+margin_right = 0.879974
+margin_bottom = 0.319946
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Forward" type="Button" parent="TouchControls/Control/Move"]
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 0.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 31 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Back" type="Button" parent="TouchControls/Control/Move"]
+anchor_left = 0.33
+anchor_top = 0.5
+anchor_right = 0.66
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 30 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Left" type="Button" parent="TouchControls/Control/Move"]
+anchor_top = 0.250048
+anchor_right = 0.33
+anchor_bottom = 0.750048
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 33 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Right" type="Button" parent="TouchControls/Control/Move"]
+anchor_left = 0.66
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 32 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Look" type="Panel" parent="TouchControls/Control"]
+anchor_left = 0.8
+anchor_top = 0.649704
+anchor_right = 1.0
+anchor_bottom = 0.899704
+margin_left = -0.6
+margin_top = 0.319946
+margin_right = 0.879974
+margin_bottom = 0.319946
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Up" type="Button" parent="TouchControls/Control/Look"]
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 0.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 31 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Down" type="Button" parent="TouchControls/Control/Look"]
+anchor_left = 0.33
+anchor_top = 0.5
+anchor_right = 0.66
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 30 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Left" type="Button" parent="TouchControls/Control/Look"]
+anchor_top = 0.250048
+anchor_right = 0.33
+anchor_bottom = 0.750048
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 33 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Right" type="Button" parent="TouchControls/Control/Look"]
+anchor_left = 0.66
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 32 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Menu" type="CanvasLayer" parent="."]
 layer = 3
@@ -72,7 +293,6 @@ switch_on_hover = true
 script = ExtResource( 4 )
 
 [node name="Edit" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
-visible = false
 margin_left = 104.0
 margin_right = 204.0
 margin_bottom = 70.0
@@ -82,6 +302,17 @@ text = "Edit"
 flat = false
 switch_on_hover = true
 script = ExtResource( 5 )
+
+[node name="About" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
+margin_left = 208.0
+margin_right = 308.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_vertical = 3
+text = "About"
+flat = false
+switch_on_hover = true
+script = ExtResource( 27 )
 
 [node name="CenterMenu" type="HBoxContainer" parent="Menu/Control/TopBar"]
 anchor_left = 0.4
@@ -105,14 +336,25 @@ align = 0
 expand_icon = true
 
 [node name="LevelName" type="LineEdit" parent="Menu/Control/TopBar/CenterMenu"]
-margin_left = 92.0
-margin_right = 292.0
+margin_right = 200.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 200, 0 )
 max_length = 32
 expand_to_text_length = true
 placeholder_text = "Filename..."
 placeholder_alpha = 0.7
+
+[node name="Mobile" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
+margin_left = 216.0
+margin_right = 384.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+text = "Mobile Mode"
+icon = ExtResource( 35 )
+align = 0
+expand_icon = true
 
 [node name="About" type="TextureRect" parent="Menu/Control/TopBar"]
 anchor_left = 0.9
@@ -331,6 +573,102 @@ popup_exclusive = true
 window_title = "Error Loading File"
 dialog_text = "File is incompatible with this version (too new)."
 
+[node name="LoadSettingsError" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 56.0
+popup_exclusive = true
+window_title = "Error Loading Settings"
+dialog_text = "Settings have been cleared (incompatible version)."
+
+[node name="Credits" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+window_title = "Credits"
+dialog_text = "Created by craftablescience (Brendan Lewis).
+
+Click noise created by Mike Koenig at SoundBible.com."
+
+[node name="BackgroundMusicCredits" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+window_title = "Background Music Credits"
+dialog_text = "Concentration by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3536-concentration
+License: http://creativecommons.org/licenses/by/4.0/"
+
+[node name="Properties" type="Popup" parent="Menu/Control"]
+anchor_left = 0.4
+anchor_top = 0.3
+anchor_right = 0.6
+anchor_bottom = 0.7
+popup_exclusive = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="Menu/Control/Properties"]
+anchor_right = 1.0
+anchor_bottom = 0.9
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="General" type="VBoxContainer" parent="Menu/Control/Properties/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Music" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
+margin_right = 376.0
+margin_bottom = 40.0
+
+[node name="Music" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Music"]
+margin_left = 127.0
+margin_right = 249.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+pressed = true
+text = "Music:"
+
+[node name="Sound" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
+margin_top = 44.0
+margin_right = 376.0
+margin_bottom = 84.0
+
+[node name="Sound" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Sound"]
+margin_left = 126.0
+margin_right = 249.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+pressed = true
+text = "Sound Effects:"
+
+[node name="Panel" type="Panel" parent="Menu/Control/Properties"]
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/Properties/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+
+[node name="Close" type="Button" parent="Menu/Control/Properties/Panel/HBoxContainer"]
+margin_left = 142.0
+margin_right = 242.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 100, 0 )
+text = "Close"
+
 [node name="Crosshair" type="Sprite" parent="Menu"]
 visible = false
 material = SubResource( 1 )
@@ -358,10 +696,35 @@ environment = ExtResource( 1 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-autoplay = true
 
-[node name="Click" type="AudioStreamPlayer" parent="."]
+[node name="Click" type="AudioStreamPlayer" parent="." groups=[
+"SFX",
+]]
 stream = ExtResource( 21 )
+script = ExtResource( 29 )
+[connection signal="button_down" from="TouchControls/Control/Up" to="TouchControls/Control" method="_on_Up_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Up" to="TouchControls/Control" method="_on_Up_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Down" to="TouchControls/Control" method="_on_Down_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Down" to="TouchControls/Control" method="_on_Down_button_up"]
+[connection signal="pressed" from="TouchControls/Control/LeftClick" to="TouchControls/Control" method="_on_LeftClick_pressed"]
+[connection signal="pressed" from="TouchControls/Control/RightClick" to="TouchControls/Control" method="_on_RightClick_pressed"]
+[connection signal="button_down" from="TouchControls/Control/Move/Forward" to="TouchControls/Control" method="_on_Forward_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Move/Forward" to="TouchControls/Control" method="_on_Forward_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Move/Back" to="TouchControls/Control" method="_on_Back_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Move/Back" to="TouchControls/Control" method="_on_Back_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Move/Left" to="TouchControls/Control" method="_on_Left_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Move/Left" to="TouchControls/Control" method="_on_Left_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Move/Right" to="TouchControls/Control" method="_on_Right_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Move/Right" to="TouchControls/Control" method="_on_Right_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Look/Up" to="TouchControls/Control" method="_on_LookUp_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Look/Up" to="TouchControls/Control" method="_on_LookUp_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Look/Down" to="TouchControls/Control" method="_on_LookDown_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Look/Down" to="TouchControls/Control" method="_on_LookDown_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Look/Left" to="TouchControls/Control" method="_on_LookLeft_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Look/Left" to="TouchControls/Control" method="_on_LookLeft_button_up"]
+[connection signal="button_down" from="TouchControls/Control/Look/Right" to="TouchControls/Control" method="_on_LookRight_button_down"]
+[connection signal="button_up" from="TouchControls/Control/Look/Right" to="TouchControls/Control" method="_on_LookRight_button_up"]
+[connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Mobile" to="TouchControls/Control" method="_on_Mobile_toggled"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Scene/Room" method="_on_Select_pressed"]
@@ -382,6 +745,9 @@ stream = ExtResource( 21 )
 [connection signal="file_selected" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_file_selected"]
 [connection signal="confirmed" from="Menu/Control/ConfirmNewLevel" to="Menu/Control/ConfirmNewLevel" method="_on_confirmed"]
 [connection signal="confirmed" from="Menu/Control/QuitRequest" to="Menu/Control/QuitRequest" method="_on_confirmed"]
+[connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Music/Music" to="Menu/Control/Properties" method="_on_Music_toggled"]
+[connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Sound/Sound" to="Menu/Control/Properties" method="_on_Sound_toggled"]
+[connection signal="pressed" from="Menu/Control/Properties/Panel/HBoxContainer/Close" to="Menu/Control/Properties" method="_on_Close_pressed"]
 [connection signal="grow_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_grow"]
 [connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]

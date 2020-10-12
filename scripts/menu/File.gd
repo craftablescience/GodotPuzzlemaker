@@ -12,6 +12,7 @@ func _ready() -> void:
 	self.popup.add_item("New")
 	self.popup.add_item("Open...")
 	self.popup.add_item("Save")
+	#self.popup.add_item("Export...")
 	if (OS.get_name() != "HTML5"):
 		self.popup.add_item("Exit")
 	self.popup.connect("id_pressed", self, "_on_item_pressed")

@@ -2,37 +2,52 @@ extends MenuButton
 
 
 var popup: PopupMenu
-var advancedSubMenu: PopupMenu
+var themeSubMenu: PopupMenu
+#var advancedSubMenu: PopupMenu
 
 
 func _ready() -> void:
 	popup = get_popup()
 	popup.add_item("Properties...")
-	popup.add_item("Set Theme...")
-	popup.add_item("Compile")
-	popup.add_item("Compile + Run")
 	
-	advancedSubMenu = PopupMenu.new()
-	advancedSubMenu.set_name("advancedSubMenu")
-	advancedSubMenu.add_item("Save VMF...")
-	popup.add_child(advancedSubMenu)
-	popup.add_submenu_item("Advanced", "advancedSubMenu")
+	themeSubMenu = PopupMenu.new()
+	themeSubMenu.set_name("themeSubMenu")
+	themeSubMenu.add_radio_check_item("Light")
+	themeSubMenu.set_item_checked(0, true)
+	themeSubMenu.add_radio_check_item("Dark")
+	themeSubMenu.set_item_checked(1, false)
+	popup.add_child(themeSubMenu)
+	popup.add_submenu_item("Theme", "themeSubMenu")
+	
+	#advancedSubMenu = PopupMenu.new()
+	#advancedSubMenu.set_name("advancedSubMenu")
+	#advancedSubMenu.add_item("Save VMF...")
+	#popup.add_child(advancedSubMenu)
+	#popup.add_submenu_item("Advanced", "advancedSubMenu")
 	
 	popup.connect("id_pressed", self, "_on_item_pressed")
-	advancedSubMenu.connect("id_pressed", self, "_on_item_pressed_advanced")
+	#advancedSubMenu.connect("id_pressed", self, "_on_item_pressed_advanced")
+	themeSubMenu.connect("id_pressed", self, "_on_item_pressed_theme")
 
 func _on_item_pressed(id : int) -> void:
 	match id:
 		0:
-			print("(Properties) was pressed")
-		1:
-			print("(Set Theme) was pressed")
-		2:
-			print("(Compile) was pressed")
-		3:
-			print("(Compile + Run) was pressed")
+			get_parent().get_parent().get_parent().get_node("Properties").popup_centered()
 		_:
 			print("Edit says how?")
+
+func _on_item_pressed_theme(id: int) -> void:
+	match id:
+		0:
+			themeSubMenu.set_item_checked(0, true)
+			themeSubMenu.set_item_checked(1, false)
+			Globals.SET_THEME(Globals.THEME.LIGHT)
+		1:
+			themeSubMenu.set_item_checked(0, false)
+			themeSubMenu.set_item_checked(1, true)
+			Globals.SET_THEME(Globals.THEME.DARK)
+		_:
+			print("Edit.Theme says how?")
 
 func _on_item_pressed_advanced(id: int) -> void:
 	match id:
