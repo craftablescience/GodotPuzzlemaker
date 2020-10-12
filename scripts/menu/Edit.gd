@@ -3,6 +3,7 @@ extends MenuButton
 
 var popup: PopupMenu
 var themeSubMenu: PopupMenu
+var themeID: int
 #var advancedSubMenu: PopupMenu
 
 
@@ -29,6 +30,20 @@ func _ready() -> void:
 	#advancedSubMenu.connect("id_pressed", self, "_on_item_pressed_advanced")
 	themeSubMenu.connect("id_pressed", self, "_on_item_pressed_theme")
 
+func __init(themeID: int) -> void:
+	self.themeID = themeID
+	if self.themeID == Globals.THEME.LIGHT:
+		themeSubMenu.set_item_checked(0, true)
+		themeSubMenu.set_item_checked(1, false)
+		Globals.SET_THEME(Globals.THEME.LIGHT)
+	elif self.themeID == Globals.THEME.DARK:
+		themeSubMenu.set_item_checked(0, false)
+		themeSubMenu.set_item_checked(1, true)
+		Globals.SET_THEME(Globals.THEME.DARK)
+
+func get_theme_selection() -> int:
+	return self.themeID
+
 func _on_item_pressed(id : int) -> void:
 	match id:
 		0:
@@ -37,15 +52,18 @@ func _on_item_pressed(id : int) -> void:
 			print("Edit says how?")
 
 func _on_item_pressed_theme(id: int) -> void:
+	self.themeID = id
 	match id:
 		0:
 			themeSubMenu.set_item_checked(0, true)
 			themeSubMenu.set_item_checked(1, false)
 			Globals.SET_THEME(Globals.THEME.LIGHT)
+			get_parent().get_parent().get_parent().get_node("Properties").save()
 		1:
 			themeSubMenu.set_item_checked(0, false)
 			themeSubMenu.set_item_checked(1, true)
 			Globals.SET_THEME(Globals.THEME.DARK)
+			get_parent().get_parent().get_parent().get_node("Properties").save()
 		_:
 			print("Edit.Theme says how?")
 

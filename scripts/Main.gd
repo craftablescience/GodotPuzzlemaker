@@ -19,11 +19,15 @@ func _ready() -> void:
 			get_node("Menu/Control/LoadSettingsError").popup_centered()
 		else:
 			ary.remove(0)
+			get_node("Menu/Control/TopBar/LeftMenu/Edit").__init(int(ary[0]["THEME"]))
+			ary.remove(0)
 			for line in ary:
 				if "musictgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = bool(line["musictgl"])
 				elif "soundtgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = bool(line["soundtgl"])
+				elif "mobilebtn" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/General/Mobile/Mobile").pressed = bool(line["mobilebtn"])
 	get_node("Menu/Control/Properties").__init()
 
 func _notification(notification):

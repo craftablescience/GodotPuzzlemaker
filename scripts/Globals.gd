@@ -25,7 +25,7 @@ enum THEME {
 const FIRSTTOOL: int = TOOL.VOXEL
 
 const FILEFORMAT: int = 13
-const FILESETTINGSFORMAT: int = 14
+const FILESETTINGSFORMAT: int = 16
 
 const TEXTUREFALLBACK: String = "white"
 
