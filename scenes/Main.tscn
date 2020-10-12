@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -19,7 +19,13 @@
 [ext_resource path="res://scripts/Main.gd" type="Script" id=17]
 [ext_resource path="res://scripts/menu/QuitRequest.gd" type="Script" id=18]
 [ext_resource path="res://scripts/menu/FileSelect.gd" type="Script" id=19]
+[ext_resource path="res://scripts/menu/EntityList.gd" type="Script" id=20]
 [ext_resource path="res://sounds/editor/click.wav" type="AudioStream" id=21]
+[ext_resource path="res://scripts/menu/TextureList.gd" type="Script" id=22]
+[ext_resource path="res://images/icons/entity_coin.png" type="Texture" id=23]
+[ext_resource path="res://images/icons/add.png" type="Texture" id=24]
+[ext_resource path="res://images/icons/reload.png" type="Texture" id=25]
+[ext_resource path="res://images/logo/logo.png" type="Texture" id=26]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 127
@@ -112,6 +118,7 @@ placeholder_alpha = 0.7
 anchor_left = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
+texture = ExtResource( 26 )
 expand = true
 stretch_mode = 1
 __meta__ = {
@@ -172,7 +179,105 @@ text = "Texture"
 icon = ExtResource( 13 )
 align = 0
 
+[node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
+visible = false
+margin_top = 191.0
+margin_right = 173.0
+margin_bottom = 259.0
+text = "Texture"
+icon = ExtResource( 23 )
+align = 0
+
 [node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
+
+[node name="ContextPanel" type="Panel" parent="Menu/Control"]
+anchor_top = 0.3
+anchor_right = 0.1
+anchor_bottom = 0.6
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+anchorRight = 0.1
+anchorLeftHidden = -0.2
+anchorRightHidden = -0.1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/ContextPanel"]
+anchor_right = 1.0
+anchor_bottom = 0.1
+custom_constants/separation = 4
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reload" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
+visible = false
+margin_left = 124.0
+margin_right = 156.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 0 )
+size_flags_vertical = 3
+icon = ExtResource( 25 )
+align = 2
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Add" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
+visible = false
+margin_left = 160.0
+margin_right = 192.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 0 )
+icon = ExtResource( 24 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="Menu/Control/ContextPanel"]
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 1.0
+tabs_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Entities" type="ScrollContainer" parent="Menu/Control/ContextPanel/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
+margin_right = 184.0
+margin_bottom = 279.6
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 20 )
+
+[node name="Textures" type="ScrollContainer" parent="Menu/Control/ContextPanel/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
+margin_right = 184.0
+margin_bottom = 279.6
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 22 )
+
+[node name="Tween" type="Tween" parent="Menu/Control/ContextPanel"]
 
 [node name="MissingLevelNameDialog" type="AcceptDialog" parent="Menu/Control"]
 margin_right = 231.0
@@ -201,7 +306,7 @@ margin_right = 545.0
 margin_bottom = 73.0
 popup_exclusive = true
 window_title = "Are You Sure?"
-dialog_text = "Your level was not saved if you did not provide a name for it. Press OK to continue."
+dialog_text = "Your level will not be saved if you did not provide a name for it. Press OK to continue."
 script = ExtResource( 16 )
 
 [node name="QuitRequest" type="ConfirmationDialog" parent="Menu/Control"]
@@ -257,18 +362,27 @@ autoplay = true
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 21 )
-[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 0 ]]
-[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 0 ]]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_grow"]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Scene/Room" method="_on_Select_pressed"]
-[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 1 ]]
-[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 1 ]]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_grow"]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
-[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_button_mouse_entered" binds= [ 2 ]]
-[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_button_mouse_exited" binds= [ 2 ]]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Reload" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_reload"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Reload" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_reload"]
 [connection signal="about_to_show" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_about_to_show"]
 [connection signal="file_selected" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_file_selected"]
 [connection signal="confirmed" from="Menu/Control/ConfirmNewLevel" to="Menu/Control/ConfirmNewLevel" method="_on_confirmed"]
 [connection signal="confirmed" from="Menu/Control/QuitRequest" to="Menu/Control/QuitRequest" method="_on_confirmed"]
+[connection signal="grow_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_grow"]
+[connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]
 [connection signal="editor_camera_inactive" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_inactive"]

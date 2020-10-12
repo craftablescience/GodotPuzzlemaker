@@ -1,9 +1,9 @@
 
 # Godot-specific ignores
 .import/
-addons/
 build/
 sounds/background/
+debug.log
 
 # Imported translations (automatically generated from CSV files)
 *.translation

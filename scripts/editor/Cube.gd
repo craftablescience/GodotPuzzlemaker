@@ -16,9 +16,10 @@ var ZPH: Spatial
 var ZMH: Spatial
 
 var planes: Dictionary
+var textureNode: Tree
 
 
-func __init(pos: Vector3, type: int, id: int):
+func __init(pos: Vector3, type: String, id: int):
 	self.XP = get_node("XP")
 	self.XM = get_node("XM")
 	self.YP = get_node("YP")
@@ -80,7 +81,9 @@ func __init(pos: Vector3, type: int, id: int):
 	self.set_type_all(type)
 	self.set_position_grid(pos)
 	self.set_id(id)
-	
+
+func load_textures() -> void:
+	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
 
 func get_id() -> int:
 	return int(self.name)
@@ -123,15 +126,15 @@ func set_data(planes: Dictionary) -> void:
 func get_data() -> Dictionary:
 	return self.planes
 
-func set_type_all(type: int) -> void:
+func set_type_all(type: String) -> void:
 	for i in Globals.PLANEID.values():
 		self.set_type(i, type)
 
-func set_type(plane: int, type: int) -> void:
-	self.planes[plane]["node"].texture = Globals.TEXTURES[type]
+func set_type(plane: int, type: String) -> void:
+	self.planes[plane]["node"].texture = self.textureNode.get_texture(type)
 	self.planes[plane]["texture"] = type
 
-func get_type(plane: int) -> int:
+func get_type(plane: int) -> String:
 	return self.planes[plane]["texture"]
 
 func set_position_grid(pos: Vector3) -> void:

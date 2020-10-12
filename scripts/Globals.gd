@@ -1,11 +1,6 @@
 extends Node
 
 
-enum TEXTURETYPE {
-	WHITE,
-	BLACK
-}
-
 enum PLANEID {
 	XP,
 	XM,
@@ -18,11 +13,11 @@ enum PLANEID {
 enum TOOL {
 	SELECT,
 	VOXEL,
-	TEXTURE
+	TEXTURE,
+	PLACEENTITY
 }
-const FIRSTTOOL: int = TOOL.SELECT
+const FIRSTTOOL: int = TOOL.VOXEL
 
-const TEXTURES: Array = [preload("res://images/editor/white.png"),
-						 preload("res://images/editor/black.png")]
+const FILEFORMAT: int = 13
 
-const FILEFORMAT: int = 12
+const TEXTUREFALLBACK: String = "white"

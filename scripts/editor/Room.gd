@@ -9,6 +9,10 @@ var camPivot: Spatial
 var actionGizmo: Spatial
 var currentSave: String
 var levelName: String
+var textureNode: Tree
+
+signal grow_sidebar
+signal shrink_sidebar
 
 
 func _ready():
@@ -20,20 +24,21 @@ func _ready():
 	self.camPivot = get_parent().get_node("CameraPivot")
 	self.currentSave = ""
 	self.levelName = ""
+	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
 	
-	self.add_cube(Vector3(), Globals.TEXTURETYPE.WHITE)
+	self.add_cube(Vector3(), "white")
 
 func _process(_delta: float) -> void:
 	var camPivotRot: Vector3 = self.camPivot.global_transform.basis.get_euler()
 	var xrot: float = rad2deg(camPivotRot.x)
 	
 
-func add_cube(gridPos: Vector3, type: int) -> Spatial:
+func add_cube(gridPos: Vector3, type: String) -> Spatial:
 	var cube = self.CubeScene.instance()
-	cube.__init(gridPos, type, len(self.cubes))
-	
 	self.add_child(cube)
 	self.cubes.append(cube)
+	cube.load_textures()
+	cube.__init(gridPos, type, len(self.cubes) - 1)
 	return cube
 
 func unhighlight_all() -> void:
@@ -105,7 +110,6 @@ func serialize() -> String:
 		dict["posy"] = cube.get_position_grid().y
 		dict["posz"] = cube.get_position_grid().z
 		savedata += to_json(dict) + "\n"
-		print(len(self.cubes))
 	return savedata
 
 func clear() -> void:
@@ -114,7 +118,7 @@ func clear() -> void:
 		self.cubes[i].queue_free()
 		self.cubes[i] = null
 	self.remove_null_cubes()
-	self.add_cube(Vector3(), Globals.TEXTURETYPE.WHITE)
+	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
 
 func save(levelName: String) -> void:
 	self.levelName = levelName
@@ -144,7 +148,7 @@ func load_save(path: String) -> void:
 			for data in contents:
 				data = parse_json(data)
 				if data != null:
-					var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTURETYPE.WHITE)
+					var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTUREFALLBACK)
 					for i in range(6):
 						cube.set_type(i, data[str(i)]["texture"])
 						cube.set_disabled(i, data[str(i)]["disabled"])
@@ -176,7 +180,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 		
 		Globals.TOOL.VOXEL:
 			if (key == BUTTON_LEFT):
-				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTURETYPE.WHITE)
+				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
 			elif (key == BUTTON_RIGHT):
 				if len(self.cubes) > 1:
 					self.remove_child(self.cubes[cubeid])
@@ -185,26 +189,34 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 					self.remove_null_cubes()
 		
 		Globals.TOOL.TEXTURE:
-			var currentTexture: int = 0
-			if key == BUTTON_LEFT:
-				currentTexture = Globals.TEXTURETYPE.WHITE
-			elif key == BUTTON_RIGHT:
-				currentTexture = Globals.TEXTURETYPE.BLACK
-			self.cubes[cubeid].set_type(plane, currentTexture)
+			var tex: String = self.textureNode.get_selected_texture()
+			if tex == "": tex = Globals.TEXTUREFALLBACK
+			self.cubes[cubeid].set_type(plane, tex)
+		
+		Globals.TOOL.PLACEENTITY:
+			print("Room.PLACEENTITY")
 		_:
 			print("Room._on_face_selected says how?")
 
 
 func _on_Select_pressed():
 	self.toolSelected = Globals.TOOL.SELECT
+	self.emit_signal("shrink_sidebar")
 
 func _on_VoxelBuild_pressed():
 	self.toolSelected = Globals.TOOL.VOXEL
 	self.unhighlight_all()
+	self.emit_signal("shrink_sidebar")
 
 func _on_VoxelTextured_pressed():
 	self.toolSelected = Globals.TOOL.TEXTURE
 	self.unhighlight_all()
+	self.emit_signal("grow_sidebar")
+
+func _on_PlaceEntity_pressed() -> void:
+	self.toolSelected = Globals.TOOL.PLACEENTITY
+	self.unhighlight_all()
+	self.emit_signal("grow_sidebar")
 
 
 func _on_ArrowX_input_event(camera, event, click_position, click_normal, shape_idx):

@@ -15,12 +15,12 @@ func _ready() -> void:
 	self.tween = get_node("Tween")
 
 
-func _on_button_mouse_entered(buttonID: int) -> void:
+func _on_grow() -> void:
 	tween.interpolate_property(self, "anchor_left", null, self.anchorLeft, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "anchor_right", null, self.anchorRight, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 	tween.start()
 
-func _on_button_mouse_exited(buttonID: int) -> void:
+func _on_shrink() -> void:
 	tween.interpolate_property(self, "anchor_left", null, self.anchorLeftHidden, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 	tween.interpolate_property(self, "anchor_right", null, self.anchorRightHidden, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 	tween.start()
