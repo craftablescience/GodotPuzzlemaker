@@ -215,7 +215,10 @@ func load_save(path: String) -> void:
 								ID = ID.substr(0, len(ID) - 1)
 							else:
 								ID = ary[1]
-							self.load_texture(textures64[ID], ID)
+							if !((Globals.CUSTOMTEXTUREID + ":" + ID) in self.textureNode.TEXTURES):
+								self.load_texture(textures64[ID], ID)
+							else:
+								data[str(i)]["texdata"] = self.textureNode.get_texture(Globals.CUSTOMTEXTUREID + ":" + ID)
 						cube.set_type(i, data[str(i)]["texture"])
 						cube.set_disabled(i, data[str(i)]["disabled"])
 			self.currentSave = self.serialize()
