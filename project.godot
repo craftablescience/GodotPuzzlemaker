@@ -17,9 +17,9 @@ _global_script_class_icons={
 
 config/name="GodotPuzzlemaker"
 run/main_scene="res://scenes/Main.tscn"
-boot_splash/image="res://images/logo/logo.png"
+boot_splash/image="res://images/logo/loading.png"
 boot_splash/fullsize=false
-boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
+boot_splash/bg_color=Color( 0.286275, 0.286275, 0.286275, 1 )
 config/icon="res://images/logo/icon.png"
 config/macos_native_icon="res://images/logo/icon.icns"
 config/windows_native_icon="res://images/logo/icon.ico"
@@ -40,6 +40,10 @@ window/size/fullscreen=true
 [editor_plugins]
 
 enabled=PoolStringArray(  )
+
+[gdnative]
+
+singletons=[  ]
 
 [input]
 

@@ -4,6 +4,7 @@
 build/
 sounds/background/
 debug.log
+discordid.txt
 
 # Imported translations (automatically generated from CSV files)
 *.translation

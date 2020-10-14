@@ -21,6 +21,8 @@ func _ready() -> void:
 	self.add_item("builtin", "White", "white", preload("res://images/editor/white.png"))
 	self.add_item("builtin", "Black", "black", preload("res://images/editor/black.png"))
 	
+	self.add_category("Custom", Globals.CUSTOMTEXTUREID)
+
 	add_to_group("TEXTURELIST", true)
 
 
@@ -31,15 +33,15 @@ func add_category(catName: String, ID: String) -> void:
 func add_item(category: String, itemName: String, itemID: String, texture: Texture) -> bool:
 	if !(category in self.children.keys()):
 		return false;
-	self.TEXTURES[itemID] = texture
+	self.TEXTURES[category + ":" + itemID] = texture
 	self.children[category]["children"][itemID] = {
 		"item": self.create_item(self.children[category]["parent"]),
 		"node": texture
 	}
 	self.children[category]["children"][itemID]["item"].set_text(0, itemName)
-	self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[itemID])
+	self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
 	self.children[category]["children"][itemID]["item"].set_icon_max_width(0, 16)
-	self.children[category]["children"][itemID]["item"].set_metadata(0, itemID)
+	self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 	return true;
 
 func get_selected_texture() -> String:
@@ -57,7 +59,6 @@ func _on_texture_button_pressed() -> void:
 		node.hide()
 	get_parent().show()
 
-
-func _on_reload() -> void:
-	if self.visible:
-		print("TextureList._on_reload") # TODO
+func _on_search() -> void:
+	if get_parent().visible:
+		print("TextureList._on_search") # TODO

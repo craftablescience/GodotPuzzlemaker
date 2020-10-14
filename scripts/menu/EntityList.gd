@@ -38,7 +38,6 @@ func _on_texture_button_pressed() -> void:
 		node.hide()
 	get_parent().show()
 
-
-func _on_reload() -> void:
-	if self.visible:
-		print("EntityList._on_reload") # TODO
+func _on_search() -> void:
+	if get_parent().visible:
+		print("EntityList._on_search") # TODO

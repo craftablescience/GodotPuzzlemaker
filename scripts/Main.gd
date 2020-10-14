@@ -8,6 +8,18 @@ func _ready() -> void:
 	else:
 		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide()
 	
+	if OS.get_name() == "Windows":
+		var fil = File.new()
+		fil.open("res://discordid.txt", fil.READ)
+		var id: String = str(parse_json(fil.get_as_text())["ID"])
+		fil.close()
+		
+		Globals.DISCORD.start(id)
+		Globals.DISCORD.large_image_key = "largevoxel"
+		Globals.DISCORD.start_time = OS.get_unix_time()
+		Globals.DISCORD.details = "Loading..."
+		Globals.DISCORD.update()
+	
 	var settings: File = File.new()
 	var ary: Array = []
 	if settings.file_exists("user://settings.cfg"):
@@ -29,6 +41,7 @@ func _ready() -> void:
 				elif "mobilebtn" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Mobile/Mobile").pressed = bool(line["mobilebtn"])
 	get_node("Menu/Control/Properties").__init()
+
 
 func _notification(notification):
 	if notification == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

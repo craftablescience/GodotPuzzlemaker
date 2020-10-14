@@ -91,7 +91,7 @@ transform = Transform( 4.88762e-07, -1, 5.30863e-14, 1.62921e-07, 2.65431e-14, -
 shape = SubResource( 1 )
 
 [node name="ZM" type="Sprite3D" parent="."]
-transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, 0, 0, -5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5 )
 use_in_baked_light = true
 pixel_size = 0.1563
 transparent = false
@@ -109,52 +109,60 @@ shape = SubResource( 1 )
 visible = false
 
 [node name="XPH_Outer" type="Sprite3D" parent="XPH"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 5.01, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.01, 0, 0 )
 pixel_size = 0.1563
+axis = 0
 texture = ExtResource( 3 )
 
 [node name="XPH_Inner" type="Sprite3D" parent="XPH"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 4.99, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99, 0, 0 )
 pixel_size = 0.1563
+axis = 0
 texture = ExtResource( 3 )
 
 [node name="XMH" type="Spatial" parent="."]
 visible = false
 
 [node name="XMH_Outer" type="Sprite3D" parent="XMH"]
-transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -5.01, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.01, 0, 0 )
 pixel_size = 0.1563
+axis = 0
 texture = ExtResource( 3 )
 
 [node name="XMH_Inner" type="Sprite3D" parent="XMH"]
-transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -4.99, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99, 0, 0 )
 pixel_size = 0.1563
+axis = 0
 texture = ExtResource( 3 )
 
 [node name="YPH" type="Spatial" parent="."]
 visible = false
 
 [node name="YPH_Outer" type="Sprite3D" parent="YPH"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 5.01, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.01, 0 )
 pixel_size = 0.1563
+axis = 1
 texture = ExtResource( 3 )
 
 [node name="YPH_Inner" type="Sprite3D" parent="YPH"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 4.99, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.99, 0 )
 pixel_size = 0.1563
+axis = 1
 texture = ExtResource( 3 )
 
 [node name="YMH" type="Spatial" parent="."]
 visible = false
 
 [node name="YMH_Outer" type="Sprite3D" parent="YMH"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, -5.01, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.01, 0 )
 pixel_size = 0.1563
+axis = 1
 texture = ExtResource( 3 )
 
 [node name="YMH_Inner" type="Sprite3D" parent="YMH"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, -4.99, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.99, 0 )
 pixel_size = 0.1563
+axis = 1
 texture = ExtResource( 3 )
 
 [node name="ZPH" type="Spatial" parent="."]
@@ -174,12 +182,12 @@ texture = ExtResource( 3 )
 visible = false
 
 [node name="ZMH_Outer" type="Sprite3D" parent="ZMH"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, -5.01 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.01 )
 pixel_size = 0.1563
 texture = ExtResource( 3 )
 
 [node name="ZMH_Inner" type="Sprite3D" parent="ZMH"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, -4.99 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.99 )
 pixel_size = 0.1563
 texture = ExtResource( 3 )
 [connection signal="input_event" from="XP/Area" to="." method="_on_XP_select"]

@@ -78,6 +78,7 @@ func __init(pos: Vector3, type: String, id: int):
 			"disabled": false
 		}
 	}
+	self.load_textures()
 	self.set_type_all(type)
 	self.set_position_grid(pos)
 	self.set_id(id)
@@ -134,7 +135,7 @@ func set_type(plane: int, type: String) -> void:
 	self.planes[plane]["node"].texture = self.textureNode.get_texture(type)
 	self.planes[plane]["texture"] = type
 
-func get_type(plane: int) -> String:
+func get_type(plane: int) -> Array:
 	return self.planes[plane]["texture"]
 
 func set_position_grid(pos: Vector3) -> void:
