@@ -9,6 +9,6 @@ func _ready() -> void:
 
 func _on_pressed() -> void:
 	if get_parent().get_parent().get_node("TabContainer/Entities").visible:
-		pass # Add new entity
+		get_parent().get_parent().get_parent().get_node("EntityFileSelect").popup_centered()
 	elif get_parent().get_parent().get_node("TabContainer/Textures").visible:
 		get_parent().get_parent().get_parent().get_node("TextureFileSelect").popup_centered()

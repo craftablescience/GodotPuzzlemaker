@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -41,6 +41,7 @@
 [ext_resource path="res://scripts/menu/Add.gd" type="Script" id=39]
 [ext_resource path="res://scripts/menu/TextureFileSelect.gd" type="Script" id=40]
 [ext_resource path="res://scripts/DiscordTimer.gd" type="Script" id=41]
+[ext_resource path="res://scripts/menu/EntityFileSelect.gd" type="Script" id=42]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 127
@@ -53,6 +54,7 @@ script = ExtResource( 17 )
 layer = 3
 
 [node name="TouchControls" type="Control" parent="Menu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -263,6 +265,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -284,7 +287,7 @@ __meta__ = {
 
 [node name="File" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_right = 100.0
-margin_bottom = 70.0
+margin_bottom = 58.0
 rect_min_size = Vector2( 100, 0 )
 mouse_default_cursor_shape = 2
 size_flags_vertical = 3
@@ -296,7 +299,7 @@ script = ExtResource( 4 )
 [node name="Edit" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_left = 104.0
 margin_right = 204.0
-margin_bottom = 70.0
+margin_bottom = 58.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_vertical = 3
 text = "Edit"
@@ -307,7 +310,7 @@ script = ExtResource( 5 )
 [node name="About" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_left = 208.0
 margin_right = 308.0
-margin_bottom = 70.0
+margin_bottom = 58.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_vertical = 3
 text = "About"
@@ -317,8 +320,9 @@ script = ExtResource( 27 )
 
 [node name="CenterMenu" type="HBoxContainer" parent="Menu/Control/TopBar"]
 anchor_left = 0.4
-anchor_right = 0.6
+anchor_right = 0.8
 anchor_bottom = 1.0
+margin_bottom = -0.499996
 custom_constants/separation = 16
 alignment = 1
 __meta__ = {
@@ -337,9 +341,10 @@ align = 0
 expand_icon = true
 
 [node name="LevelName" type="LineEdit" parent="Menu/Control/TopBar/CenterMenu"]
-margin_right = 200.0
-margin_bottom = 70.0
+margin_right = 474.0
+margin_bottom = 58.0
 rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
 max_length = 32
 expand_to_text_length = true
 clear_button_enabled = true
@@ -348,10 +353,10 @@ placeholder_alpha = 0.7
 script = ExtResource( 38 )
 
 [node name="Mobile" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
-margin_left = 216.0
-margin_right = 384.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
+margin_left = 490.0
+margin_right = 640.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
 toggle_mode = true
 text = "Mobile Mode"
@@ -392,7 +397,6 @@ anchor_left = 0.05
 anchor_top = 0.025
 anchor_right = 0.95
 anchor_bottom = 0.975
-theme = ExtResource( 2 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -409,27 +413,26 @@ clip_text = true
 align = 0
 
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 83.0
-margin_right = 173.0
-margin_bottom = 151.0
+margin_top = 22.0
+margin_right = 144.0
+margin_bottom = 90.0
 text = "Build"
 icon = ExtResource( 10 )
 align = 0
 
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 155.0
-margin_right = 173.0
-margin_bottom = 223.0
+margin_top = 94.0
+margin_right = 144.0
+margin_bottom = 162.0
 text = "Texture"
 icon = ExtResource( 13 )
 align = 0
 
 [node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-visible = false
-margin_top = 191.0
-margin_right = 173.0
-margin_bottom = 259.0
-text = "Texture"
+margin_top = 166.0
+margin_right = 144.0
+margin_bottom = 234.0
+text = "Entity"
 icon = ExtResource( 23 )
 align = 0
 
@@ -437,15 +440,15 @@ align = 0
 
 [node name="ContextPanel" type="Panel" parent="Menu/Control"]
 anchor_top = 0.3
-anchor_right = 0.1
+anchor_right = 0.2
 anchor_bottom = 0.6
 script = ExtResource( 12 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
-anchorRight = 0.1
-anchorLeftHidden = -0.2
-anchorRightHidden = -0.1
+anchorRight = 0.2
+anchorLeftHidden = -0.25
+anchorRightHidden = -0.05
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/ContextPanel"]
 anchor_right = 1.0
@@ -471,11 +474,12 @@ __meta__ = {
 }
 
 [node name="Add" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
-margin_left = 160.0
-margin_right = 192.0
-margin_bottom = 32.0
+margin_left = 288.0
+margin_right = 320.0
+margin_bottom = 27.0
 rect_min_size = Vector2( 32, 0 )
 icon = ExtResource( 24 )
+flat = true
 expand_icon = true
 script = ExtResource( 39 )
 __meta__ = {
@@ -500,8 +504,8 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
-margin_right = 184.0
-margin_bottom = 279.6
+margin_right = 312.0
+margin_bottom = 231.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -516,8 +520,8 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
-margin_right = 184.0
-margin_bottom = 279.6
+margin_right = 312.0
+margin_bottom = 231.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
@@ -559,6 +563,23 @@ filters = PoolStringArray( "*.png ; PNG File", "*.jpg ; JPG File" )
 current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
 current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
 script = ExtResource( 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EntityFileSelect" type="FileDialog" parent="Menu/Control"]
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+popup_exclusive = true
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.tscn ; Scene File", "*.scn ; Scene File" )
+current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
+current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
+script = ExtResource( 42 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -616,7 +637,9 @@ dialog_text = "Created by craftablescience (Brendan Lewis).
 
 Click noise created by Mike Koenig at SoundBible.com.
 
-Discord RP library by Soaku @ github.com/Soaku/DiscordGD."
+Discord RP library by Soaku @ github.com/Soaku/DiscordGD.
+
+Rubik font created by \"Hubert and Fischer\", \"Meir Sadan\", and \"Cyreal\"."
 
 [node name="BackgroundMusicCredits" type="AcceptDialog" parent="Menu/Control"]
 margin_right = 83.0
@@ -649,7 +672,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 40.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -658,9 +681,10 @@ margin_right = 376.0
 margin_bottom = 40.0
 
 [node name="Music" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Music"]
-margin_left = 127.0
-margin_right = 249.0
-margin_bottom = 40.0
+margin_left = 129.0
+margin_top = 2.0
+margin_right = 247.0
+margin_bottom = 38.0
 size_flags_horizontal = 0
 pressed = true
 text = "Music:"
@@ -671,9 +695,10 @@ margin_right = 376.0
 margin_bottom = 84.0
 
 [node name="Sound" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Sound"]
-margin_left = 103.0
-margin_right = 272.0
-margin_bottom = 40.0
+margin_left = 95.0
+margin_top = 2.0
+margin_right = 281.0
+margin_bottom = 38.0
 size_flags_horizontal = 0
 pressed = true
 text = "Sound Effects:"
@@ -684,9 +709,10 @@ margin_right = 376.0
 margin_bottom = 128.0
 
 [node name="Mobile" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Mobile"]
-margin_left = 95.0
-margin_right = 280.0
-margin_bottom = 40.0
+margin_left = 90.0
+margin_top = 2.0
+margin_right = 285.0
+margin_bottom = 38.0
 size_flags_horizontal = 0
 pressed = true
 text = "Mobile Controls:"
@@ -781,19 +807,21 @@ script = ExtResource( 41 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="about_to_show" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_about_to_show"]
 [connection signal="file_selected" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_file_selected"]
 [connection signal="about_to_show" from="Menu/Control/TextureFileSelect" to="Menu/Control/TextureFileSelect" method="_on_about_to_show"]
 [connection signal="file_selected" from="Menu/Control/TextureFileSelect" to="Menu/Control/TextureFileSelect" method="_on_file_selected"]
+[connection signal="about_to_show" from="Menu/Control/EntityFileSelect" to="Menu/Control/EntityFileSelect" method="_on_about_to_show"]
+[connection signal="file_selected" from="Menu/Control/EntityFileSelect" to="Menu/Control/EntityFileSelect" method="_on_file_selected"]
 [connection signal="confirmed" from="Menu/Control/ConfirmNewLevel" to="Menu/Control/ConfirmNewLevel" method="_on_confirmed"]
 [connection signal="confirmed" from="Menu/Control/QuitRequest" to="Menu/Control/QuitRequest" method="_on_confirmed"]
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Music/Music" to="Menu/Control/Properties" method="_on_Music_toggled"]

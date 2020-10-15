@@ -21,7 +21,7 @@ func _ready() -> void:
 	self.add_item("builtin", "White", "white", preload("res://images/editor/white.png"))
 	self.add_item("builtin", "Black", "black", preload("res://images/editor/black.png"))
 	
-	self.add_category("Custom", Globals.CUSTOMTEXTUREID)
+	self.add_category("Custom", Globals.CUSTOMID)
 
 	add_to_group("TEXTURELIST", true)
 

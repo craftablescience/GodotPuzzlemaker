@@ -2,6 +2,7 @@ extends Spatial
 
 
 var cubes: Array
+var ents: Array
 var toolSelected: int
 var CubeScene: PackedScene
 var cam: Camera
@@ -10,6 +11,7 @@ var actionGizmo: Spatial
 var currentSave: String
 var levelName: String
 var textureNode: Tree
+var entityNode: Tree
 
 signal grow_sidebar
 signal shrink_sidebar
@@ -17,6 +19,7 @@ signal shrink_sidebar
 
 func _ready():
 	self.cubes = []
+	self.ents = []
 	self.CubeScene = preload("res://scenes/editor/Cube.tscn")
 	self.toolSelected = Globals.FIRSTTOOL
 	self.actionGizmo = get_node("ActionGizmo")
@@ -25,13 +28,20 @@ func _ready():
 	self.currentSave = ""
 	self.levelName = ""
 	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
+	self.entityNode = get_tree().get_nodes_in_group("ENTITYLIST")[0]
 	
 	self.add_cube(Vector3(), "builtin:white")
 
-func _process(_delta: float) -> void:
-	var camPivotRot: Vector3 = self.camPivot.global_transform.basis.get_euler()
-	var xrot: float = rad2deg(camPivotRot.x)
-	
+func _process(delta: float) -> void:
+	if len(self.ents) > 0:
+		var i: int = 0
+		for ent in ents:
+			if !is_instance_valid(ent["node"]):
+				self.ents.remove(i)
+			else:
+				self.ents[i]["node"].name = "E" + str(i)
+				i += 1
+
 
 func add_cube(gridPos: Vector3, type: String) -> Spatial:
 	var cube = self.CubeScene.instance()
@@ -39,6 +49,45 @@ func add_cube(gridPos: Vector3, type: String) -> Spatial:
 	self.cubes.append(cube)
 	cube.__init(gridPos, type, len(self.cubes) - 1)
 	return cube
+
+func add_entity(pos: Vector3) -> void:
+	var ent: Node = self.entityNode.ENTITIES[self.entityNode.get_selected_entity()].instance()
+	ent.name = "E" + str(len(self.ents))
+	ent.translate(pos)
+	self.add_child(ent)
+	self.ents.append({
+		"node": ent,
+		"ID": self.entityNode.get_selected_entity(),
+		"posx": ent.global_transform.origin.x,
+		"posy": ent.global_transform.origin.y,
+		"posz": ent.global_transform.origin.z
+	})
+
+func add_entity_from_id(pos: Vector3, ID: String) -> void:
+	var ent: Node = self.entityNode.ENTITIES[ID].instance()
+	ent.name = "E" + str(len(self.ents))
+	ent.translate(pos)
+	self.add_child(ent)
+	self.ents.append({
+		"node": ent,
+		"ID": ID,
+		"posx": ent.global_transform.origin.x,
+		"posy": ent.global_transform.origin.y,
+		"posz": ent.global_transform.origin.z
+	})
+
+func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
+	var ent: Spatial = scene.instance()
+	ent.name = "E" + str(len(self.ents))
+	ent.translate(pos)
+	self.add_child(ent)
+	self.ents.append({
+		"node": ent,
+		"ID": self.entityNode.get_entity_ID(scene),
+		"posx": ent.global_transform.origin.x,
+		"posy": ent.global_transform.origin.y,
+		"posz": ent.global_transform.origin.z
+	})
 
 func unhighlight_all() -> void:
 	for cube in self.cubes:
@@ -67,6 +116,14 @@ func set_actionGizmo_pos(cubeid: int, plane: int):
 			print("Room.set_actionGizmo_pos says how?")
 	self.actionGizmo.translation = cubePos
 
+func get_placed_ent_pos(cubeid: int, plane: int) -> Vector3:
+	var p: Vector3 = self.cubes[cubeid].get_position_grid()
+	p.x *= 10
+	p.y *= 10
+	p.z *= 10
+	p.y += 5
+	return p
+
 func get_placed_cube_pos(cubeid: int, plane: int) -> Vector3:
 	var cubePosGrid: Vector3 = self.cubes[cubeid].get_position_grid()
 	match plane:
@@ -83,7 +140,7 @@ func get_placed_cube_pos(cubeid: int, plane: int) -> Vector3:
 		Globals.PLANEID.ZM:
 			cubePosGrid.z -= 1
 		_:
-			print("Room.add_cube_relative says how?")
+			print("Room.get_placed_cube_pos says how?")
 	return cubePosGrid
 
 func remove_null_cubes() -> void:
@@ -95,6 +152,12 @@ func remove_null_cubes() -> void:
 		else:
 			self.cubes[i].set_id(i)
 			i += 1
+
+func clear_entities() -> void:
+	for ent in self.ents:
+		self.remove_child(ent["node"])
+		ent["node"].queue_free()
+	self.ents = []
 
 func serialize() -> String:
 	var savedata: String = ""
@@ -121,6 +184,15 @@ func serialize() -> String:
 					image.close()
 					savedata += "\n{" + "\"T_" + ID + "\":\"" + customTex + "\"}"
 	savedata += "\n"
+	
+	var storedEntIDs: Array = []
+	for ent in self.ents:
+		if ent["ID"].split(":")[0] != "builtin" and !(ent["ID"] in storedEntIDs):
+			var scn: File = File.new()
+			scn.open("user://.cache/" + ent["ID"].split(":")[-1], scn.READ)
+			savedata += "{\"E_" + ent["ID"] + "\":\"" + Marshalls.raw_to_base64(scn.get_buffer(scn.get_len())) + "\"}\n"
+			storedEntIDs.append(ent["ID"])
+	
 	for cube in self.cubes:
 		var dict: Dictionary = cube.get_data().duplicate(true)
 		for i in range(6):
@@ -144,6 +216,11 @@ func serialize() -> String:
 		dict["posy"] = cube.get_position_grid().y
 		dict["posz"] = cube.get_position_grid().z
 		savedata += to_json(dict) + "\n"
+	
+	for ent in self.ents.duplicate(true):
+		ent.erase("node")
+		savedata += to_json(ent) + "\n"
+	
 	return savedata
 
 func clear() -> void:
@@ -152,6 +229,7 @@ func clear() -> void:
 		self.cubes[i].queue_free()
 		self.cubes[i] = null
 	self.remove_null_cubes()
+	self.clear_entities()
 	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
 
 func save(levelName: String) -> void:
@@ -204,23 +282,38 @@ func load_save(path: String) -> void:
 					if data.keys()[0].substr(0,2) == "T_":
 						textures64[data.keys()[0].substr(2,-1)] = data.values()[0]
 						continue
-					var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTUREFALLBACK)
-					for i in range(6):
-						if data[str(i)]["texdata"] != "null":
-							var ary: Array = data[str(i)]["texture"].split(":")
-							var ID: String = ""
-							if len(ary) > 2:
-								for item in ary.slice(1, len(ary) - 1):
-									ID += item + ":"
-								ID = ID.substr(0, len(ID) - 1)
-							else:
-								ID = ary[1]
-							if !((Globals.CUSTOMTEXTUREID + ":" + ID) in self.textureNode.TEXTURES):
-								self.load_texture(textures64[ID], ID)
-							else:
-								data[str(i)]["texdata"] = self.textureNode.get_texture(Globals.CUSTOMTEXTUREID + ":" + ID)
-						cube.set_type(i, data[str(i)]["texture"])
-						cube.set_disabled(i, data[str(i)]["disabled"])
+					elif data.keys()[0].substr(0,2) == "E_":
+						if !(data.keys()[0].substr(2) in self.entityNode.ENTITIES.keys()):
+							var efile: File = File.new()
+							efile.open("user://.cache/" + data.keys()[0].split(":")[-1], efile.WRITE)
+							efile.store_buffer(Marshalls.base64_to_raw(data[data.keys()[0]]))
+							efile.close()
+							self.entityNode.add_item(
+								Globals.CUSTOMID,
+								data.keys()[0].split(":")[-1].split(".")[0],
+								data.keys()[0].split(":")[-1],
+								load("user://.cache/" + data.keys()[0].split(":")[-1]))
+						continue
+					elif data.keys()[0] == "0":
+						var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTUREFALLBACK)
+						for i in range(6):
+							if data[str(i)]["texdata"] != "null":
+								var ary: Array = data[str(i)]["texture"].split(":")
+								var ID: String = ""
+								if len(ary) > 2:
+									for item in ary.slice(1, len(ary) - 1):
+										ID += item + ":"
+									ID = ID.substr(0, len(ID) - 1)
+								else:
+									ID = ary[1]
+								if !((Globals.CUSTOMID + ":" + ID) in self.textureNode.TEXTURES):
+									self.load_texture(textures64[ID], ID)
+								else:
+									data[str(i)]["texdata"] = self.textureNode.get_texture(Globals.CUSTOMID + ":" + ID)
+							cube.set_type(i, data[str(i)]["texture"])
+							cube.set_disabled(i, data[str(i)]["disabled"])
+					elif data.keys()[0] == "ID":
+						self.add_entity_from_id(Vector3(int(data["posx"]), int(data["posy"]), int(data["posz"])), data["ID"])
 			self.currentSave = self.serialize()
 	save.close()
 	get_parent().get_parent().get_node("Menu/Control/TopBar/CenterMenu/LevelName").text = path.split("/")[-1].split(".")[0]
@@ -266,7 +359,10 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 			self.cubes[cubeid].set_type(plane, tex)
 		
 		Globals.TOOL.PLACEENTITY:
-			print("Room.PLACEENTITY")
+			if key == BUTTON_LEFT:
+				var ent: String = self.entityNode.get_selected_entity()
+				if ent != "" and plane == Globals.PLANEID.YP:
+					self.add_entity(self.get_placed_ent_pos(cubeid, plane))
 		_:
 			print("Room._on_face_selected says how?")
 

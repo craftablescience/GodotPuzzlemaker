@@ -32,14 +32,12 @@ Globals="*res://scripts/Globals.gd"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
-window/size/borderless=true
-window/size/fullscreen=true
+window/size/width=1600
+window/size/height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "entity_node" )
 
 [gdnative]
 
@@ -97,5 +95,6 @@ editor_camera_down={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/shadows/filter_mode=0
 environment/default_clear_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 environment/default_environment="res://default_env.tres"

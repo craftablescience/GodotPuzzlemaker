@@ -25,4 +25,4 @@ func _on_file_selected(path: String) -> void:
 		var texture = ImageTexture.new()
 		texture.create_from_image(image, 1)
 		var ID: String = path.split("/")[-1]
-		get_parent().get_node("ContextPanel/TabContainer/Textures/Tree").add_item(Globals.CUSTOMTEXTUREID, ID, ID, texture)
+		get_parent().get_node("ContextPanel/TabContainer/Textures/Tree").add_item(Globals.CUSTOMID, ID, ID, texture)

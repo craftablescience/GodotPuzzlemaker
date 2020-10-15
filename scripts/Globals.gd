@@ -24,7 +24,7 @@ enum THEME {
 
 const FIRSTTOOL: int = TOOL.VOXEL
 
-const FILEFORMAT: int = 15
+const FILEFORMAT: int = 16
 const FILESETTINGSFORMAT: int = 16
 
 const TEXTUREFALLBACK: String = "builtin:white"
@@ -32,7 +32,7 @@ const TEXTUREFALLBACK: String = "builtin:white"
 var Discord = preload("res://gdnative/libdiscord.gdns")
 var DISCORD = Discord.new()
 
-const CUSTOMTEXTUREID: String = "usercustom"
+const CUSTOMID: String = "usercustom"
 
 static func SET_THEME(tm: int) -> void:
 	if tm == Globals.THEME.LIGHT:
