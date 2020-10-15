@@ -11,7 +11,7 @@ func _ready() -> void:
 	if OS.get_name() == "Windows":
 		var fil = File.new()
 		fil.open("res://discordid.txt", fil.READ)
-		var id: String = str(parse_json(fil.get_as_text())["ID"])
+		var id: String = fil.get_as_text()
 		fil.close()
 		
 		Globals.DISCORD.start(id)
