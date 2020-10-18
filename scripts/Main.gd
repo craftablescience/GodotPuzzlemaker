@@ -8,12 +8,11 @@ func _ready() -> void:
 	else:
 		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide()
 	
-	if OS.get_name() == "Windows":
+	if OS.get_name() == "Windows" or OS.get_name() == "X11":
 		var fil = File.new()
 		fil.open("res://discordid.txt", fil.READ)
 		var id: String = fil.get_as_text()
 		fil.close()
-		
 		Globals.DISCORD.start(id)
 		Globals.DISCORD.large_image_key = "largevoxel"
 		Globals.DISCORD.start_time = OS.get_unix_time()
@@ -33,14 +32,28 @@ func _ready() -> void:
 			ary.remove(0)
 			get_node("Menu/Control/TopBar/LeftMenu/Edit").__init(int(ary[0]["THEME"]))
 			ary.remove(0)
+			var musicSet: bool = false
+			var soundSet: bool = false
+			var mobileSet: bool = false
 			for line in ary:
 				if "musictgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = bool(line["musictgl"])
-				elif "soundtgl" in line.keys():
+					musicSet = true
+				if "soundtgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = bool(line["soundtgl"])
-				elif "mobilebtn" in line.keys():
+					soundSet = true
+				if "mobilebtn" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Mobile/Mobile").pressed = bool(line["mobilebtn"])
+					mobileSet = true
+			if !musicSet:
+				get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = true
+			if !soundSet:
+				get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = true
+			if !mobileSet:
+				get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = false
+			
 	get_node("Menu/Control/Properties").__init()
+	get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
 
 
 func _notification(notification):

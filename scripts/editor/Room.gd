@@ -89,6 +89,12 @@ func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
 		"posz": ent.global_transform.origin.z
 	})
 
+func get_player_start() -> Array:
+	for ent in self.ents:
+		if ent["ID"] == "builtin:" + Globals.PLAYER_START:
+			return [true, ent["posx"], ent["posy"], ent["posz"]]
+	return [false]
+
 func unhighlight_all() -> void:
 	for cube in self.cubes:
 		if cube != null:
@@ -221,6 +227,19 @@ func serialize() -> String:
 		ent.erase("node")
 		savedata += to_json(ent) + "\n"
 	
+	var lightData: Panel = get_parent().get_parent().get_node("Menu/Control/LightPanel")
+	savedata += "{" + \
+					"\"P_LIGHT\":{" + \
+						"\"sunx\":"       + str(int(lightData.xs.value))  + \
+						",\"suny\":"      + str(int(lightData.ys.value))  + \
+						",\"sunz\":"      + str(int(lightData.zs.value))  + \
+						",\"sunstr\":"    + str(int(lightData.sns.value)) + \
+						",\"gistr\":"     + str(int(lightData.gis.value)) + \
+						",\"sunenable\":" + str(lightData.sunBtn.pressed).to_lower() + \
+						",\"gienable\":"  + str(lightData.giBtn.pressed).to_lower()  + \
+					"}" + \
+				"}\n"
+	
 	return savedata
 
 func clear() -> void:
@@ -231,6 +250,7 @@ func clear() -> void:
 	self.remove_null_cubes()
 	self.clear_entities()
 	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
+	get_parent().get_parent().get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
 
 func save(levelName: String) -> void:
 	self.levelName = levelName
@@ -314,6 +334,18 @@ func load_save(path: String) -> void:
 							cube.set_disabled(i, data[str(i)]["disabled"])
 					elif data.keys()[0] == "ID":
 						self.add_entity_from_id(Vector3(int(data["posx"]), int(data["posy"]), int(data["posz"])), data["ID"])
+					elif data.keys()[0].substr(0,2) == "P_":
+						if data.keys()[0] == "P_LIGHT":
+							var lightData: Panel = get_parent().get_parent().get_node("Menu/Control/LightPanel")
+							lightData.__init(false, true, 0, 0, 0, 100, 100)
+							lightData.xs.value = int(data["P_LIGHT"]["sunx"])
+							lightData.ys.value = int(data["P_LIGHT"]["suny"])
+							lightData.zs.value = int(data["P_LIGHT"]["sunz"])
+							lightData.sns.value = int(data["P_LIGHT"]["sunstr"])
+							lightData.gis.value = int(data["P_LIGHT"]["gistr"])
+							lightData.sunBtn.pressed = bool(data["P_LIGHT"]["sunenable"])
+							lightData.giBtn.pressed = bool(data["P_LIGHT"]["gienable"])
+							lightData.update()
 			self.currentSave = self.serialize()
 	save.close()
 	get_parent().get_parent().get_node("Menu/Control/TopBar/CenterMenu/LevelName").text = path.split("/")[-1].split(".")[0]
@@ -322,6 +354,9 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 	var clik: AudioStreamPlayer = get_parent().get_parent().get_node("Click")
 	if !clik.get_disabled():
 		clik.play()
+	
+	if Globals.PLAY_MODE:
+		return
 	
 	match self.toolSelected:
 		

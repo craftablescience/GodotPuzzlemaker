@@ -22,9 +22,13 @@ enum THEME {
 	DARK
 }
 
+const MOUSE_SENSITIVITY: float = 0.02
+const MOBILE_SENSITIVITY: float = 32.0
+const MOVEMENT_SENSITIVITY: float = 1.0
+
 const FIRSTTOOL: int = TOOL.VOXEL
 
-const FILEFORMAT: int = 16
+const FILEFORMAT: int = 17
 const FILESETTINGSFORMAT: int = 16
 
 const TEXTUREFALLBACK: String = "builtin:white"
@@ -32,7 +36,10 @@ const TEXTUREFALLBACK: String = "builtin:white"
 var Discord = preload("res://gdnative/libdiscord.gdns")
 var DISCORD = Discord.new()
 
+var PLAY_MODE: bool = false
+
 const CUSTOMID: String = "usercustom"
+const PLAYER_START: String = "player_start"
 
 static func SET_THEME(tm: int) -> void:
 	if tm == Globals.THEME.LIGHT:

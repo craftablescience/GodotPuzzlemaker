@@ -30,27 +30,28 @@ func _ready() -> void:
 	self.ldwn = false
 
 func _process(delta: float) -> void:
-	if self.fwd:
-		self.create_key_event(KEY_W)
-	if self.bck:
-		self.create_key_event(KEY_S)
-	if self.lft:
-		self.create_key_event(KEY_A)
-	if self.rgt:
-		self.create_key_event(KEY_D)
-	if self.up:
-		self.create_key_event(KEY_SPACE)
-	if self.dwn:
-		self.create_key_event(KEY_C)
+	if self.visible:
+		if self.fwd:
+			self.create_key_event(KEY_W)
+		if self.bck:
+			self.create_key_event(KEY_S)
+		if self.lft:
+			self.create_key_event(KEY_A)
+		if self.rgt:
+			self.create_key_event(KEY_D)
+		if self.up:
+			self.create_key_event(KEY_SPACE)
+		if self.dwn:
+			self.create_key_event(KEY_C)
 
-	if self.llft:
-		self.create_key_event(KEY_LEFT)
-	if self.lrgt:
-		self.create_key_event(KEY_RIGHT)
-	if self.lup:
-		self.create_key_event(KEY_UP)
-	if self.ldwn:
-		self.create_key_event(KEY_DOWN)
+		if self.llft:
+			self.create_key_event(KEY_LEFT)
+		if self.lrgt:
+			self.create_key_event(KEY_RIGHT)
+		if self.lup:
+			self.create_key_event(KEY_UP)
+		if self.ldwn:
+			self.create_key_event(KEY_DOWN)
 
 
 func create_mouse_event(event: InputEventMouseButton) -> void:

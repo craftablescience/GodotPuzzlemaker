@@ -18,6 +18,7 @@ func _ready() -> void:
 	}
 	self.children["builtin"]["parent"].set_text(0, "Built-In")
 	
+	self.add_item("builtin", "Player Spawn", Globals.PLAYER_START, preload("res://scenes/entities/PlayerStart.scn"))
 	self.add_item("builtin", "Coin", "CoinEntity", preload("res://scenes/entities/CoinEntity.scn"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)

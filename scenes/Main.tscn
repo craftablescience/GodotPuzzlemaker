@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -25,7 +25,7 @@
 [ext_resource path="res://images/icons/entity_coin.png" type="Texture" id=23]
 [ext_resource path="res://images/icons/add.png" type="Texture" id=24]
 [ext_resource path="res://images/icons/search.png" type="Texture" id=25]
-[ext_resource path="res://images/logo/logo.png" type="Texture" id=26]
+[ext_resource path="res://images/icons/light.png" type="Texture" id=26]
 [ext_resource path="res://scripts/menu/About.gd" type="Script" id=27]
 [ext_resource path="res://scripts/menu/Properties.gd" type="Script" id=28]
 [ext_resource path="res://scripts/editor/SoundEffect.gd" type="Script" id=29]
@@ -42,6 +42,9 @@
 [ext_resource path="res://scripts/menu/TextureFileSelect.gd" type="Script" id=40]
 [ext_resource path="res://scripts/DiscordTimer.gd" type="Script" id=41]
 [ext_resource path="res://scripts/menu/EntityFileSelect.gd" type="Script" id=42]
+[ext_resource path="res://scripts/editor/LightPanel.gd" type="Script" id=43]
+[ext_resource path="res://scripts/menu/LightingButton.gd" type="Script" id=44]
+[ext_resource path="res://scripts/editor/Play.gd" type="Script" id=45]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 127
@@ -322,7 +325,6 @@ script = ExtResource( 27 )
 anchor_left = 0.4
 anchor_right = 0.8
 anchor_bottom = 1.0
-margin_bottom = -0.499996
 custom_constants/separation = 16
 alignment = 1
 __meta__ = {
@@ -330,17 +332,19 @@ __meta__ = {
 }
 
 [node name="Play" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
-visible = false
-margin_right = 168.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
+margin_right = 150.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
-text = "  Play "
+toggle_mode = true
+text = " Play"
 icon = ExtResource( 15 )
 align = 0
 expand_icon = true
+script = ExtResource( 45 )
 
 [node name="LevelName" type="LineEdit" parent="Menu/Control/TopBar/CenterMenu"]
+margin_left = 166.0
 margin_right = 474.0
 margin_bottom = 58.0
 rect_min_size = Vector2( 200, 0 )
@@ -350,6 +354,7 @@ expand_to_text_length = true
 clear_button_enabled = true
 placeholder_text = "Filename..."
 placeholder_alpha = 0.7
+caret_blink = true
 script = ExtResource( 38 )
 
 [node name="Mobile" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
@@ -364,13 +369,18 @@ icon = ExtResource( 35 )
 align = 0
 expand_icon = true
 
-[node name="About" type="TextureRect" parent="Menu/Control/TopBar"]
-anchor_left = 0.9
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 1
+[node name="LightingButton" type="Button" parent="Menu/Control"]
+anchor_left = 0.92
+anchor_top = 0.005
+anchor_right = 0.995
+anchor_bottom = 0.06
+margin_bottom = -0.5
+toggle_mode = true
+text = "Lighting"
+icon = ExtResource( 26 )
+flat = true
+expand_icon = true
+script = ExtResource( 44 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -528,6 +538,217 @@ script = ExtResource( 22 )
 
 [node name="Tween" type="Tween" parent="Menu/Control/ContextPanel"]
 
+[node name="LightPanel" type="Panel" parent="Menu/Control"]
+show_behind_parent = true
+anchor_left = 0.8
+anchor_top = 0.0651444
+anchor_right = 1.0
+anchor_bottom = 0.3
+margin_top = -0.629959
+margin_bottom = -0.229965
+script = ExtResource( 43 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+anchorUp = 0.065
+anchorDown = 0.29
+anchorUpHidden = -0.45
+anchorDownHidden = -0.225
+
+[node name="Sun" type="Label" parent="Menu/Control/LightPanel"]
+anchor_right = 0.25
+anchor_bottom = 0.2
+margin_bottom = 0.0958481
+text = "Sun:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SunEnable" type="CheckButton" parent="Menu/Control/LightPanel"]
+anchor_left = 0.25
+anchor_right = 0.45
+anchor_bottom = 0.2
+margin_left = -0.125671
+margin_right = -0.125671
+margin_bottom = -0.0503998
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GILabel" type="Label" parent="Menu/Control/LightPanel"]
+anchor_left = 0.5
+anchor_right = 0.75
+anchor_bottom = 0.2
+margin_right = -0.0400238
+margin_bottom = -0.0559998
+text = "GI:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="GIEnable" type="CheckButton" parent="Menu/Control/LightPanel"]
+anchor_left = 0.78
+anchor_right = 0.98
+anchor_bottom = 0.2
+margin_left = 0.0536041
+margin_right = 0.0536194
+margin_bottom = -0.0503998
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LabelX" type="Label" parent="Menu/Control/LightPanel"]
+anchor_top = 0.25
+anchor_right = 0.28
+anchor_bottom = 0.4
+margin_bottom = -0.0307999
+text = "X:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LabelY" type="Label" parent="Menu/Control/LightPanel"]
+anchor_top = 0.4
+anchor_right = 0.28
+anchor_bottom = 0.55
+margin_right = -0.120003
+margin_bottom = 0.00309753
+text = "Y:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LabelZ" type="Label" parent="Menu/Control/LightPanel"]
+anchor_top = 0.55
+anchor_right = 0.28
+anchor_bottom = 0.7
+margin_right = -0.120003
+margin_bottom = 0.00309753
+text = "Z:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LabelSun" type="Label" parent="Menu/Control/LightPanel"]
+anchor_top = 0.7
+anchor_right = 0.28
+anchor_bottom = 0.85
+margin_right = -0.120003
+margin_bottom = 0.00309753
+text = "Sun:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LabelGI" type="Label" parent="Menu/Control/LightPanel"]
+anchor_top = 0.85
+anchor_right = 0.28
+anchor_bottom = 1.0
+margin_left = 2.47955e-05
+margin_right = -0.11998
+margin_bottom = 0.00309753
+text = "GI:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="XSlider" type="HSlider" parent="Menu/Control/LightPanel"]
+anchor_left = 0.3
+anchor_top = 0.25
+anchor_right = 0.98
+anchor_bottom = 0.4
+margin_left = 0.0399971
+margin_top = 0.0631676
+margin_right = 0.159973
+margin_bottom = -0.0387726
+max_value = 360.0
+step = 15.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YSlider" type="HSlider" parent="Menu/Control/LightPanel"]
+anchor_left = 0.3
+anchor_top = 0.4
+anchor_right = 0.98
+anchor_bottom = 0.55
+margin_left = 0.0399971
+margin_top = 0.0631676
+margin_right = 0.159973
+margin_bottom = -0.0387726
+max_value = 360.0
+step = 15.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZSlider" type="HSlider" parent="Menu/Control/LightPanel"]
+anchor_left = 0.3
+anchor_top = 0.55
+anchor_right = 0.98
+anchor_bottom = 0.7
+margin_left = 0.0399971
+margin_top = 0.0631676
+margin_right = 0.159973
+margin_bottom = -0.0387726
+max_value = 360.0
+step = 15.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SunSlider" type="HSlider" parent="Menu/Control/LightPanel"]
+anchor_left = 0.3
+anchor_top = 0.7
+anchor_right = 0.98
+anchor_bottom = 0.85
+margin_left = 0.0399933
+margin_top = -0.382294
+margin_right = 0.159973
+margin_bottom = -0.484238
+max_value = 100.0
+step = 5.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GISlider" type="HSlider" parent="Menu/Control/LightPanel"]
+anchor_left = 0.3
+anchor_top = 0.85
+anchor_right = 0.98
+anchor_bottom = 1.0
+margin_left = 0.0399971
+margin_top = 0.0631676
+margin_right = 0.159973
+margin_bottom = -0.0387726
+max_value = 100.0
+step = 5.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Menu/Control/LightPanel"]
+
 [node name="MissingLevelNameDialog" type="AcceptDialog" parent="Menu/Control"]
 margin_right = 231.0
 margin_bottom = 56.0
@@ -650,6 +871,13 @@ dialog_text = "Concentration by Kevin MacLeod
 Link: https://incompetech.filmmusic.io/song/3536-concentration
 License: http://creativecommons.org/licenses/by/4.0/"
 
+[node name="PlayModeError" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 1400.0
+margin_bottom = 72.0
+popup_exclusive = true
+window_title = "Error: Could Not Find \"Player Start\" Entity"
+dialog_text = "You must have one \"Player Spawn\" entity placed to enter play mode. If two or more \"Player Spawn\" entities are placed, it will use the first one placed as the player spawn location."
+
 [node name="Properties" type="Popup" parent="Menu/Control"]
 anchor_left = 0.4
 anchor_top = 0.3
@@ -677,42 +905,39 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Music" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_right = 376.0
-margin_bottom = 40.0
+margin_right = 312.0
+margin_bottom = 36.0
 
 [node name="Music" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Music"]
-margin_left = 129.0
-margin_top = 2.0
-margin_right = 247.0
-margin_bottom = 38.0
+margin_left = 97.0
+margin_right = 215.0
+margin_bottom = 36.0
 size_flags_horizontal = 0
 pressed = true
 text = "Music:"
 
 [node name="Sound" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_top = 44.0
-margin_right = 376.0
-margin_bottom = 84.0
+margin_top = 40.0
+margin_right = 312.0
+margin_bottom = 76.0
 
 [node name="Sound" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Sound"]
-margin_left = 95.0
-margin_top = 2.0
-margin_right = 281.0
-margin_bottom = 38.0
+margin_left = 63.0
+margin_right = 249.0
+margin_bottom = 36.0
 size_flags_horizontal = 0
 pressed = true
 text = "Sound Effects:"
 
 [node name="Mobile" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_top = 88.0
-margin_right = 376.0
-margin_bottom = 128.0
+margin_top = 80.0
+margin_right = 312.0
+margin_bottom = 116.0
 
 [node name="Mobile" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Mobile"]
-margin_left = 90.0
-margin_top = 2.0
-margin_right = 285.0
-margin_bottom = 38.0
+margin_left = 58.0
+margin_right = 253.0
+margin_bottom = 36.0
 size_flags_horizontal = 0
 pressed = true
 text = "Mobile Controls:"
@@ -731,9 +956,9 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="Close" type="Button" parent="Menu/Control/Properties/Panel/HBoxContainer"]
-margin_left = 142.0
-margin_right = 242.0
-margin_bottom = 43.0
+margin_left = 110.0
+margin_right = 210.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 100, 0 )
 text = "Close"
 
@@ -797,8 +1022,10 @@ script = ExtResource( 41 )
 [connection signal="button_up" from="Menu/TouchControls/Look/Left" to="Menu/TouchControls" method="_on_LookLeft_button_up"]
 [connection signal="button_down" from="Menu/TouchControls/Look/Right" to="Menu/TouchControls" method="_on_LookRight_button_down"]
 [connection signal="button_up" from="Menu/TouchControls/Look/Right" to="Menu/TouchControls" method="_on_LookRight_button_up"]
+[connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Play" to="Menu/Control/TopBar/CenterMenu/Play" method="_on_toggled"]
 [connection signal="text_changed" from="Menu/Control/TopBar/CenterMenu/LevelName" to="Menu/Control/TopBar/CenterMenu/LevelName" method="_on_text_changed"]
 [connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Mobile" to="Menu/TouchControls" method="_on_Mobile_toggled"]
+[connection signal="toggled" from="Menu/Control/LightingButton" to="Menu/Control/LightingButton" method="_on_toggled"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Select" to="Scene/Room" method="_on_Select_pressed"]
@@ -816,6 +1043,13 @@ script = ExtResource( 41 )
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
+[connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
+[connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]
+[connection signal="value_changed" from="Menu/Control/LightPanel/XSlider" to="Menu/Control/LightPanel" method="_on_XSlider_value_changed"]
+[connection signal="value_changed" from="Menu/Control/LightPanel/YSlider" to="Menu/Control/LightPanel" method="_on_YSlider_value_changed"]
+[connection signal="value_changed" from="Menu/Control/LightPanel/ZSlider" to="Menu/Control/LightPanel" method="_on_ZSlider_value_changed"]
+[connection signal="value_changed" from="Menu/Control/LightPanel/SunSlider" to="Menu/Control/LightPanel" method="_on_SunSlider_value_changed"]
+[connection signal="value_changed" from="Menu/Control/LightPanel/GISlider" to="Menu/Control/LightPanel" method="_on_GISlider_value_changed"]
 [connection signal="about_to_show" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_about_to_show"]
 [connection signal="file_selected" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_file_selected"]
 [connection signal="about_to_show" from="Menu/Control/TextureFileSelect" to="Menu/Control/TextureFileSelect" method="_on_about_to_show"]
