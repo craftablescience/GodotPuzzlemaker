@@ -18,8 +18,14 @@ func _ready() -> void:
 	}
 	self.children["builtin"]["parent"].set_text(0, "Built-In")
 	
+	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "Player Spawn", Globals.PLAYER_START, preload("res://scenes/entities/PlayerStart.scn"))
+	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "Coin", "CoinEntity", preload("res://scenes/entities/CoinEntity.scn"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Table", "TableEntity", preload("res://scenes/entities/TableEntity.scn"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Enemy", "EnemyEntity", preload("res://scenes/entities/EnemyEntity.scn"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)
 

@@ -2,6 +2,7 @@ extends Spatial
 
 
 var cubes: Array
+var cubeFacesSelected: Array
 var ents: Array
 var toolSelected: int
 var CubeScene: PackedScene
@@ -19,6 +20,7 @@ signal shrink_sidebar
 
 func _ready():
 	self.cubes = []
+	self.cubeFacesSelected = []
 	self.ents = []
 	self.CubeScene = preload("res://scenes/editor/Cube.tscn")
 	self.toolSelected = Globals.FIRSTTOOL
@@ -30,9 +32,10 @@ func _ready():
 	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
 	self.entityNode = get_tree().get_nodes_in_group("ENTITYLIST")[0]
 	
-	self.add_cube(Vector3(), "builtin:white")
+	# warning-ignore:return_value_discarded
+	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if len(self.ents) > 0:
 		var i: int = 0
 		for ent in ents:
@@ -41,27 +44,108 @@ func _process(delta: float) -> void:
 			else:
 				self.ents[i]["node"].name = "E" + str(i)
 				i += 1
-
+	if Input.is_action_just_pressed("editor_add_cube"):
+		for cubeid in range(len(cubeFacesSelected)):
+			var planes = self.cubeFacesSelected[cubeid].keys()
+			self.cubes[cubeid].set_all_face_highlight(false)
+			self.cubeFacesSelected[cubeid] = {}
+			for plane in planes:
+				var cube = self.add_cube_if_empty(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
+				cube.set_face_highlight(plane, true)
+				self.cubeFacesSelected[cube.get_id()][plane] = true
+	elif Input.is_action_just_pressed("editor_subtract_cube"):
+		var cubeid: int = 0
+		while cubeid < len(self.cubes):
+			var planes = self.cubeFacesSelected[cubeid].keys()
+			if len(planes) > 0:
+				for plane in planes:
+					var cube = self.get_cube_at_grid_pos(self.get_opposite_placed_cube_pos(cubeid, plane))
+					if cube != null:
+						cube.set_face_highlight(plane, true)
+						self.cubeFacesSelected[cube.get_id()][plane] = true
+				if len(self.cubes) > 1:
+					self.remove_cube(cubeid)
+				else:
+					cubeid += 1
+			else:
+				cubeid += 1
+			#for plane in planes:
+			#	cube.set_face_highlight(plane, true)
+			#	self.cubeFacesSelected[cube.get_id()][plane] = true
 
 func add_cube(gridPos: Vector3, type: String) -> Spatial:
 	var cube = self.CubeScene.instance()
 	self.add_child(cube)
 	self.cubes.append(cube)
+	self.cubeFacesSelected.append({})
 	cube.__init(gridPos, type, len(self.cubes) - 1)
+	self.update_surrounding_cull_faces(cube.get_id(), gridPos)
 	return cube
 
+func add_cube_if_empty(gridPos: Vector3, type: String) -> Spatial:
+	# TODO: add cube only if unoccupied, otherwise there may be several cubes in one position
+	if (self.get_cube_at_grid_pos(gridPos) == null):
+		return self.add_cube(gridPos, type)
+	return null
+
+func remove_cube(cubeid: int) -> void:
+	if len(self.cubes) > 1:
+		self.update_empty_surrounding_cull_faces(self.cubes[cubeid].get_position_grid())
+		self.remove_child(self.cubes[cubeid])
+		self.cubes[cubeid].queue_free()
+		self.cubes[cubeid] = null
+		self.cubeFacesSelected[cubeid] = {}
+		self.remove_null_cubes()
+
+func update_surrounding_cull_faces(cubeid: int, gridPos: Vector3) -> void:
+	var cube = self.cubes[cubeid]
+	var XM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XM))
+	var XP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XP))
+	var YM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.YM))
+	var YP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.YP))
+	var ZM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.ZM))
+	var ZP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.ZP))
+	if XM != null:
+		XM.set_disabled(Globals.PLANEID.XP, true)
+		cube.set_disabled(Globals.PLANEID.XM, true)
+	if XP != null:
+		XP.set_disabled(Globals.PLANEID.XM, true)
+		cube.set_disabled(Globals.PLANEID.XP, true)
+	if YM != null:
+		YM.set_disabled(Globals.PLANEID.YP, true)
+		cube.set_disabled(Globals.PLANEID.YM, true)
+	if YP != null:
+		YP.set_disabled(Globals.PLANEID.YM, true)
+		cube.set_disabled(Globals.PLANEID.YP, true)
+	if ZM != null:
+		ZM.set_disabled(Globals.PLANEID.ZP, true)
+		cube.set_disabled(Globals.PLANEID.ZM, true)
+	if ZP != null:
+		ZP.set_disabled(Globals.PLANEID.ZM, true)
+		cube.set_disabled(Globals.PLANEID.ZP, true)
+
+func update_empty_surrounding_cull_faces(gridPos: Vector3) -> void:
+	var XM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XM))
+	var XP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XP))
+	var YM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.YM))
+	var YP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.YP))
+	var ZM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.ZM))
+	var ZP = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.ZP))
+	if XM != null:
+		XM.set_disabled(Globals.PLANEID.XP, false)
+	if XP != null:
+		XP.set_disabled(Globals.PLANEID.XM, false)
+	if YM != null:
+		YM.set_disabled(Globals.PLANEID.YP, false)
+	if YP != null:
+		YP.set_disabled(Globals.PLANEID.YM, false)
+	if ZM != null:
+		ZM.set_disabled(Globals.PLANEID.ZP, false)
+	if ZP != null:
+		ZP.set_disabled(Globals.PLANEID.ZM, false)
+
 func add_entity(pos: Vector3) -> void:
-	var ent: Node = self.entityNode.ENTITIES[self.entityNode.get_selected_entity()].instance()
-	ent.name = "E" + str(len(self.ents))
-	ent.translate(pos)
-	self.add_child(ent)
-	self.ents.append({
-		"node": ent,
-		"ID": self.entityNode.get_selected_entity(),
-		"posx": ent.global_transform.origin.x,
-		"posy": ent.global_transform.origin.y,
-		"posz": ent.global_transform.origin.z
-	})
+	self.add_entity_from_id(pos, self.entityNode.get_selected_entity())
 
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = self.entityNode.ENTITIES[ID].instance()
@@ -99,6 +183,8 @@ func unhighlight_all() -> void:
 	for cube in self.cubes:
 		if cube != null:
 			cube.set_all_face_highlight(false)
+	for i in range(0, len(self.cubes)):
+		self.cubeFacesSelected[i] = {}
 	self.actionGizmo.hide()
 
 func set_actionGizmo_pos(cubeid: int, plane: int):
@@ -121,6 +207,12 @@ func set_actionGizmo_pos(cubeid: int, plane: int):
 		_:
 			print("Room.set_actionGizmo_pos says how?")
 	self.actionGizmo.translation = cubePos
+
+func get_cube_at_grid_pos(gridPos: Vector3):
+	for cube in self.cubes:
+		if cube.get_position_grid() == gridPos:
+			return cube
+	return null
 
 func get_placed_ent_pos(cubeid: int, plane: int) -> Vector3:
 	var p: Vector3 = self.cubes[cubeid].get_position_grid()
@@ -149,12 +241,32 @@ func get_placed_cube_pos(cubeid: int, plane: int) -> Vector3:
 			print("Room.get_placed_cube_pos says how?")
 	return cubePosGrid
 
+func get_opposite_placed_cube_pos(cubeid: int, plane: int) -> Vector3:
+	var cubePosGrid: Vector3 = self.cubes[cubeid].get_position_grid()
+	match plane:
+		Globals.PLANEID.XP:
+			cubePosGrid.x -= 1
+		Globals.PLANEID.XM:
+			cubePosGrid.x += 1
+		Globals.PLANEID.YP:
+			cubePosGrid.y -= 1
+		Globals.PLANEID.YM:
+			cubePosGrid.y += 1
+		Globals.PLANEID.ZP:
+			cubePosGrid.z -= 1
+		Globals.PLANEID.ZM:
+			cubePosGrid.z += 1
+		_:
+			print("Room.get_opposite_placed_cube_pos says how?")
+	return cubePosGrid
+
 func remove_null_cubes() -> void:
 	var i: int = 0
 	while i < len(self.cubes):
 		var cube: Spatial = self.cubes[i]
 		if cube == null:
 			self.cubes.remove(i)
+			self.cubeFacesSelected.remove(i)
 		else:
 			self.cubes[i].set_id(i)
 			i += 1
@@ -185,6 +297,7 @@ func serialize() -> String:
 					ID = ary[1]
 				if !(ID in storedTextureIds):
 					storedTextureIds.append(ID)
+					# warning-ignore:return_value_discarded
 					image.open("user://.cache/" + ID, image.READ)
 					customTex = Marshalls.raw_to_base64(image.get_buffer(image.get_len()))
 					image.close()
@@ -195,6 +308,7 @@ func serialize() -> String:
 	for ent in self.ents:
 		if ent["ID"].split(":")[0] != "builtin" and !(ent["ID"] in storedEntIDs):
 			var scn: File = File.new()
+			# warning-ignore:return_value_discarded
 			scn.open("user://.cache/" + ent["ID"].split(":")[-1], scn.READ)
 			savedata += "{\"E_" + ent["ID"] + "\":\"" + Marshalls.raw_to_base64(scn.get_buffer(scn.get_len())) + "\"}\n"
 			storedEntIDs.append(ent["ID"])
@@ -249,11 +363,12 @@ func clear() -> void:
 		self.cubes[i] = null
 	self.remove_null_cubes()
 	self.clear_entities()
+	# warning-ignore:return_value_discarded
 	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
 	get_parent().get_parent().get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
 
-func save(levelName: String) -> void:
-	self.levelName = levelName
+func save(levelname: String) -> void:
+	self.levelName = levelname
 	var save = File.new()
 	self.currentSave = ""
 	save.open("user://" + self.levelName + ".gpz", File.WRITE)
@@ -269,13 +384,14 @@ func load_texture(data: String, ID: String) -> void:
 		i.load_jpg_from_buffer(Marshalls.base64_to_raw(data))
 	elif ID.split(".")[-1] == "png":
 		i.load_png_from_buffer(Marshalls.base64_to_raw(data))
+	# warning-ignore:return_value_discarded
 	cache.open("user://.cache/" + ID, cache.WRITE)
 	cache.store_buffer(Marshalls.base64_to_raw(data))
 	cache.close()
 	i.resize(64, 64, Image.INTERPOLATE_NEAREST)
 	img.create_from_image(i, 1)
-	if !(Globals.CUSTOMTEXTUREID + ":" + ID in self.textureNode.TEXTURES):
-		self.textureNode.add_item(Globals.CUSTOMTEXTUREID,
+	if !(Globals.CUSTOMID + ":" + ID in self.textureNode.TEXTURES):
+		self.textureNode.add_item(Globals.CUSTOMID,
 		ID.split("/")[-1].split(".")[0], ID,
 		img)
 
@@ -305,6 +421,7 @@ func load_save(path: String) -> void:
 					elif data.keys()[0].substr(0,2) == "E_":
 						if !(data.keys()[0].substr(2) in self.entityNode.ENTITIES.keys()):
 							var efile: File = File.new()
+							# warning-ignore:return_value_discarded
 							efile.open("user://.cache/" + data.keys()[0].split(":")[-1], efile.WRITE)
 							efile.store_buffer(Marshalls.base64_to_raw(data[data.keys()[0]]))
 							efile.close()
@@ -366,27 +483,27 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 				self.unhighlight_all()
 				self.cubes[cubeid].set_face_highlight(plane, highlight)
 				if highlight:
-					self.set_actionGizmo_pos(cubeid, plane)
-					self.actionGizmo.show()
+					self.cubeFacesSelected[cubeid][plane] = true
+					#self.set_actionGizmo_pos(cubeid, plane)
+					#self.actionGizmo.show()
 			elif key == BUTTON_RIGHT:
 				var highlighted: bool = self.cubes[cubeid].get_face_highlight(plane)
 				if !highlighted:
 					self.cubes[cubeid].set_face_highlight(plane, true)
-					self.actionGizmo.show()
-					self.set_actionGizmo_pos(cubeid, plane)
+					self.cubeFacesSelected[cubeid][plane] = true
+					#self.actionGizmo.show()
+					#self.set_actionGizmo_pos(cubeid, plane)
 				else:
 					self.cubes[cubeid].set_face_highlight(plane, false)
-					self.actionGizmo.hide()
+					self.cubeFacesSelected[cubeid].erase(plane)
+					#self.actionGizmo.hide()
 		
 		Globals.TOOL.VOXEL:
 			if key == BUTTON_LEFT:
+				# warning-ignore:return_value_discarded
 				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
 			elif key == BUTTON_RIGHT:
-				if len(self.cubes) > 1:
-					self.remove_child(self.cubes[cubeid])
-					self.cubes[cubeid].queue_free()
-					self.cubes[cubeid] = null
-					self.remove_null_cubes()
+				self.remove_cube(cubeid)
 		
 		Globals.TOOL.TEXTURE:
 			var tex: String = self.textureNode.get_selected_texture()
@@ -422,20 +539,11 @@ func _on_PlaceEntity_pressed() -> void:
 	self.emit_signal("grow_sidebar")
 
 
-func _on_ArrowX_input_event(camera, event, click_position, click_normal, shape_idx):
+func _on_ArrowX_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
 	pass
 
-func _on_ArrowY_input_event(camera, event, click_position, click_normal, shape_idx):
+func _on_ArrowY_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
 	pass
 
-func _on_ArrowZ_input_event(camera, event, click_position, click_normal, shape_idx):
-	pass
-
-func _on_MoveXY_input_event(camera, event, click_position, click_normal, shape_idx):
-	pass
-
-func _on_MoveYZ_input_event(camera, event, click_position, click_normal, shape_idx):
-	pass
-
-func _on_MoveXZ_input_event(camera, event, click_position, click_normal, shape_idx):
+func _on_ArrowZ_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
 	pass

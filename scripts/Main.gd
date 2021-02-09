@@ -8,20 +8,10 @@ func _ready() -> void:
 	else:
 		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide()
 	
-	if OS.get_name() == "Windows" or OS.get_name() == "X11":
-		var fil = File.new()
-		fil.open("res://discordid.txt", fil.READ)
-		var id: String = fil.get_as_text()
-		fil.close()
-		Globals.DISCORD.start(id)
-		Globals.DISCORD.large_image_key = "largevoxel"
-		Globals.DISCORD.start_time = OS.get_unix_time()
-		Globals.DISCORD.details = "Loading..."
-		Globals.DISCORD.update()
-	
 	var settings: File = File.new()
 	var ary: Array = []
 	if settings.file_exists("user://settings.cfg"):
+		# warning-ignore:return_value_discarded
 		settings.open("user://settings.cfg", settings.READ)
 		for line in settings.get_as_text().split("\n"):
 			ary.append(parse_json(line))

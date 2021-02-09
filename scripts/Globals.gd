@@ -33,9 +33,6 @@ const FILESETTINGSFORMAT: int = 16
 
 const TEXTUREFALLBACK: String = "builtin:white"
 
-var Discord = preload("res://gdnative/libdiscord.gdns")
-var DISCORD = Discord.new()
-
 var PLAY_MODE: bool = false
 
 const CUSTOMID: String = "usercustom"
@@ -63,3 +60,20 @@ static func LIST_FILES_IN_DIR(path) -> Array:
 
 	dir.list_dir_end()
 	return files
+
+static func GET_OFFSET_ON_AXIS(pos: Vector3, direction: int):
+	match (direction):
+		PLANEID.XM:
+			return Vector3(pos.x - 1, pos.y, pos.z)
+		PLANEID.XP:
+			return Vector3(pos.x + 1, pos.y, pos.z)
+		PLANEID.YM:
+			return Vector3(pos.x, pos.y - 1, pos.z)
+		PLANEID.YP:
+			return Vector3(pos.x, pos.y + 1, pos.z)
+		PLANEID.ZM:
+			return Vector3(pos.x, pos.y, pos.z - 1)
+		PLANEID.ZP:
+			return Vector3(pos.x, pos.y, pos.z + 1)
+		_:
+			return null

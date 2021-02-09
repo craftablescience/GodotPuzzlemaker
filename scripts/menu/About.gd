@@ -10,6 +10,7 @@ func _ready() -> void:
 	if OS.get_name() != "HTML5":
 		popup.add_item("Background Music")
 	
+	# warning-ignore:return_value_discarded
 	popup.connect("id_pressed", self, "_on_item_pressed")
 
 

@@ -15,10 +15,12 @@ func _ready() -> void:
 	#self.popup.add_item("Export...")
 	if (OS.get_name() != "HTML5"):
 		self.popup.add_item("Exit")
+	# warning-ignore:return_value_discarded
 	self.popup.connect("id_pressed", self, "_on_item_pressed")
 	
 	self.levelName = get_parent().get_parent().get_parent().get_node("TopBar/CenterMenu/LevelName")
 	
+	# warning-ignore:return_value_discarded
 	self.connect("save_level", get_parent().get_parent().get_parent().get_parent().get_parent().get_node("Scene/Room"), "save")
 
 func _on_item_pressed(id : int) -> void:

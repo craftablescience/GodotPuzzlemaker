@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/editor/Room.gd" type="Script" id=1]
 [ext_resource path="res://materials/action_gizmo_arrowx.material" type="Material" id=2]
@@ -9,9 +9,6 @@
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.2, 1.4, 0.2 )
-
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.375, 0.375, 0.025 )
 
 [node name="Room" type="Spatial"]
 script = ExtResource( 1 )
@@ -88,42 +85,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/ArrowZ/ArrowZ_Collider"]
 shape = SubResource( 1 )
 
-[node name="MoveXY" type="CSGBox" parent="ActionGizmo"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0 )
-width = 0.75
-height = 0.75
-depth = 0.05
-material = ExtResource( 2 )
-
-[node name="MoveXY_Collider" type="Area" parent="ActionGizmo/MoveXY"]
-
-[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveXY/MoveXY_Collider"]
-shape = SubResource( 2 )
-
-[node name="MoveYZ" type="CSGBox" parent="ActionGizmo"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1, 1 )
-width = 0.75
-height = 0.75
-depth = 0.05
-material = ExtResource( 4 )
-
-[node name="MoveYZ_Collider" type="Area" parent="ActionGizmo/MoveYZ"]
-
-[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveYZ/MoveYZ_Collider"]
-shape = SubResource( 2 )
-
-[node name="MoveXZ" type="CSGBox" parent="ActionGizmo"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 1, 0, 1 )
-width = 0.75
-height = 0.75
-depth = 0.05
-material = ExtResource( 5 )
-
-[node name="MoveXZ_Collider" type="Area" parent="ActionGizmo/MoveXZ"]
-
-[node name="CollisionShape" type="CollisionShape" parent="ActionGizmo/MoveXZ/MoveXZ_Collider"]
-shape = SubResource( 2 )
-
 [node name="Sun" type="DirectionalLight" parent="."]
 light_color = Color( 1, 1, 0.909804, 1 )
 light_energy = 0.5
@@ -135,6 +96,3 @@ directional_shadow_blend_splits = true
 [connection signal="input_event" from="ActionGizmo/ArrowX/ArrowX_Collider" to="." method="_on_ArrowX_input_event"]
 [connection signal="input_event" from="ActionGizmo/ArrowY/ArrowY_Collider" to="." method="_on_ArrowY_input_event"]
 [connection signal="input_event" from="ActionGizmo/ArrowZ/ArrowZ_Collider" to="." method="_on_ArrowZ_input_event"]
-[connection signal="input_event" from="ActionGizmo/MoveXY/MoveXY_Collider" to="." method="_on_MoveXY_input_event"]
-[connection signal="input_event" from="ActionGizmo/MoveYZ/MoveYZ_Collider" to="." method="_on_MoveYZ_input_event"]
-[connection signal="input_event" from="ActionGizmo/MoveXZ/MoveXZ_Collider" to="." method="_on_MoveXZ_input_event"]

@@ -23,7 +23,6 @@ func _on_toggled(button_pressed: bool) -> void:
 		else:
 			self.text = " Stop"
 			Globals.PLAY_MODE = true
-			self.room.add_child(player, true)
 			self.player.global_transform.origin.x = resp[1]
 			self.player.global_transform.origin.y = resp[2]
 			self.player.global_transform.origin.z = resp[3]

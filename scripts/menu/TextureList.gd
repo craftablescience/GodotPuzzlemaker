@@ -18,7 +18,9 @@ func _ready() -> void:
 	}
 	self.children["builtin"]["parent"].set_text(0, "Built-In")
 	
+	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "White", "white", preload("res://images/editor/white.png"))
+	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "Black", "black", preload("res://images/editor/black.png"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)

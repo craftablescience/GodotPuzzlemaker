@@ -29,7 +29,7 @@ func _ready() -> void:
 	self.lup  = false
 	self.ldwn = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if self.visible:
 		if self.fwd:
 			self.create_key_event(KEY_W)

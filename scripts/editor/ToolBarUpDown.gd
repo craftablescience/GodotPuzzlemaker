@@ -16,11 +16,17 @@ func _ready() -> void:
 
 
 func _on_grow() -> void:
+	# warning-ignore:return_value_discarded
 	tween.interpolate_property(self, "anchor_top", null, self.anchorUp, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+	# warning-ignore:return_value_discarded
 	tween.interpolate_property(self, "anchor_bottom", null, self.anchorDown, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+	# warning-ignore:return_value_discarded
 	tween.start()
 
 func _on_shrink() -> void:
+	# warning-ignore:return_value_discarded
 	tween.interpolate_property(self, "anchor_top", null, self.anchorUpHidden, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+	# warning-ignore:return_value_discarded
 	tween.interpolate_property(self, "anchor_bottom", null, self.anchorDownHidden, 0.25, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+	# warning-ignore:return_value_discarded
 	tween.start()

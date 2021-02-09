@@ -18,6 +18,7 @@ func __init() -> void:
 
 func save() -> void:
 	var fil: File = File.new()
+	# warning-ignore:return_value_discarded
 	fil.open("user://settings.cfg", fil.WRITE)
 	var out: String = ""
 	out += "{"  + "\"VERSION\":"    + str(Globals.FILESETTINGSFORMAT)                                          + "}"

@@ -89,8 +89,8 @@ func load_textures() -> void:
 func get_id() -> int:
 	return int(self.name)
 
-func set_id(cubeid: int) -> void:
-	self.name = str(cubeid)
+func set_id(cubeID: int) -> void:
+	self.name = str(cubeID)
 
 func get_disabled(plane: int) -> bool:
 	return self.planes[plane]["disabled"]
@@ -119,6 +119,7 @@ func get_plane(planeid: int):
 		_:
 			print("Room.get_plane says how?")
 
+# warning-ignore:shadowed_variable
 func set_data(planes: Dictionary) -> void:
 	for i in range(6):
 		self.set_type(i, planes[i]["texture"])

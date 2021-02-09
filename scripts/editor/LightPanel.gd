@@ -81,5 +81,5 @@ func _on_SunSlider_value_changed(_value: float) -> void:
 func _on_SunEnable_toggled(_button_pressed: bool) -> void:
 	self.update()
 
-func _on_GIEnable_toggled(button_pressed: bool) -> void:
+func _on_GIEnable_toggled(_button_pressed: bool) -> void:
 	self.update()

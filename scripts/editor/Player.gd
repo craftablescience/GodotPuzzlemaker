@@ -15,6 +15,7 @@ func _ready() -> void:
 	self.gravity = -10.0
 	self.movement = Vector3()
 
+# warning-ignore:shadowed_variable
 func _set_active(active: bool) -> void:
 	self.active = active
 	if active:
@@ -56,6 +57,7 @@ func _physics_process(delta: float) -> void:
 		self.movement.y = 4
 		snap = Vector3()
 	
+	# warning-ignore:return_value_discarded
 	self.move_and_slide_with_snap(transform.basis.xform(movement) * 20, snap, Vector3(0,1,0))
 
 func _input(event: InputEvent) -> void:

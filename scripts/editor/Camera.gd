@@ -59,7 +59,7 @@ func _process(_delta) -> void:
 		if active_toggle or active_button:
 			pivot.translate(self.get_movement())
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if !Globals.PLAY_MODE:
 		# Activate movement?
 		if Input.is_action_just_pressed("editor_camera_button"):

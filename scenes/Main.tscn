@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -40,7 +40,6 @@
 [ext_resource path="res://scripts/menu/LevelName.gd" type="Script" id=38]
 [ext_resource path="res://scripts/menu/Add.gd" type="Script" id=39]
 [ext_resource path="res://scripts/menu/TextureFileSelect.gd" type="Script" id=40]
-[ext_resource path="res://scripts/DiscordTimer.gd" type="Script" id=41]
 [ext_resource path="res://scripts/menu/EntityFileSelect.gd" type="Script" id=42]
 [ext_resource path="res://scripts/editor/LightPanel.gd" type="Script" id=43]
 [ext_resource path="res://scripts/menu/LightingButton.gd" type="Script" id=44]
@@ -268,7 +267,6 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -290,7 +288,7 @@ __meta__ = {
 
 [node name="File" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_right = 100.0
-margin_bottom = 58.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 100, 0 )
 mouse_default_cursor_shape = 2
 size_flags_vertical = 3
@@ -302,7 +300,7 @@ script = ExtResource( 4 )
 [node name="Edit" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_left = 104.0
 margin_right = 204.0
-margin_bottom = 58.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_vertical = 3
 text = "Edit"
@@ -313,7 +311,7 @@ script = ExtResource( 5 )
 [node name="About" type="MenuButton" parent="Menu/Control/TopBar/LeftMenu"]
 margin_left = 208.0
 margin_right = 308.0
-margin_bottom = 58.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_vertical = 3
 text = "About"
@@ -333,7 +331,7 @@ __meta__ = {
 
 [node name="Play" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
 margin_right = 150.0
-margin_bottom = 58.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
 toggle_mode = true
@@ -345,8 +343,8 @@ script = ExtResource( 45 )
 
 [node name="LevelName" type="LineEdit" parent="Menu/Control/TopBar/CenterMenu"]
 margin_left = 166.0
-margin_right = 474.0
-margin_bottom = 58.0
+margin_right = 602.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 max_length = 32
@@ -358,9 +356,9 @@ caret_blink = true
 script = ExtResource( 38 )
 
 [node name="Mobile" type="Button" parent="Menu/Control/TopBar/CenterMenu"]
-margin_left = 490.0
-margin_right = 640.0
-margin_bottom = 58.0
+margin_left = 618.0
+margin_right = 768.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
 toggle_mode = true
@@ -386,13 +384,14 @@ __meta__ = {
 }
 
 [node name="ToolBar" type="Panel" parent="Menu/Control"]
-anchor_left = 0.9
+anchor_left = 0.899771
 anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.6
+anchor_right = 0.999896
+anchor_bottom = 0.68
 margin_left = -0.560059
 margin_right = 0.199951
 margin_bottom = -0.240051
+theme = ExtResource( 2 )
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -413,35 +412,34 @@ __meta__ = {
 }
 
 [node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-visible = false
-margin_top = 47.0
+margin_top = 52.0
 margin_right = 173.0
-margin_bottom = 115.0
+margin_bottom = 120.0
 text = "Select"
 icon = ExtResource( 11 )
 clip_text = true
 align = 0
 
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 22.0
-margin_right = 144.0
-margin_bottom = 90.0
+margin_top = 124.0
+margin_right = 173.0
+margin_bottom = 192.0
 text = "Build"
 icon = ExtResource( 10 )
 align = 0
 
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 94.0
-margin_right = 144.0
-margin_bottom = 162.0
+margin_top = 196.0
+margin_right = 173.0
+margin_bottom = 264.0
 text = "Texture"
 icon = ExtResource( 13 )
 align = 0
 
 [node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 166.0
-margin_right = 144.0
-margin_bottom = 234.0
+margin_top = 268.0
+margin_right = 173.0
+margin_bottom = 336.0
 text = "Entity"
 icon = ExtResource( 23 )
 align = 0
@@ -484,12 +482,11 @@ __meta__ = {
 }
 
 [node name="Add" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
-margin_left = 288.0
-margin_right = 320.0
-margin_bottom = 27.0
+margin_left = 352.0
+margin_right = 384.0
+margin_bottom = 32.0
 rect_min_size = Vector2( 32, 0 )
 icon = ExtResource( 24 )
-flat = true
 expand_icon = true
 script = ExtResource( 39 )
 __meta__ = {
@@ -514,8 +511,8 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
-margin_right = 312.0
-margin_bottom = 231.0
+margin_right = 376.0
+margin_bottom = 279.6
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -530,8 +527,8 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
-margin_right = 312.0
-margin_bottom = 231.0
+margin_right = 376.0
+margin_bottom = 279.6
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
@@ -724,7 +721,6 @@ margin_left = 0.0399933
 margin_top = -0.382294
 margin_right = 0.159973
 margin_bottom = -0.484238
-max_value = 100.0
 step = 5.0
 tick_count = 5
 __meta__ = {
@@ -740,7 +736,6 @@ margin_left = 0.0399971
 margin_top = 0.0631676
 margin_right = 0.159973
 margin_bottom = -0.0387726
-max_value = 100.0
 step = 5.0
 tick_count = 5
 __meta__ = {
@@ -900,7 +895,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 40.0
+margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -909,9 +904,9 @@ margin_right = 312.0
 margin_bottom = 36.0
 
 [node name="Music" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Music"]
-margin_left = 97.0
-margin_right = 215.0
-margin_bottom = 36.0
+margin_left = 95.0
+margin_right = 217.0
+margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Music:"
@@ -922,9 +917,9 @@ margin_right = 312.0
 margin_bottom = 76.0
 
 [node name="Sound" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Sound"]
-margin_left = 63.0
-margin_right = 249.0
-margin_bottom = 36.0
+margin_left = 71.0
+margin_right = 240.0
+margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Sound Effects:"
@@ -935,9 +930,9 @@ margin_right = 312.0
 margin_bottom = 116.0
 
 [node name="Mobile" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Mobile"]
-margin_left = 58.0
-margin_right = 253.0
-margin_bottom = 36.0
+margin_left = 63.0
+margin_right = 248.0
+margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Mobile Controls:"
@@ -995,11 +990,6 @@ stream = ExtResource( 3 )
 ]]
 stream = ExtResource( 21 )
 script = ExtResource( 29 )
-
-[node name="DiscordTimer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-script = ExtResource( 41 )
 [connection signal="button_down" from="Menu/TouchControls/Up" to="Menu/TouchControls" method="_on_Up_button_down"]
 [connection signal="button_up" from="Menu/TouchControls/Up" to="Menu/TouchControls" method="_on_Up_button_up"]
 [connection signal="button_down" from="Menu/TouchControls/Down" to="Menu/TouchControls" method="_on_Down_button_down"]
@@ -1034,12 +1024,12 @@ script = ExtResource( 41 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
@@ -1066,4 +1056,3 @@ script = ExtResource( 41 )
 [connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]
 [connection signal="editor_camera_inactive" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_inactive"]
-[connection signal="timeout" from="DiscordTimer" to="DiscordTimer" method="_on_timeout"]

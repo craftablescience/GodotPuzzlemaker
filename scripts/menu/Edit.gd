@@ -26,12 +26,14 @@ func _ready() -> void:
 	#popup.add_child(advancedSubMenu)
 	#popup.add_submenu_item("Advanced", "advancedSubMenu")
 	
+	# warning-ignore:return_value_discarded
 	popup.connect("id_pressed", self, "_on_item_pressed")
 	#advancedSubMenu.connect("id_pressed", self, "_on_item_pressed_advanced")
+	# warning-ignore:return_value_discarded
 	themeSubMenu.connect("id_pressed", self, "_on_item_pressed_theme")
 
-func __init(themeID: int) -> void:
-	self.themeID = themeID
+func __init(themeid: int) -> void:
+	self.themeID = themeid
 	if self.themeID == Globals.THEME.LIGHT:
 		themeSubMenu.set_item_checked(0, true)
 		themeSubMenu.set_item_checked(1, false)
