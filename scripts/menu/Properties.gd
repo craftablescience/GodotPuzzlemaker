@@ -5,6 +5,19 @@ var musictgl: bool
 var soundtgl: bool
 var mobilebtn: bool
 var windowSize: int
+var keyboardType: int
+
+
+enum WINDOW_TYPE {
+	WINDOWED,
+	BORDERLESS,
+	FULLSCREEN
+}
+
+enum KEYBOARD_TYPE {
+	QWERTY,
+	AZERTY
+}
 
 
 func _ready() -> void:
@@ -16,6 +29,7 @@ func __init() -> void:
 	self.soundtgl = get_node("TabContainer/General/Sound/Sound").pressed
 	self.mobilebtn = get_node("TabContainer/General/Mobile/Mobile").pressed
 	self.windowSize = get_node("TabContainer/General/WindowSize/HBoxContainer/WindowSize").get_selected_id()
+	self.keyboardType = get_node("TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").get_selected_id()
 	self.update()
 
 func save() -> void:
@@ -29,6 +43,7 @@ func save() -> void:
 	out += "\n" + "{\"musictgl\":"  + str(self.musictgl).to_lower()                                            + "}"
 	out += "\n" + "{\"soundtgl\":"  + str(self.soundtgl).to_lower()                                            + "}"
 	out += "\n" + "{\"windowSize\":" + str(self.windowSize)                                                    + "}"
+	out += "\n" + "{\"keyboardType\":" + str(self.keyboardType)                                                + "}"
 	fil.store_string(out)
 	fil.close()
 
@@ -50,16 +65,35 @@ func update() -> void:
 		get_parent().get_node("TopBar/CenterMenu/Mobile").hide()
 	
 	match windowSize:
-		0:
+		WINDOW_TYPE.WINDOWED:
 			OS.window_borderless = false
 			OS.window_fullscreen = false
-		1:
+		WINDOW_TYPE.BORDERLESS:
 			OS.window_fullscreen = true
 			OS.window_borderless = true
 			OS.window_fullscreen = false
-		2:
+		WINDOW_TYPE.FULLSCREEN:
 			OS.window_fullscreen = true
+	
+	match keyboardType:
+		KEYBOARD_TYPE.QWERTY:
+			InputMap.load_from_globals()
+		KEYBOARD_TYPE.AZERTY:
+			var KEYQ: InputEventKey = InputEventKey.new()
+			KEYQ.set_scancode(KEY_A)
+			var KEYW: InputEventKey = InputEventKey.new()
+			KEYW.set_scancode(KEY_Z)
+			var KEYA: InputEventKey = InputEventKey.new()
+			KEYA.set_scancode(KEY_Q)
+			InputMap.action_erase_events("editor_camera_toggle")
+			InputMap.action_add_event("editor_camera_toggle", KEYQ)
+			InputMap.action_erase_events("editor_camera_forward")
+			InputMap.action_add_event("editor_camera_forward", KEYW)
+			InputMap.action_erase_events("editor_camera_left")
+			InputMap.action_add_event("editor_camera_left", KEYA)
 
+func get_keyboard_type() -> int:
+	return self.keyboardType
 
 func _on_Music_toggled(button_pressed: bool) -> void:
 	self.musictgl = button_pressed
@@ -78,5 +112,9 @@ func _on_Close_pressed() -> void:
 	self.save()
 
 func _on_WindowSize_item_selected(index: int) -> void:
-	windowSize = index
+	self.windowSize = index
+	self.update()
+
+func _on_KeyboardLayout_item_selected(index: int) -> void:
+	self.keyboardType = index
 	self.update()

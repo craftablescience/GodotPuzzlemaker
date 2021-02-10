@@ -86,7 +86,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			self.rotation_degrees.x = clamp(self.rotation_degrees.x, -90, 90)
 	elif event is InputEventKey:
 		if !event.scancode in [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT] and !Globals.PLAY_MODE:
-			pivot.translate(self.get_mobile_movement(event.scancode))
+			if get_parent().get_parent().get_parent().get_node("Menu/Control/Properties").get_keyboard_type() == 0:
+				pivot.translate(self.get_mobile_movement(event.scancode))
+			elif get_parent().get_parent().get_parent().get_node("Menu/Control/Properties").get_keyboard_type() == 1:
+				if event.scancode == KEY_Z:
+					pivot.translate(self.get_mobile_movement(KEY_W))
+				elif event.scancode == KEY_Q:
+					pivot.translate(self.get_mobile_movement(KEY_A))
+				elif !event.scancode in [KEY_A, KEY_W]:
+					pivot.translate(self.get_mobile_movement(event.scancode))
 		elif !Globals.PLAY_MODE:
 			var x: float = 0.0
 			var y: float = 0.0

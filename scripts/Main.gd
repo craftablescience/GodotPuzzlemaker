@@ -26,6 +26,7 @@ func _ready() -> void:
 			var soundSet: bool = false
 			var mobileSet: bool = false
 			var windowSize: bool = false
+			var keyboardType: bool = false
 			for line in ary:
 				if "musictgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = bool(line["musictgl"])
@@ -39,7 +40,9 @@ func _ready() -> void:
 				if "windowSize" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(int(line["windowSize"]))
 					windowSize = true
-					
+				if "keyboardType" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(int(line["keyboardType"]))
+					keyboardType = true
 			if !musicSet:
 				get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = true
 			if !soundSet:
@@ -48,6 +51,8 @@ func _ready() -> void:
 				get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = false
 			if !windowSize:
 				get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
+			if !keyboardType:
+				get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(0)
 	
 	if OS.get_name() == "HTML5":
 		get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)

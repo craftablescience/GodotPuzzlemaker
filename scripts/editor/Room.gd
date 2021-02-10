@@ -469,7 +469,7 @@ func load_save(path: String) -> void:
 
 func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 	var clik: AudioStreamPlayer = get_parent().get_parent().get_node("Click")
-	if !clik.get_disabled():
+	if !clik.get_disabled() and not drag:
 		clik.play()
 	
 	if Globals.PLAY_MODE:

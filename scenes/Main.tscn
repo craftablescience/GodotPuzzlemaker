@@ -940,25 +940,51 @@ text = "Mobile Controls:"
 [node name="WindowSize" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
 margin_top = 132.0
 margin_right = 376.0
-margin_bottom = 152.0
+margin_bottom = 162.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/Properties/TabContainer/General/WindowSize"]
 margin_left = 95.0
 margin_right = 280.0
-margin_bottom = 20.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
 
 [node name="Label" type="Label" parent="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer"]
-margin_top = 3.0
+margin_top = 8.0
 margin_right = 85.0
-margin_bottom = 17.0
+margin_bottom = 22.0
 text = "Window Size:"
 
 [node name="WindowSize" type="OptionButton" parent="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer"]
 margin_left = 89.0
 margin_right = 185.0
-margin_bottom = 20.0
+margin_bottom = 30.0
 text = "Windowed"
 items = [ "Windowed", null, false, 0, null, "Borderless Fullscreen", null, false, 1, null, "Fullscreen", null, false, 2, null ]
+selected = 0
+
+[node name="KeyboardLayout" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
+margin_top = 166.0
+margin_right = 376.0
+margin_bottom = 196.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/Properties/TabContainer/General/KeyboardLayout"]
+margin_left = 90.0
+margin_right = 285.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+
+[node name="Label" type="Label" parent="Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer"]
+margin_top = 8.0
+margin_right = 109.0
+margin_bottom = 22.0
+text = "Keyboard Layout:"
+
+[node name="KeyboardLayout" type="OptionButton" parent="Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer"]
+margin_left = 113.0
+margin_right = 195.0
+margin_bottom = 30.0
+text = "QWERTY"
+items = [ "QWERTY", null, false, 0, null, "AZERTY", null, false, 1, null ]
 selected = 0
 
 [node name="Panel" type="Panel" parent="Menu/Control/Properties"]
@@ -1054,8 +1080,8 @@ script = ExtResource( 29 )
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]
@@ -1076,6 +1102,7 @@ script = ExtResource( 29 )
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Sound/Sound" to="Menu/Control/Properties" method="_on_Sound_toggled"]
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Mobile/Mobile" to="Menu/Control/Properties" method="_on_Mobile_toggled"]
 [connection signal="item_selected" from="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize" to="Menu/Control/Properties" method="_on_WindowSize_item_selected"]
+[connection signal="item_selected" from="Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout" to="Menu/Control/Properties" method="_on_KeyboardLayout_item_selected"]
 [connection signal="pressed" from="Menu/Control/Properties/Panel/HBoxContainer/Close" to="Menu/Control/Properties" method="_on_Close_pressed"]
 [connection signal="grow_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_grow"]
 [connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
