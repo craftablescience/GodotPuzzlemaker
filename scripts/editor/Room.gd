@@ -467,7 +467,7 @@ func load_save(path: String) -> void:
 	save.close()
 	get_parent().get_parent().get_node("Menu/Control/TopBar/CenterMenu/LevelName").text = path.split("/")[-1].split(".")[0]
 
-func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
+func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 	var clik: AudioStreamPlayer = get_parent().get_parent().get_node("Click")
 	if !clik.get_disabled():
 		clik.play()
@@ -478,7 +478,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 	match self.toolSelected:
 		
 		Globals.TOOL.SELECT:
-			if key == BUTTON_LEFT:
+			if key == BUTTON_LEFT and not drag:
 				var highlight: bool = !self.cubes[cubeid].get_face_highlight(plane)
 				self.unhighlight_all()
 				self.cubes[cubeid].set_face_highlight(plane, highlight)
@@ -486,7 +486,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 					self.cubeFacesSelected[cubeid][plane] = true
 					#self.set_actionGizmo_pos(cubeid, plane)
 					#self.actionGizmo.show()
-			elif key == BUTTON_RIGHT:
+			elif key == BUTTON_RIGHT and not drag:
 				var highlighted: bool = self.cubes[cubeid].get_face_highlight(plane)
 				if !highlighted:
 					self.cubes[cubeid].set_face_highlight(plane, true)
@@ -497,18 +497,29 @@ func _on_face_selected(cubeid: int, plane: int, key: int) -> void:
 					self.cubes[cubeid].set_face_highlight(plane, false)
 					self.cubeFacesSelected[cubeid].erase(plane)
 					#self.actionGizmo.hide()
+			elif key == BUTTON_RIGHT and drag:
+				var highlighted: bool = self.cubes[cubeid].get_face_highlight(plane)
+				if !highlighted:
+					self.cubes[cubeid].set_face_highlight(plane, true)
+					self.cubeFacesSelected[cubeid][plane] = true
+					#self.actionGizmo.show()
+					#self.set_actionGizmo_pos(cubeid, plane)
 		
 		Globals.TOOL.VOXEL:
-			if key == BUTTON_LEFT:
+			if key == BUTTON_LEFT and not drag:
 				# warning-ignore:return_value_discarded
 				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
-			elif key == BUTTON_RIGHT:
+			elif key == BUTTON_RIGHT and not drag:
 				self.remove_cube(cubeid)
 		
 		Globals.TOOL.TEXTURE:
-			var tex: String = self.textureNode.get_selected_texture()
-			if tex == "": tex = Globals.TEXTUREFALLBACK
-			self.cubes[cubeid].set_type(plane, tex)
+			if key == BUTTON_LEFT:
+				var tex: String = self.textureNode.get_selected_texture()
+				if tex == "":
+					tex = Globals.TEXTUREFALLBACK
+				self.cubes[cubeid].set_type(plane, tex)
+			elif key == BUTTON_RIGHT and not drag:
+				pass # TODO: add context menu here
 		
 		Globals.TOOL.PLACEENTITY:
 			if key == BUTTON_LEFT:

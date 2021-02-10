@@ -29,7 +29,7 @@ const MOVEMENT_SENSITIVITY: float = 1.0
 const FIRSTTOOL: int = TOOL.VOXEL
 
 const FILEFORMAT: int = 17
-const FILESETTINGSFORMAT: int = 16
+const FILESETTINGSFORMAT: int = 17
 
 const TEXTUREFALLBACK: String = "builtin:white"
 

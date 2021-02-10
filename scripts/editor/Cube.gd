@@ -19,6 +19,13 @@ var planes: Dictionary
 var textureNode: Tree
 
 
+enum FACE_SELECTION_MODE {
+	NONE,
+	CLICK,
+	DRAG
+}
+
+
 func __init(pos: Vector3, type: String, id: int):
 	self.XP = get_node("XP")
 	self.XM = get_node("XM")
@@ -163,33 +170,47 @@ func set_all_face_highlight(highlighted: bool) -> void:
 func get_face_highlight(plane: int) -> bool:
 	return self.planes[plane]["highlighted"]
 
+func _select_helper(event: InputEvent) -> int:
+	if event is InputEventMouseButton and ((event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT) and event.pressed == true):
+		return FACE_SELECTION_MODE.CLICK
+	elif event is InputEventMouseMotion and (Input.is_action_pressed("left_click") or Input.is_action_pressed("right_click")):
+		return FACE_SELECTION_MODE.DRAG
+	else:
+		return FACE_SELECTION_MODE.NONE
 
-func _select_helper(event: InputEvent) -> bool:
-	return  (event is InputEventMouseButton) and \
-			(((event.button_index == BUTTON_LEFT) \
-			or (event.button_index == BUTTON_RIGHT)) \
-			and (event.pressed == true))
+func _on_select(plane: int, event: InputEvent):
+	var selectHelper: int = self._select_helper(event)
+	match (selectHelper):
+		FACE_SELECTION_MODE.NONE:
+			return
+		FACE_SELECTION_MODE.CLICK:
+			get_parent()._on_face_selected(self.get_id(), plane, event.button_index, false)
+		FACE_SELECTION_MODE.DRAG:
+			var btn: int
+			if Input.is_action_pressed("left_click"):
+				btn = BUTTON_LEFT
+			elif Input.is_action_pressed("right_click"):
+				btn = BUTTON_RIGHT
+			else:
+				return
+			get_parent()._on_face_selected(self.get_id(), plane, btn, true)
+		_:
+			print("Cube._on_select says how?")
 
 func _on_XP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.XP, event.button_index)
+	self._on_select(Globals.PLANEID.XP, event)
 
 func _on_XM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.XM, event.button_index)
+	self._on_select(Globals.PLANEID.XM, event)
 
 func _on_YP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.YP, event.button_index)
+	self._on_select(Globals.PLANEID.YP, event)
 
 func _on_YM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.YM, event.button_index)
+	self._on_select(Globals.PLANEID.YM, event)
 
 func _on_ZP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.ZP, event.button_index)
+	self._on_select(Globals.PLANEID.ZP, event)
 
 func _on_ZM_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
-	if _select_helper(event):
-		get_parent()._on_face_selected(self.get_id(), Globals.PLANEID.ZM, event.button_index)
+	self._on_select(Globals.PLANEID.ZM, event)

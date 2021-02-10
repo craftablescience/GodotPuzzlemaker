@@ -4,6 +4,7 @@ extends Popup
 var musictgl: bool
 var soundtgl: bool
 var mobilebtn: bool
+var windowSize: int
 
 
 func _ready() -> void:
@@ -14,6 +15,7 @@ func __init() -> void:
 	self.musictgl = get_node("TabContainer/General/Music/Music").pressed
 	self.soundtgl = get_node("TabContainer/General/Sound/Sound").pressed
 	self.mobilebtn = get_node("TabContainer/General/Mobile/Mobile").pressed
+	self.windowSize = get_node("TabContainer/General/WindowSize/HBoxContainer/WindowSize").get_selected_id()
 	self.update()
 
 func save() -> void:
@@ -26,6 +28,7 @@ func save() -> void:
 	out += "\n" + "{\"mobilebtn\":" + str(self.mobilebtn).to_lower()                                           + "}"
 	out += "\n" + "{\"musictgl\":"  + str(self.musictgl).to_lower()                                            + "}"
 	out += "\n" + "{\"soundtgl\":"  + str(self.soundtgl).to_lower()                                            + "}"
+	out += "\n" + "{\"windowSize\":" + str(self.windowSize)                                                    + "}"
 	fil.store_string(out)
 	fil.close()
 
@@ -45,6 +48,17 @@ func update() -> void:
 		get_parent().get_node("TopBar/CenterMenu/Mobile").show()
 	else:
 		get_parent().get_node("TopBar/CenterMenu/Mobile").hide()
+	
+	match windowSize:
+		0:
+			OS.window_borderless = false
+			OS.window_fullscreen = false
+		1:
+			OS.window_fullscreen = true
+			OS.window_borderless = true
+			OS.window_fullscreen = false
+		2:
+			OS.window_fullscreen = true
 
 
 func _on_Music_toggled(button_pressed: bool) -> void:
@@ -62,3 +76,7 @@ func _on_Mobile_toggled(button_pressed: bool) -> void:
 func _on_Close_pressed() -> void:
 	self.hide()
 	self.save()
+
+func _on_WindowSize_item_selected(index: int) -> void:
+	windowSize = index
+	self.update()

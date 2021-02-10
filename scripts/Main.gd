@@ -25,6 +25,7 @@ func _ready() -> void:
 			var musicSet: bool = false
 			var soundSet: bool = false
 			var mobileSet: bool = false
+			var windowSize: bool = false
 			for line in ary:
 				if "musictgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = bool(line["musictgl"])
@@ -35,16 +36,25 @@ func _ready() -> void:
 				if "mobilebtn" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Mobile/Mobile").pressed = bool(line["mobilebtn"])
 					mobileSet = true
+				if "windowSize" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(int(line["windowSize"]))
+					windowSize = true
+					
 			if !musicSet:
 				get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = true
 			if !soundSet:
 				get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = true
 			if !mobileSet:
 				get_node("Menu/Control/Properties/TabContainer/General/Sound/Sound").pressed = false
-			
+			if !windowSize:
+				get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
+	
+	if OS.get_name() == "HTML5":
+		get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
+		get_node("Menu/Control/Properties/TabContainer/General/WindowSize").hide()
+	
 	get_node("Menu/Control/Properties").__init()
 	get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
-
 
 func _notification(notification):
 	if notification == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

@@ -449,7 +449,7 @@ align = 0
 [node name="ContextPanel" type="Panel" parent="Menu/Control"]
 anchor_top = 0.3
 anchor_right = 0.2
-anchor_bottom = 0.6
+anchor_bottom = 0.68
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -484,7 +484,7 @@ __meta__ = {
 [node name="Add" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
 margin_left = 352.0
 margin_right = 384.0
-margin_bottom = 32.0
+margin_bottom = 41.0
 rect_min_size = Vector2( 32, 0 )
 icon = ExtResource( 24 )
 expand_icon = true
@@ -512,7 +512,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
 margin_right = 376.0
-margin_bottom = 279.6
+margin_bottom = 357.36
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -528,7 +528,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
 margin_right = 376.0
-margin_bottom = 279.6
+margin_bottom = 357.36
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
@@ -900,42 +900,66 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Music" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_right = 312.0
-margin_bottom = 36.0
+margin_right = 376.0
+margin_bottom = 40.0
 
 [node name="Music" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Music"]
-margin_left = 95.0
-margin_right = 217.0
+margin_left = 127.0
+margin_right = 249.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Music:"
 
 [node name="Sound" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_top = 40.0
-margin_right = 312.0
-margin_bottom = 76.0
+margin_top = 44.0
+margin_right = 376.0
+margin_bottom = 84.0
 
 [node name="Sound" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Sound"]
-margin_left = 71.0
-margin_right = 240.0
+margin_left = 103.0
+margin_right = 272.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Sound Effects:"
 
 [node name="Mobile" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
-margin_top = 80.0
-margin_right = 312.0
-margin_bottom = 116.0
+margin_top = 88.0
+margin_right = 376.0
+margin_bottom = 128.0
 
 [node name="Mobile" type="CheckButton" parent="Menu/Control/Properties/TabContainer/General/Mobile"]
-margin_left = 63.0
-margin_right = 248.0
+margin_left = 95.0
+margin_right = 280.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 text = "Mobile Controls:"
+
+[node name="WindowSize" type="CenterContainer" parent="Menu/Control/Properties/TabContainer/General"]
+margin_top = 132.0
+margin_right = 376.0
+margin_bottom = 152.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/Properties/TabContainer/General/WindowSize"]
+margin_left = 95.0
+margin_right = 280.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer"]
+margin_top = 3.0
+margin_right = 85.0
+margin_bottom = 17.0
+text = "Window Size:"
+
+[node name="WindowSize" type="OptionButton" parent="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer"]
+margin_left = 89.0
+margin_right = 185.0
+margin_bottom = 20.0
+text = "Windowed"
+items = [ "Windowed", null, false, 0, null, "Borderless Fullscreen", null, false, 1, null, "Fullscreen", null, false, 2, null ]
+selected = 0
 
 [node name="Panel" type="Panel" parent="Menu/Control/Properties"]
 anchor_top = 0.9
@@ -951,9 +975,9 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="Close" type="Button" parent="Menu/Control/Properties/Panel/HBoxContainer"]
-margin_left = 110.0
-margin_right = 210.0
-margin_bottom = 36.0
+margin_left = 142.0
+margin_right = 242.0
+margin_bottom = 43.0
 rect_min_size = Vector2( 100, 0 )
 text = "Close"
 
@@ -1030,8 +1054,8 @@ script = ExtResource( 29 )
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]
@@ -1051,6 +1075,7 @@ script = ExtResource( 29 )
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Music/Music" to="Menu/Control/Properties" method="_on_Music_toggled"]
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Sound/Sound" to="Menu/Control/Properties" method="_on_Sound_toggled"]
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Mobile/Mobile" to="Menu/Control/Properties" method="_on_Mobile_toggled"]
+[connection signal="item_selected" from="Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize" to="Menu/Control/Properties" method="_on_WindowSize_item_selected"]
 [connection signal="pressed" from="Menu/Control/Properties/Panel/HBoxContainer/Close" to="Menu/Control/Properties" method="_on_Close_pressed"]
 [connection signal="grow_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_grow"]
 [connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
