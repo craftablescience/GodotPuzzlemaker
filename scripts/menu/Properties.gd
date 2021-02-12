@@ -20,10 +20,6 @@ enum KEYBOARD_TYPE {
 }
 
 
-func _ready() -> void:
-	if OS.get_name() == "HTML5":
-		get_node("TabContainer/General/Music").hide()
-
 func __init() -> void:
 	self.musictgl = get_node("TabContainer/General/Music/Music").pressed
 	self.soundtgl = get_node("TabContainer/General/Sound/Sound").pressed
