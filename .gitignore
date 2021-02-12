@@ -2,7 +2,6 @@
 # Godot-specific ignores
 .import/
 build/
-sounds/background/
 debug.log
 discordid.txt
 
