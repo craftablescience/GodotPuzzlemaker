@@ -3,12 +3,10 @@ extends "res://scripts/editor/ToolBarUpDown.gd"
 
 var x: Label
 var y: Label
-var z: Label
 var gi: Label
 var sn: Label
 var xs: Slider
 var ys: Slider
-var zs: Slider
 var gis: Slider
 var sns: Slider
 var sunBtn: Button
@@ -18,34 +16,30 @@ var giBtn: Button
 func _ready() -> void:
 	self.x = $LabelX
 	self.y = $LabelY
-	self.z = $LabelZ
 	self.gi = $LabelGI
 	self.sn = $LabelSun
 	self.xs = $XSlider
 	self.ys = $YSlider
-	self.zs = $ZSlider
 	self.gis = $GISlider
 	self.sns = $SunSlider
 	self.sunBtn = $SunEnable
 	self.giBtn = $GIEnable
 
 
-func __init(sunOn: bool, giOn: bool, xi: int, yi: int, zi: int, gii: int, sni: int) -> void:
+func __init(sunOn: bool, giOn: bool, xi: int, yi: int, gii: int, sni: int) -> void:
 	self.sunBtn.pressed = sunOn
 	self.giBtn.pressed = giOn
 	self.xs.value = xi
 	self.ys.value = yi
-	self.zs.value = zi
 	self.gis.value = gii
 	self.sns.value = sni
 	self.update()
 
 func update() -> void:
-	self.x.text  = "X: "   + str(int(self.xs.value))  + "°"
-	self.y.text  = "Y: "   + str(int(self.ys.value))  + "°"
-	self.z.text  = "Z: "   + str(int(self.zs.value))  + "°"
-	self.gi.text = "GI: "  + str(int(self.gis.value)) + "%"
-	self.sn.text = "Sun: " + str(int(self.sns.value)) + "%"
+	self.x.text  = "Pitch: " + str(int(self.xs.value))  + "°"
+	self.y.text  = "Yaw: "   + str(int(self.ys.value))  + "°"
+	self.gi.text = "GI: "    + str(int(self.gis.value)) + "%"
+	self.sn.text = "Sun: "   + str(int(self.sns.value)) + "%"
 	
 	var roomSun: DirectionalLight = get_parent().get_parent().get_parent().get_node("Scene/Room/Sun")
 	if self.sunBtn.pressed:
@@ -55,7 +49,7 @@ func update() -> void:
 		roomSun.hide()
 	roomSun.rotation_degrees.x = int(self.xs.value)
 	roomSun.rotation_degrees.y = int(self.ys.value)
-	roomSun.rotation_degrees.z = int(self.zs.value)
+	roomSun.rotation_degrees.z = 0
 	var env: Environment = get_parent().get_parent().get_parent().get_node("Environment").environment
 	if self.giBtn.pressed:
 		env.ambient_light_energy = float(self.gis.value) / 100.0
@@ -67,9 +61,6 @@ func _on_XSlider_value_changed(_value: float) -> void:
 	self.update()
 
 func _on_YSlider_value_changed(_value: float) -> void:
-	self.update()
-
-func _on_ZSlider_value_changed(_value: float) -> void:
 	self.update()
 
 func _on_GISlider_value_changed(_value: float) -> void:

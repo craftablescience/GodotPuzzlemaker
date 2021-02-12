@@ -22,6 +22,10 @@ func _ready() -> void:
 	self.add_item("builtin", "White", "white", preload("res://images/editor/white.png"))
 	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "Black", "black", preload("res://images/editor/black.png"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Dev Orange", "dev_orange", preload("res://images/editor/orange_dev.png"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Dev Grey", "dev_grey", preload("res://images/editor/grey_dev.png"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)
 

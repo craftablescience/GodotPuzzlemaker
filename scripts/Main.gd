@@ -59,7 +59,7 @@ func _ready() -> void:
 		get_node("Menu/Control/Properties/TabContainer/General/WindowSize").hide()
 	
 	get_node("Menu/Control/Properties").__init()
-	get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
+	get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 100, 100)
 
 func _notification(notification):
 	if notification == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

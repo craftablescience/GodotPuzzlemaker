@@ -8,8 +8,12 @@ var themeID: int
 
 
 func _ready() -> void:
+	var properties_shortcut = ShortCut.new()
+	properties_shortcut.set_shortcut(InputMap.get_action_list("ui_properties")[0])
+	
 	popup = get_popup()
 	popup.add_item("Properties...")
+	popup.set_item_shortcut(0, properties_shortcut)
 	
 	themeSubMenu = PopupMenu.new()
 	themeSubMenu.set_name("themeSubMenu")

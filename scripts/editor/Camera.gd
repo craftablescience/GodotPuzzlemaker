@@ -69,6 +69,9 @@ func _input(_event: InputEvent) -> void:
 			active_button = false
 		if Input.is_action_just_pressed("editor_camera_toggle") and !active_button:
 			active_toggle = !active_toggle
+		
+		if Input.is_action_just_pressed("editor_player_pause") and active_toggle:
+			active_toggle = false
 	
 		if (!(active_toggle or active_button)):
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -109,3 +112,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			pivot.rotate_y(deg2rad(x * Globals.MOUSE_SENSITIVITY))
 			self.rotate_x(deg2rad(y * Globals.MOUSE_SENSITIVITY))
 			self.rotation_degrees.x = clamp(self.rotation_degrees.x, -90, 90)
+
+func _on_play_button_pressed() -> void:
+	active_toggle = false
+	active_button = false

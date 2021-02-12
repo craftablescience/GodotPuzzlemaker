@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/theme.theme" type="Theme" id=2]
@@ -45,7 +45,37 @@
 [ext_resource path="res://scripts/menu/LightingButton.gd" type="Script" id=44]
 [ext_resource path="res://scripts/editor/Play.gd" type="Script" id=45]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="InputEventAction" id=1]
+action = "ui_play"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "tool_select"
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventAction" id=5]
+action = "tool_build"
+
+[sub_resource type="ShortCut" id=6]
+shortcut = SubResource( 5 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "tool_texture"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="InputEventAction" id=9]
+action = "tool_entity"
+
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
+
+[sub_resource type="ShaderMaterial" id=11]
 render_priority = 127
 shader = ExtResource( 14 )
 
@@ -335,6 +365,8 @@ margin_bottom = 70.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
 toggle_mode = true
+shortcut_in_tooltip = false
+shortcut = SubResource( 2 )
 text = " Play"
 icon = ExtResource( 15 )
 align = 0
@@ -415,6 +447,8 @@ __meta__ = {
 margin_top = 52.0
 margin_right = 173.0
 margin_bottom = 120.0
+shortcut_in_tooltip = false
+shortcut = SubResource( 4 )
 text = "Select"
 icon = ExtResource( 11 )
 clip_text = true
@@ -424,6 +458,8 @@ align = 0
 margin_top = 124.0
 margin_right = 173.0
 margin_bottom = 192.0
+shortcut_in_tooltip = false
+shortcut = SubResource( 6 )
 text = "Build"
 icon = ExtResource( 10 )
 align = 0
@@ -432,6 +468,8 @@ align = 0
 margin_top = 196.0
 margin_right = 173.0
 margin_bottom = 264.0
+shortcut_in_tooltip = false
+shortcut = SubResource( 8 )
 text = "Texture"
 icon = ExtResource( 13 )
 align = 0
@@ -440,6 +478,8 @@ align = 0
 margin_top = 268.0
 margin_right = 173.0
 margin_bottom = 336.0
+shortcut_in_tooltip = false
+shortcut = SubResource( 10 )
 text = "Entity"
 icon = ExtResource( 23 )
 align = 0
@@ -538,9 +578,9 @@ script = ExtResource( 22 )
 [node name="LightPanel" type="Panel" parent="Menu/Control"]
 show_behind_parent = true
 anchor_left = 0.8
-anchor_top = 0.0651444
+anchor_top = 0.0653981
 anchor_right = 1.0
-anchor_bottom = 0.3
+anchor_bottom = 0.240028
 margin_top = -0.629959
 margin_bottom = -0.229965
 script = ExtResource( 43 )
@@ -600,11 +640,11 @@ __meta__ = {
 }
 
 [node name="LabelX" type="Label" parent="Menu/Control/LightPanel"]
-anchor_top = 0.25
+anchor_top = 0.2
 anchor_right = 0.28
 anchor_bottom = 0.4
 margin_bottom = -0.0307999
-text = "X:"
+text = "Pitch:"
 align = 2
 valign = 1
 __meta__ = {
@@ -614,23 +654,10 @@ __meta__ = {
 [node name="LabelY" type="Label" parent="Menu/Control/LightPanel"]
 anchor_top = 0.4
 anchor_right = 0.28
-anchor_bottom = 0.55
+anchor_bottom = 0.6
 margin_right = -0.120003
 margin_bottom = 0.00309753
-text = "Y:"
-align = 2
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="LabelZ" type="Label" parent="Menu/Control/LightPanel"]
-anchor_top = 0.55
-anchor_right = 0.28
-anchor_bottom = 0.7
-margin_right = -0.120003
-margin_bottom = 0.00309753
-text = "Z:"
+text = "Yaw:"
 align = 2
 valign = 1
 __meta__ = {
@@ -638,9 +665,9 @@ __meta__ = {
 }
 
 [node name="LabelSun" type="Label" parent="Menu/Control/LightPanel"]
-anchor_top = 0.7
+anchor_top = 0.6
 anchor_right = 0.28
-anchor_bottom = 0.85
+anchor_bottom = 0.8
 margin_right = -0.120003
 margin_bottom = 0.00309753
 text = "Sun:"
@@ -651,7 +678,7 @@ __meta__ = {
 }
 
 [node name="LabelGI" type="Label" parent="Menu/Control/LightPanel"]
-anchor_top = 0.85
+anchor_top = 0.8
 anchor_right = 0.28
 anchor_bottom = 1.0
 margin_left = 2.47955e-05
@@ -666,7 +693,7 @@ __meta__ = {
 
 [node name="XSlider" type="HSlider" parent="Menu/Control/LightPanel"]
 anchor_left = 0.3
-anchor_top = 0.25
+anchor_top = 0.2
 anchor_right = 0.98
 anchor_bottom = 0.4
 margin_left = 0.0399971
@@ -684,27 +711,11 @@ __meta__ = {
 anchor_left = 0.3
 anchor_top = 0.4
 anchor_right = 0.98
-anchor_bottom = 0.55
-margin_left = 0.0399971
-margin_top = 0.0631676
+anchor_bottom = 0.6
+margin_left = 0.0400009
+margin_top = -0.408768
 margin_right = 0.159973
-margin_bottom = -0.0387726
-max_value = 360.0
-step = 15.0
-tick_count = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ZSlider" type="HSlider" parent="Menu/Control/LightPanel"]
-anchor_left = 0.3
-anchor_top = 0.55
-anchor_right = 0.98
-anchor_bottom = 0.7
-margin_left = 0.0399971
-margin_top = 0.0631676
-margin_right = 0.159973
-margin_bottom = -0.0387726
+margin_bottom = -0.510712
 max_value = 360.0
 step = 15.0
 tick_count = 5
@@ -714,9 +725,9 @@ __meta__ = {
 
 [node name="SunSlider" type="HSlider" parent="Menu/Control/LightPanel"]
 anchor_left = 0.3
-anchor_top = 0.7
+anchor_top = 0.6
 anchor_right = 0.98
-anchor_bottom = 0.85
+anchor_bottom = 0.8
 margin_left = 0.0399933
 margin_top = -0.382294
 margin_right = 0.159973
@@ -729,7 +740,7 @@ __meta__ = {
 
 [node name="GISlider" type="HSlider" parent="Menu/Control/LightPanel"]
 anchor_left = 0.3
-anchor_top = 0.85
+anchor_top = 0.8
 anchor_right = 0.98
 anchor_bottom = 1.0
 margin_left = 0.0399971
@@ -1009,7 +1020,7 @@ text = "Close"
 
 [node name="Crosshair" type="Sprite" parent="Menu"]
 visible = false
-material = SubResource( 1 )
+material = SubResource( 11 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 2
 texture = ExtResource( 8 )
@@ -1062,6 +1073,7 @@ script = ExtResource( 29 )
 [connection signal="button_up" from="Menu/TouchControls/Look/Left" to="Menu/TouchControls" method="_on_LookLeft_button_up"]
 [connection signal="button_down" from="Menu/TouchControls/Look/Right" to="Menu/TouchControls" method="_on_LookRight_button_down"]
 [connection signal="button_up" from="Menu/TouchControls/Look/Right" to="Menu/TouchControls" method="_on_LookRight_button_up"]
+[connection signal="play_button_pressed" from="Menu/Control/TopBar/CenterMenu/Play" to="Scene/CameraPivot/Camera" method="_on_play_button_pressed"]
 [connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Play" to="Menu/Control/TopBar/CenterMenu/Play" method="_on_toggled"]
 [connection signal="text_changed" from="Menu/Control/TopBar/CenterMenu/LevelName" to="Menu/Control/TopBar/CenterMenu/LevelName" method="_on_text_changed"]
 [connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Mobile" to="Menu/TouchControls" method="_on_Mobile_toggled"]
@@ -1080,14 +1092,13 @@ script = ExtResource( 29 )
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]
 [connection signal="value_changed" from="Menu/Control/LightPanel/XSlider" to="Menu/Control/LightPanel" method="_on_XSlider_value_changed"]
 [connection signal="value_changed" from="Menu/Control/LightPanel/YSlider" to="Menu/Control/LightPanel" method="_on_YSlider_value_changed"]
-[connection signal="value_changed" from="Menu/Control/LightPanel/ZSlider" to="Menu/Control/LightPanel" method="_on_ZSlider_value_changed"]
 [connection signal="value_changed" from="Menu/Control/LightPanel/SunSlider" to="Menu/Control/LightPanel" method="_on_SunSlider_value_changed"]
 [connection signal="value_changed" from="Menu/Control/LightPanel/GISlider" to="Menu/Control/LightPanel" method="_on_GISlider_value_changed"]
 [connection signal="about_to_show" from="Menu/Control/FileSelect" to="Menu/Control/FileSelect" method="_on_about_to_show"]

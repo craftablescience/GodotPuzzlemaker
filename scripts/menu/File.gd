@@ -8,13 +8,26 @@ signal save_level
 
 
 func _ready() -> void:
+	var new_shortcut = ShortCut.new()
+	new_shortcut.set_shortcut(InputMap.get_action_list("ui_new_level")[0])
+	var open_shortcut = ShortCut.new()
+	open_shortcut.set_shortcut(InputMap.get_action_list("ui_open_level")[0])
+	var save_shortcut = ShortCut.new()
+	save_shortcut.set_shortcut(InputMap.get_action_list("ui_save_level")[0])
+	var exit_shortcut = ShortCut.new()
+	exit_shortcut.set_shortcut(InputMap.get_action_list("ui_exit")[0])
+	
 	self.popup = get_popup()
 	self.popup.add_item("New")
+	self.popup.set_item_shortcut(0, new_shortcut)
 	self.popup.add_item("Open...")
+	self.popup.set_item_shortcut(1, open_shortcut)
 	self.popup.add_item("Save")
+	self.popup.set_item_shortcut(2, save_shortcut)
 	#self.popup.add_item("Export...")
 	if (OS.get_name() != "HTML5"):
 		self.popup.add_item("Exit")
+		self.popup.set_item_shortcut(3, exit_shortcut)
 	# warning-ignore:return_value_discarded
 	self.popup.connect("id_pressed", self, "_on_item_pressed")
 	

@@ -51,8 +51,9 @@ func _process(_delta: float) -> void:
 			self.cubeFacesSelected[cubeid] = {}
 			for plane in planes:
 				var cube = self.add_cube_if_empty(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
-				cube.set_face_highlight(plane, true)
-				self.cubeFacesSelected[cube.get_id()][plane] = true
+				if cube != null:
+					cube.set_face_highlight(plane, true)
+					self.cubeFacesSelected[cube.get_id()][plane] = true
 	elif Input.is_action_just_pressed("editor_subtract_cube"):
 		var cubeid: int = 0
 		while cubeid < len(self.cubes):
@@ -513,19 +514,20 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 				self.remove_cube(cubeid)
 		
 		Globals.TOOL.TEXTURE:
-			if key == BUTTON_LEFT:
+			if key == BUTTON_LEFT and not drag:
+				pass # TODO: add context menu here
+			elif key == BUTTON_RIGHT and drag:
 				var tex: String = self.textureNode.get_selected_texture()
 				if tex == "":
 					tex = Globals.TEXTUREFALLBACK
 				self.cubes[cubeid].set_type(plane, tex)
-			elif key == BUTTON_RIGHT and not drag:
-				pass # TODO: add context menu here
 		
 		Globals.TOOL.PLACEENTITY:
 			if key == BUTTON_LEFT:
 				var ent: String = self.entityNode.get_selected_entity()
 				if ent != "" and plane == Globals.PLANEID.YP:
 					self.add_entity(self.get_placed_ent_pos(cubeid, plane))
+		
 		_:
 			print("Room._on_face_selected says how?")
 

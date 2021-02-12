@@ -5,6 +5,9 @@ var player: KinematicBody
 var room: Spatial
 
 
+signal play_button_pressed
+
+
 func _ready() -> void:
 	self.text = " Play"
 	self.room = get_parent().get_parent().get_parent().get_parent().get_parent().get_node("Scene/Room")
@@ -15,6 +18,7 @@ func _ready() -> void:
 func _on_toggled(button_pressed: bool) -> void:
 	self.release_focus()
 	if button_pressed:
+		self.emit_signal("play_button_pressed")
 		var resp: Array = self.room.get_player_start()
 		if !resp[0]:
 			get_parent().get_parent().get_parent().get_node("PlayModeError").popup_centered()
