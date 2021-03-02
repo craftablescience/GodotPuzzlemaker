@@ -53,12 +53,16 @@ func get_mobile_movement(key) -> Vector3:
 	return vec3
 """
 
-func _process(_delta) -> void:
+func _process(delta) -> void:
 	if Globals.PLAY_MODE:
 		self.current = false
 	else:
 		self.current = true
 		if active_toggle or active_button:
+			if Input.is_action_just_released("editor_camera_speed_increase"):
+				Globals.MOVEMENT_SENSITIVITY = clamp(Globals.MOVEMENT_SENSITIVITY + (5 * delta), 0.25, 5.0)
+			elif Input.is_action_just_released("editor_camera_speed_decrease"):
+				Globals.MOVEMENT_SENSITIVITY = clamp(Globals.MOVEMENT_SENSITIVITY - (5 * delta), 0.25, 5.0)
 			pivot.translate(self.get_movement())
 
 func _input(_event: InputEvent) -> void:

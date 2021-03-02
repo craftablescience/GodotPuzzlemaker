@@ -22,9 +22,10 @@ enum THEME {
 	DARK
 }
 
-const MOUSE_SENSITIVITY: float = 0.02
+var MOUSE_SENSITIVITY: float = 0.02
+var MOVEMENT_SENSITIVITY: float = 1.0
+
 const MOBILE_SENSITIVITY: float = 32.0
-const MOVEMENT_SENSITIVITY: float = 1.0
 
 const FIRSTTOOL: int = TOOL.VOXEL
 

@@ -27,6 +27,8 @@ func _ready() -> void:
 			var mobileSet: bool = false
 			var windowSize: bool = false
 			var keyboardType: bool = false
+			var mouseSensitivity: bool = false
+			var cameraSpeed: bool = false
 			var p2vmfexport: bool = false
 			
 			for line in ary:
@@ -48,6 +50,12 @@ func _ready() -> void:
 				if "keyboardType" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(int(line["keyboardType"]))
 					keyboardType = true
+				if "mouseSensitivity" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/General/MouseSensitivity/MouseSensitivity").value = float(line["mouseSensitivity"])
+					mouseSensitivity = true
+				if "cameraSpeed" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/General/CameraSpeed/CameraSpeed").value = float(line["cameraSpeed"])
+					cameraSpeed = true
 				if "p2vmfexport" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed = bool(line["p2vmfexport"])
 					p2vmfexport = true
@@ -75,6 +83,10 @@ func _ready() -> void:
 				get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
 			if !keyboardType:
 				get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(0)
+			if !mouseSensitivity:
+				get_node("Menu/Control/Properties/TabContainer/General/MouseSensitivity/MouseSensitivity").value = 20.0
+			if !cameraSpeed:
+				get_node("Menu/Control/Properties/TabContainer/General/CameraSpeed/CameraSpeed").value = 20.0
 			if !p2vmfexport:
 				get_node("Menu/Control/Properties/TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed = false
 	

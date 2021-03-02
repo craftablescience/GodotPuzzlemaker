@@ -6,6 +6,8 @@ var soundtgl: bool
 var mobilebtn: bool
 var windowSize: int
 var keyboardType: int
+var mouseSensitivity: float
+var cameraSpeed: float
 var p2vmfexport: bool
 
 var p2_exe: String
@@ -36,6 +38,8 @@ func __init() -> void:
 	get_node("TabContainer/General/Mobile").hide()
 	self.windowSize = get_node("TabContainer/General/WindowSize/HBoxContainer/WindowSize").get_selected_id()
 	self.keyboardType = get_node("TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").get_selected_id()
+	self.mouseSensitivity = get_node("TabContainer/General/MouseSensitivity/MouseSensitivity").get_value()
+	self.cameraSpeed = get_node("TabContainer/General/CameraSpeed/CameraSpeed").get_value()
 	self.p2vmfexport = get_node("TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed
 	
 	self.p2_exe = get_parent().get_node("ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text
@@ -60,6 +64,8 @@ func save() -> void:
 	out += "\n" + "{\"soundtgl\":"  + str(self.soundtgl).to_lower()                                            + "}"
 	out += "\n" + "{\"windowSize\":" + str(self.windowSize)                                                    + "}"
 	out += "\n" + "{\"keyboardType\":" + str(self.keyboardType)                                                + "}"
+	out += "\n" + "{\"mouseSensitivity\":" + str(self.mouseSensitivity)                                        + "}"
+	out += "\n" + "{\"cameraSpeed\":" + str(self.cameraSpeed)                                                  + "}"
 	out += "\n" + "{\"p2vmfexport\":" + str(self.p2vmfexport).to_lower()                                       + "}"
 	
 	out += "\n" + "{\"p2gameinfo\":" + "\"" + str(self.p2_gameinfo) + "\""                                     + "}"
@@ -118,6 +124,9 @@ func update() -> void:
 			InputMap.action_erase_events("editor_camera_left")
 			InputMap.action_add_event("editor_camera_left", KEYA)
 	
+	Globals.MOUSE_SENSITIVITY = self.mouseSensitivity / 1000.0
+	Globals.MOVEMENT_SENSITIVITY = self.cameraSpeed / 20.0
+	
 	get_parent().get_node("ExportDialog").set_portal2_visibility(p2vmfexport)
 
 func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
@@ -154,6 +163,18 @@ func _on_WindowSize_item_selected(index: int) -> void:
 
 func _on_KeyboardLayout_item_selected(index: int) -> void:
 	self.keyboardType = index
+	self.update()
+
+func _on_MouseSensitivity_value_changed(value: float) -> void:
+	if value < 1:
+		value = 1
+	self.mouseSensitivity = value
+	self.update()
+
+func _on_CameraSpeed_value_changed(value: float) -> void:
+	if value < 1:
+		value = 1
+	self.cameraSpeed = value
 	self.update()
 
 func _on_P2VMFExport_toggled(button_pressed: bool) -> void:
