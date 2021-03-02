@@ -510,7 +510,6 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 		return
 	
 	match self.toolSelected:
-		
 		Globals.TOOL.SELECT:
 			if key == BUTTON_LEFT and not drag:
 				var highlight: bool = !self.cubes[cubeid].get_face_highlight(plane)
@@ -568,18 +567,26 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 func _on_Select_pressed():
 	self.toolSelected = Globals.TOOL.SELECT
 	self.emit_signal("shrink_sidebar")
+	for ent in self.ents:
+		ent["node"].set_collider_disabled(true)
 
 func _on_VoxelBuild_pressed():
 	self.toolSelected = Globals.TOOL.VOXEL
 	self.unhighlight_all()
 	self.emit_signal("shrink_sidebar")
+	for ent in self.ents:
+		ent["node"].set_collider_disabled(true)
 
 func _on_VoxelTextured_pressed():
 	self.toolSelected = Globals.TOOL.TEXTURE
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
+	for ent in self.ents:
+		ent["node"].set_collider_disabled(true)
 
 func _on_PlaceEntity_pressed() -> void:
 	self.toolSelected = Globals.TOOL.PLACEENTITY
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
+	for ent in self.ents:
+		ent["node"].set_collider_disabled(false)
