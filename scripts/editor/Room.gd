@@ -583,13 +583,3 @@ func _on_PlaceEntity_pressed() -> void:
 	self.toolSelected = Globals.TOOL.PLACEENTITY
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
-
-
-func _on_ArrowX_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
-	pass
-
-func _on_ArrowY_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
-	pass
-
-func _on_ArrowZ_input_event(_camera, _event, _click_position, _click_normal, _shape_idx):
-	pass

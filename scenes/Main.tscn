@@ -886,7 +886,6 @@ window_title = "Error: Could Not Find \"Player Start\" Entity"
 dialog_text = "You must have one \"Player Spawn\" entity placed to enter play mode. If two or more \"Player Spawn\" entities are placed, it will use the first one placed as the player spawn location."
 
 [node name="ExportDialog" type="Popup" parent="Menu/Control"]
-visible = true
 anchor_left = 0.25
 anchor_top = 0.15
 anchor_right = 0.75
