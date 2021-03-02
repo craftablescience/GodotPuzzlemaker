@@ -1,0 +1,24 @@
+name: PublishToWeb
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy
+        uses: andstor/copycat-action@v3.2.3
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          src_path: /build/html5/.
+          dst_path: /
+          src_branch: main
+          dst_branch: web
+          dst_owner: craftablescience
+          clean: true
+          commit_message: "Actions: Update web branch to latest version"
+          username: "craftablescience"
+          email: "brendanelewis@gmail.com"
+          dst_repo_name: GodotPuzzlemaker
