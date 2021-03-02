@@ -33,6 +33,7 @@ func get_movement() -> Vector3:
 	vec3 = vec3.normalized() * Globals.MOVEMENT_SENSITIVITY
 	return vec3
 
+""" # remove mobile controls
 func get_mobile_movement(key) -> Vector3:
 	# Get movement keys,
 	var vec3: Vector3 = Vector3()
@@ -50,6 +51,7 @@ func get_mobile_movement(key) -> Vector3:
 		vec3.y -= 1
 	vec3 = vec3.normalized() * Globals.MOVEMENT_SENSITIVITY
 	return vec3
+"""
 
 func _process(_delta) -> void:
 	if Globals.PLAY_MODE:
@@ -87,6 +89,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			pivot.rotate_y(deg2rad(-event.relative.x * Globals.MOUSE_SENSITIVITY))
 			self.rotate_x(deg2rad(-event.relative.y * Globals.MOUSE_SENSITIVITY))
 			self.rotation_degrees.x = clamp(self.rotation_degrees.x, -90, 90)
+	""" # remove touch controls code
 	elif event is InputEventKey:
 		if !event.scancode in [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT] and !Globals.PLAY_MODE:
 			if get_parent().get_parent().get_parent().get_node("Menu/Control/Properties").get_keyboard_type() == 0:
@@ -112,6 +115,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			pivot.rotate_y(deg2rad(x * Globals.MOUSE_SENSITIVITY))
 			self.rotate_x(deg2rad(y * Globals.MOUSE_SENSITIVITY))
 			self.rotation_degrees.x = clamp(self.rotation_degrees.x, -90, 90)
+	"""
 
 func _on_play_button_pressed() -> void:
 	active_toggle = false

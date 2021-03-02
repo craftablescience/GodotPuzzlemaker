@@ -93,6 +93,3 @@ shadow_enabled = true
 directional_shadow_blend_splits = true
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
-[connection signal="input_event" from="ActionGizmo/ArrowX/ArrowX_Collider" to="." method="_on_ArrowX_input_event"]
-[connection signal="input_event" from="ActionGizmo/ArrowY/ArrowY_Collider" to="." method="_on_ArrowY_input_event"]
-[connection signal="input_event" from="ActionGizmo/ArrowZ/ArrowZ_Collider" to="." method="_on_ArrowZ_input_event"]

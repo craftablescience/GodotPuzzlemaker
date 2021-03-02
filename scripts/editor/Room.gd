@@ -347,7 +347,6 @@ func serialize() -> String:
 					"\"P_LIGHT\":{" + \
 						"\"sunx\":"       + str(int(lightData.xs.value))  + \
 						",\"suny\":"      + str(int(lightData.ys.value))  + \
-						",\"sunz\":"      + str(int(lightData.zs.value))  + \
 						",\"sunstr\":"    + str(int(lightData.sns.value)) + \
 						",\"gistr\":"     + str(int(lightData.gis.value)) + \
 						",\"sunenable\":" + str(lightData.sunBtn.pressed).to_lower() + \
@@ -366,7 +365,7 @@ func clear() -> void:
 	self.clear_entities()
 	# warning-ignore:return_value_discarded
 	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
-	get_parent().get_parent().get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 0, 100, 100)
+	get_parent().get_parent().get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 100, 100)
 
 func save(levelname: String) -> void:
 	self.levelName = levelname
@@ -455,10 +454,9 @@ func load_save(path: String) -> void:
 					elif data.keys()[0].substr(0,2) == "P_":
 						if data.keys()[0] == "P_LIGHT":
 							var lightData: Panel = get_parent().get_parent().get_node("Menu/Control/LightPanel")
-							lightData.__init(false, true, 0, 0, 0, 100, 100)
+							lightData.__init(false, true, 0, 0, 100, 100)
 							lightData.xs.value = int(data["P_LIGHT"]["sunx"])
 							lightData.ys.value = int(data["P_LIGHT"]["suny"])
-							lightData.zs.value = int(data["P_LIGHT"]["sunz"])
 							lightData.sns.value = int(data["P_LIGHT"]["sunstr"])
 							lightData.gis.value = int(data["P_LIGHT"]["gistr"])
 							lightData.sunBtn.pressed = bool(data["P_LIGHT"]["sunenable"])
@@ -467,6 +465,39 @@ func load_save(path: String) -> void:
 			self.currentSave = self.serialize()
 	save.close()
 	get_parent().get_parent().get_node("Menu/Control/TopBar/CenterMenu/LevelName").text = path.split("/")[-1].split(".")[0]
+
+func export_to_vmf(filenam: String) -> void:
+	var vmf = VMF.new()
+	for cube in self.cubes:
+		var cubepos = cube.get_position_grid() * 64
+		cubepos.x = cubepos.x + 32
+		cubepos.y = cubepos.y - 32
+		cubepos.z = cubepos.z + 32
+		var block = VMF.Block.new(cubepos, Vector3(64, 64, 64))
+		var dirs = [Vector3.FORWARD, Vector3.BACK, Vector3.UP, Vector3.DOWN, Vector3.LEFT, Vector3.RIGHT]
+		for plane in range(6):
+			if cube.get_disabled(plane):
+				block.set_material_side(vmf.COMMON_MATERIALS.TOOLS_TOOLSNODRAW, dirs[plane])
+				continue
+			var planeTexture: String = cube.get_type(plane)
+			if planeTexture == "builtin:white":
+				block.set_material_side("TILE/WHITE_WALL_TILE001A", dirs[plane])
+			elif planeTexture == "builtin:black":
+				block.set_material_side("METAL/BLACK_WALL_METAL_002D", dirs[plane])
+			elif planeTexture == "builtin:dev_orange":
+				block.set_material_side(vmf.COMMON_MATERIALS.DEV_MEASUREWALL01A, dirs[plane])
+			elif planeTexture == "builtin:dev_grey":
+				block.set_material_side(vmf.COMMON_MATERIALS.DEV_MEASUREWALL01D, dirs[plane])
+		vmf.add_solid(block.brush)
+	for entity in self.ents:
+		if entity["ID"] == "builtin:" + Globals.PLAYER_START:
+			VMF.Entities.Common.InfoPlayerStartEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"], entity["posz"]))
+		elif entity["ID"] == "builtin:omnilight":
+			VMF.Entities.Common.LightEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"] + 5, entity["posz"]))
+	vmf.write_vmf(filenam)
+
+func get_translated_entity_position_in_vmf(x: float, y: float, z: float) -> Vector3:
+	return Vector3((x / 10) * 64 + 32, (y / 10) * 64 - 32, (z / 10) * 64 + 32)
 
 func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 	var clik: AudioStreamPlayer = get_parent().get_parent().get_node("Click")
@@ -516,7 +547,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 		Globals.TOOL.TEXTURE:
 			if key == BUTTON_LEFT and not drag:
 				pass # TODO: add context menu here
-			elif key == BUTTON_RIGHT and drag:
+			elif key == BUTTON_RIGHT:
 				var tex: String = self.textureNode.get_selected_texture()
 				if tex == "":
 					tex = Globals.TEXTUREFALLBACK

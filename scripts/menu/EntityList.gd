@@ -21,11 +21,15 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	self.add_item("builtin", "Player Spawn", Globals.PLAYER_START, preload("res://scenes/entities/PlayerStart.scn"))
 	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Coin", "CoinEntity", preload("res://scenes/entities/CoinEntity.scn"))
+	self.add_item("builtin", "Coin", "coin", preload("res://scenes/entities/CoinEntity.scn"))
 	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Table", "TableEntity", preload("res://scenes/entities/TableEntity.scn"))
+	self.add_item("builtin", "Table", "table", preload("res://scenes/entities/TableEntity.scn"))
 	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Enemy", "EnemyEntity", preload("res://scenes/entities/EnemyEntity.scn"))
+	self.add_item("builtin", "Enemy", "enemy", preload("res://scenes/entities/EnemyEntity.scn"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Direction Helper", "direction_gizmo", preload("res://scenes/entities/DirectionGizmo.scn"))
+	# warning-ignore:return_value_discarded
+	self.add_item("builtin", "Light", "omnilight", preload("res://scenes/entities/LightEntity.scn"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)
 

@@ -17,6 +17,10 @@ func _ready() -> void:
 
 func _on_toggled(button_pressed: bool) -> void:
 	self.release_focus()
+	for ent in get_parent().get_parent().get_parent().get_parent().get_parent().get_node("Scene/Room").ents:
+		ent["node"].global_transform.origin.x = ent["posx"]
+		ent["node"].global_transform.origin.y = ent["posy"]
+		ent["node"].global_transform.origin.z = ent["posz"]
 	if button_pressed:
 		self.emit_signal("play_button_pressed")
 		var resp: Array = self.room.get_player_start()

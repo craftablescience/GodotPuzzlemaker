@@ -4,7 +4,7 @@ extends Spatial
 func _ready() -> void:
 	# Touchscreen controls
 	if OS.get_name() == "HTML5" or OS.get_name() == "Android" or OS.get_name() == "iOS":
-		get_node("Menu/Control/TopBar/CenterMenu/Mobile").show()
+		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide() # change to show if re-enabling
 	else:
 		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide()
 	
@@ -27,7 +27,12 @@ func _ready() -> void:
 			var mobileSet: bool = false
 			var windowSize: bool = false
 			var keyboardType: bool = false
+			var p2vmfexport: bool = false
+			
 			for line in ary:
+				if line == null:
+					print("ERROR: INVALID CONFIG. If you did not change the config yourself, please report this bug.")
+					continue
 				if "musictgl" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = bool(line["musictgl"])
 					musicSet = true
@@ -43,6 +48,21 @@ func _ready() -> void:
 				if "keyboardType" in line.keys():
 					get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(int(line["keyboardType"]))
 					keyboardType = true
+				if "p2vmfexport" in line.keys():
+					get_node("Menu/Control/Properties/TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed = bool(line["p2vmfexport"])
+					p2vmfexport = true
+				if "p2gameinfo" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/GameInfo/LineEdit").text = str(line["p2gameinfo"])
+				if "p2exe" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text = str(line["p2exe"])
+				if "p2vbsp" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/VBSP/LineEdit").text = str(line["p2vbsp"])
+				if "p2vvis" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS/LineEdit").text = str(line["p2vvis"])
+				if "p2vrad" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/VRAD/LineEdit").text = str(line["p2vrad"])
+				if "p2runonbuild" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/RunGame/CenterContainer/CheckButton").pressed = bool(line["p2runonbuild"])
 			if !musicSet:
 				get_node("Menu/Control/Properties/TabContainer/General/Music/Music").pressed = true
 			if !soundSet:
@@ -53,6 +73,8 @@ func _ready() -> void:
 				get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
 			if !keyboardType:
 				get_node("Menu/Control/Properties/TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").select(0)
+			if !p2vmfexport:
+				get_node("Menu/Control/Properties/TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed = false
 	
 	if OS.get_name() == "HTML5":
 		get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
