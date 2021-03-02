@@ -1,7 +1,8 @@
 
 # Godot-specific ignores
 .import/
-build/
+build/win64
+build/x11
 debug.log
 discordid.txt
 
