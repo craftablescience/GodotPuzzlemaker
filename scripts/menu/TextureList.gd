@@ -68,3 +68,6 @@ func _on_texture_button_pressed() -> void:
 func _on_search() -> void:
 	if get_parent().visible:
 		print("TextureList._on_search") # TODO
+
+func _on_Tree_cell_selected() -> void:
+	self.release_focus()

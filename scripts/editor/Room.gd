@@ -352,7 +352,7 @@ func serialize() -> String:
 						",\"sunenable\":" + str(lightData.sunBtn.pressed).to_lower() + \
 						",\"gienable\":"  + str(lightData.giBtn.pressed).to_lower()  + \
 					"}" + \
-				"}\n"
+				"}" # if adding more properties, add \n here
 	
 	return savedata
 
@@ -491,8 +491,10 @@ func export_to_vmf(filenam: String) -> void:
 		vmf.add_solid(block.brush)
 	for entity in self.ents:
 		if entity["ID"] == "builtin:" + Globals.PLAYER_START:
+			# warning-ignore:return_value_discarded
 			VMF.Entities.Common.InfoPlayerStartEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"], entity["posz"]))
 		elif entity["ID"] == "builtin:omnilight":
+			# warning-ignore:return_value_discarded
 			VMF.Entities.Common.LightEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"] + 5, entity["posz"]))
 	vmf.write_vmf(filenam)
 

@@ -53,6 +53,8 @@ func _ready() -> void:
 					p2vmfexport = true
 				if "p2gameinfo" in line.keys():
 					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/GameInfo/LineEdit").text = str(line["p2gameinfo"])
+				if "p2gamedir" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/GameDir/LineEdit").text = str(line["p2gamedir"])
 				if "p2exe" in line.keys():
 					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text = str(line["p2exe"])
 				if "p2vbsp" in line.keys():

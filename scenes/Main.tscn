@@ -886,6 +886,7 @@ window_title = "Error: Could Not Find \"Player Start\" Entity"
 dialog_text = "You must have one \"Player Spawn\" entity placed to enter play mode. If two or more \"Player Spawn\" entities are placed, it will use the first one placed as the player spawn location."
 
 [node name="ExportDialog" type="Popup" parent="Menu/Control"]
+visible = true
 anchor_left = 0.25
 anchor_top = 0.15
 anchor_right = 0.75
@@ -904,38 +905,54 @@ __meta__ = {
 }
 
 [node name="Portal 2" type="VBoxContainer" parent="Menu/Control/ExportDialog/TabContainer"]
-anchor_left = 0.025
-anchor_top = 0.025
-anchor_right = 0.975
-anchor_bottom = 0.975
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="GameInfo" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_right = 904.0
+[node name="GameDir" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+margin_right = 952.0
 margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameDir"]
+margin_top = 5.0
+margin_right = 118.0
+margin_bottom = 19.0
+text = "Game Folder Path:"
+
+[node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameDir"]
+margin_left = 122.0
+margin_right = 952.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "C:/.../Portal 2/portal2"
+caret_blink = true
+
+[node name="GameInfo" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+margin_top = 28.0
+margin_right = 952.0
+margin_bottom = 52.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameInfo"]
 margin_top = 5.0
-margin_right = 99.0
+margin_right = 114.0
 margin_bottom = 19.0
-text = "GameInfo Path:"
+text = "Maps Folder Path:"
 
 [node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameInfo"]
-margin_left = 103.0
-margin_right = 904.0
+margin_left = 118.0
+margin_right = 952.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-editable = false
-placeholder_text = "C:\\...\\Portal 2\\portal2\\gameinfo.txt"
+placeholder_text = "C:/.../Portal 2/portal2/maps"
 caret_blink = true
 
 [node name="ExePath" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 28.0
-margin_right = 904.0
-margin_bottom = 52.0
+margin_top = 56.0
+margin_right = 952.0
+margin_bottom = 80.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath"]
 margin_top = 5.0
@@ -945,17 +962,16 @@ text = "Game Exe Path:"
 
 [node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath"]
 margin_left = 104.0
-margin_right = 904.0
+margin_right = 952.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-editable = false
-placeholder_text = "C:\\...\\Portal 2\\portal2.exe"
+placeholder_text = "C:/.../Portal 2/portal2.exe"
 caret_blink = true
 
 [node name="VBSP" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 56.0
-margin_right = 904.0
-margin_bottom = 80.0
+margin_top = 84.0
+margin_right = 952.0
+margin_bottom = 108.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VBSP"]
 margin_top = 5.0
@@ -965,17 +981,16 @@ text = "VBSP Executable Path:"
 
 [node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VBSP"]
 margin_left = 145.0
-margin_right = 904.0
+margin_right = 952.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-editable = false
-placeholder_text = "C:\\...\\Portal 2\\bin\\vbsp.exe"
+placeholder_text = "C:/.../Portal 2/bin/vbsp.exe"
 caret_blink = true
 
 [node name="VVIS" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 84.0
-margin_right = 904.0
-margin_bottom = 108.0
+margin_top = 112.0
+margin_right = 952.0
+margin_bottom = 136.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS"]
 margin_top = 5.0
@@ -985,17 +1000,16 @@ text = "VVIS Executable Path:"
 
 [node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS"]
 margin_left = 141.0
-margin_right = 904.0
+margin_right = 952.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-editable = false
-placeholder_text = "C:\\...\\Portal 2\\bin\\vvis.exe"
+placeholder_text = "C:/.../Portal 2/bin/vvis.exe"
 caret_blink = true
 
 [node name="VRAD" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 112.0
-margin_right = 904.0
-margin_bottom = 136.0
+margin_top = 140.0
+margin_right = 952.0
+margin_bottom = 164.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VRAD"]
 margin_top = 5.0
@@ -1005,17 +1019,16 @@ text = "VRAD Executable Path:"
 
 [node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VRAD"]
 margin_left = 148.0
-margin_right = 904.0
+margin_right = 952.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-editable = false
-placeholder_text = "C:\\...\\Portal 2\\bin\\vrad.exe"
+placeholder_text = "C:/.../Portal 2/bin/vrad.exe"
 caret_blink = true
 
 [node name="RunGame" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 140.0
-margin_right = 904.0
-margin_bottom = 180.0
+margin_top = 168.0
+margin_right = 952.0
+margin_bottom = 208.0
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/RunGame"]
 margin_right = 210.0
@@ -1025,15 +1038,13 @@ margin_bottom = 40.0
 margin_right = 210.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
-disabled = true
 text = "Run Game On Build:"
 
 [node name="TextEdit" type="TextEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 184.0
-margin_right = 904.0
-margin_bottom = 656.0
+margin_top = 212.0
+margin_right = 952.0
+margin_bottom = 693.0
 size_flags_vertical = 3
-text = "Console Output"
 readonly = true
 context_menu_enabled = false
 virtual_keyboard_enabled = false
@@ -1061,7 +1072,6 @@ margin_left = 326.0
 margin_right = 426.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 100, 0 )
-disabled = true
 text = "Build + Run"
 
 [node name="SaveVMF" type="Button" parent="Menu/Control/ExportDialog/Panel/HBoxContainer"]
@@ -1310,6 +1320,8 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
+[connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
+[connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Tree_cell_selected"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]
 [connection signal="value_changed" from="Menu/Control/LightPanel/XSlider" to="Menu/Control/LightPanel" method="_on_XSlider_value_changed"]
@@ -1324,6 +1336,7 @@ script = ExtResource( 29 )
 [connection signal="file_selected" from="Menu/Control/EntityFileSelect" to="Menu/Control/EntityFileSelect" method="_on_file_selected"]
 [connection signal="confirmed" from="Menu/Control/ConfirmNewLevel" to="Menu/Control/ConfirmNewLevel" method="_on_confirmed"]
 [connection signal="confirmed" from="Menu/Control/QuitRequest" to="Menu/Control/QuitRequest" method="_on_confirmed"]
+[connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/BuildRun" to="Menu/Control/ExportDialog" method="_on_BuildRun_pressed"]
 [connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/SaveVMF" to="Menu/Control/ExportDialog" method="_on_SaveVMF_pressed"]
 [connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/Close" to="Menu/Control/ExportDialog" method="_on_Close_pressed"]
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/General/Music/Music" to="Menu/Control/Properties" method="_on_Music_toggled"]

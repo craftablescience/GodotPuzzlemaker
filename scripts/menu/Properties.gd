@@ -9,6 +9,7 @@ var keyboardType: int
 var p2vmfexport: bool
 
 var p2_exe: String
+var p2_gamedir: String
 var p2_gameinfo: String
 var p2_vvis: String
 var p2_vbsp: String
@@ -32,11 +33,13 @@ func __init() -> void:
 	self.musictgl = get_node("TabContainer/General/Music/Music").pressed
 	self.soundtgl = get_node("TabContainer/General/Sound/Sound").pressed
 	self.mobilebtn = get_node("TabContainer/General/Mobile/Mobile").pressed
+	get_node("TabContainer/General/Mobile").hide()
 	self.windowSize = get_node("TabContainer/General/WindowSize/HBoxContainer/WindowSize").get_selected_id()
 	self.keyboardType = get_node("TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").get_selected_id()
 	self.p2vmfexport = get_node("TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed
 	
 	self.p2_exe = get_parent().get_node("ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text
+	self.p2_gamedir = get_parent().get_node("ExportDialog/TabContainer/Portal 2/GameDir/LineEdit").text
 	self.p2_gameinfo = get_parent().get_node("ExportDialog/TabContainer/Portal 2/GameInfo/LineEdit").text
 	self.p2_vvis = get_parent().get_node("ExportDialog/TabContainer/Portal 2/VVIS/LineEdit").text
 	self.p2_vbsp = get_parent().get_node("ExportDialog/TabContainer/Portal 2/VBSP/LineEdit").text
@@ -60,6 +63,7 @@ func save() -> void:
 	out += "\n" + "{\"p2vmfexport\":" + str(self.p2vmfexport).to_lower()                                       + "}"
 	
 	out += "\n" + "{\"p2gameinfo\":" + "\"" + str(self.p2_gameinfo) + "\""                                     + "}"
+	out += "\n" + "{\"p2gamedir\":" + "\"" + str(self.p2_gamedir) + "\""                                       + "}"
 	out += "\n" + "{\"p2exe\":" + "\"" + str(self.p2_exe) + "\""                                               + "}"
 	out += "\n" + "{\"p2vvis\":" + "\"" + str(self.p2_vvis) + "\""                                             + "}"
 	out += "\n" + "{\"p2vbsp\":" + "\"" + str(self.p2_vbsp) + "\""                                             + "}"
@@ -116,8 +120,9 @@ func update() -> void:
 	
 	get_parent().get_node("ExportDialog").set_portal2_visibility(p2vmfexport)
 
-func set_portal2_properties(p2exe: String, vbsp: String, vvis: String, vrad: String, runonbuild: bool, gameinfo: String) -> void:
+func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
 	self.p2_exe = p2exe
+	self.p2_gamedir = gamedir
 	self.p2_vbsp = vbsp
 	self.p2_vrad = vrad
 	self.p2_vvis = vvis
