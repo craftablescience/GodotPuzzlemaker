@@ -40,7 +40,10 @@ func __init() -> void:
 	self.keyboardType = get_node("TabContainer/General/KeyboardLayout/HBoxContainer/KeyboardLayout").get_selected_id()
 	self.mouseSensitivity = get_node("TabContainer/General/MouseSensitivity/MouseSensitivity").get_value()
 	self.cameraSpeed = get_node("TabContainer/General/CameraSpeed/CameraSpeed").get_value()
-	self.p2vmfexport = get_node("TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed
+	if OS.get_name() == "Windows":
+		self.p2vmfexport = get_node("TabContainer/Experimental/P2VMFExport/P2VMFExport").pressed
+	else:
+		self.p2vmfexport = false
 	
 	self.p2_exe = get_parent().get_node("ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text
 	self.p2_gamedir = get_parent().get_node("ExportDialog/TabContainer/Portal 2/GameDir/LineEdit").text
@@ -127,7 +130,10 @@ func update() -> void:
 	Globals.MOUSE_SENSITIVITY = self.mouseSensitivity / 1000.0
 	Globals.MOVEMENT_SENSITIVITY = self.cameraSpeed / 20.0
 	
-	get_parent().get_node("ExportDialog").set_portal2_visibility(p2vmfexport)
+	if OS.get_name() == "Windows":
+		get_parent().get_node("ExportDialog").set_portal2_visibility(p2vmfexport)
+	else:
+		get_parent().get_node("ExportDialog").set_portal2_visibility(false)
 
 func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
 	self.p2_exe = p2exe

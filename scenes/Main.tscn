@@ -904,7 +904,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Portal 2" type="VBoxContainer" parent="Menu/Control/ExportDialog/TabContainer"]
+[node name="OBJ" type="VBoxContainer" parent="Menu/Control/ExportDialog/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -912,9 +912,41 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="GameDir" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+[node name="CenterContainer" type="CenterContainer" parent="Menu/Control/ExportDialog/TabContainer/OBJ"]
 margin_right = 952.0
-margin_bottom = 24.0
+margin_bottom = 31.0
+
+[node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/OBJ/CenterContainer"]
+margin_left = 391.0
+margin_right = 560.0
+margin_bottom = 31.0
+text = "
+Currently unimplemented."
+
+[node name="Portal 2" type="VBoxContainer" parent="Menu/Control/ExportDialog/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Unusable" type="CenterContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+margin_right = 952.0
+margin_bottom = 31.0
+
+[node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/Unusable"]
+margin_left = 286.0
+margin_right = 665.0
+margin_bottom = 31.0
+text = "
+This export option can only be used on Windows platforms."
+
+[node name="GameDir" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+margin_top = 35.0
+margin_right = 952.0
+margin_bottom = 59.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameDir"]
 margin_top = 5.0
@@ -931,9 +963,9 @@ placeholder_text = "C:/.../Portal 2/portal2"
 caret_blink = true
 
 [node name="GameInfo" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 28.0
+margin_top = 63.0
 margin_right = 952.0
-margin_bottom = 52.0
+margin_bottom = 87.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/GameInfo"]
 margin_top = 5.0
@@ -950,9 +982,9 @@ placeholder_text = "C:/.../Portal 2/portal2/maps"
 caret_blink = true
 
 [node name="ExePath" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 56.0
+margin_top = 91.0
 margin_right = 952.0
-margin_bottom = 80.0
+margin_bottom = 115.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath"]
 margin_top = 5.0
@@ -969,9 +1001,9 @@ placeholder_text = "C:/.../Portal 2/portal2.exe"
 caret_blink = true
 
 [node name="VBSP" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 84.0
+margin_top = 119.0
 margin_right = 952.0
-margin_bottom = 108.0
+margin_bottom = 143.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VBSP"]
 margin_top = 5.0
@@ -988,9 +1020,9 @@ placeholder_text = "C:/.../Portal 2/bin/vbsp.exe"
 caret_blink = true
 
 [node name="VVIS" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 112.0
+margin_top = 147.0
 margin_right = 952.0
-margin_bottom = 136.0
+margin_bottom = 171.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS"]
 margin_top = 5.0
@@ -1007,9 +1039,9 @@ placeholder_text = "C:/.../Portal 2/bin/vvis.exe"
 caret_blink = true
 
 [node name="VRAD" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 140.0
+margin_top = 175.0
 margin_right = 952.0
-margin_bottom = 164.0
+margin_bottom = 199.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VRAD"]
 margin_top = 5.0
@@ -1026,9 +1058,9 @@ placeholder_text = "C:/.../Portal 2/bin/vrad.exe"
 caret_blink = true
 
 [node name="RunGame" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 168.0
+margin_top = 203.0
 margin_right = 952.0
-margin_bottom = 208.0
+margin_bottom = 243.0
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/RunGame"]
 margin_right = 210.0
@@ -1041,7 +1073,7 @@ size_flags_horizontal = 3
 text = "Run Game On Build:"
 
 [node name="TextEdit" type="TextEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 212.0
+margin_top = 247.0
 margin_right = 952.0
 margin_bottom = 693.0
 size_flags_vertical = 3
@@ -1068,6 +1100,7 @@ __meta__ = {
 }
 
 [node name="BuildRun" type="Button" parent="Menu/Control/ExportDialog/Panel/HBoxContainer"]
+visible = false
 margin_left = 326.0
 margin_right = 426.0
 margin_bottom = 81.0
@@ -1075,15 +1108,16 @@ rect_min_size = Vector2( 100, 0 )
 text = "Build + Run"
 
 [node name="SaveVMF" type="Button" parent="Menu/Control/ExportDialog/Panel/HBoxContainer"]
-margin_left = 430.0
-margin_right = 530.0
+visible = false
+margin_left = 378.0
+margin_right = 478.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 100, 0 )
 text = "Save VMF"
 
 [node name="Close" type="Button" parent="Menu/Control/ExportDialog/Panel/HBoxContainer"]
-margin_left = 534.0
-margin_right = 634.0
+margin_left = 430.0
+margin_right = 530.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 100, 0 )
 text = "Close"
@@ -1386,6 +1420,7 @@ script = ExtResource( 29 )
 [connection signal="file_selected" from="Menu/Control/EntityFileSelect" to="Menu/Control/EntityFileSelect" method="_on_file_selected"]
 [connection signal="confirmed" from="Menu/Control/ConfirmNewLevel" to="Menu/Control/ConfirmNewLevel" method="_on_confirmed"]
 [connection signal="confirmed" from="Menu/Control/QuitRequest" to="Menu/Control/QuitRequest" method="_on_confirmed"]
+[connection signal="tab_changed" from="Menu/Control/ExportDialog/TabContainer" to="Menu/Control/ExportDialog" method="_on_TabContainer_tab_changed"]
 [connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/BuildRun" to="Menu/Control/ExportDialog" method="_on_BuildRun_pressed"]
 [connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/SaveVMF" to="Menu/Control/ExportDialog" method="_on_SaveVMF_pressed"]
 [connection signal="pressed" from="Menu/Control/ExportDialog/Panel/HBoxContainer/Close" to="Menu/Control/ExportDialog" method="_on_Close_pressed"]
