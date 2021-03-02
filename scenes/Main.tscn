@@ -435,19 +435,19 @@ anchorLeftHidden = 0.955
 anchorRightHidden = 1.055
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/Control/ToolBar"]
-anchor_left = 0.05
-anchor_top = 0.025
-anchor_right = 0.95
-anchor_bottom = 0.975
+anchor_left = 0.0518135
+anchor_top = 0.0243807
+anchor_right = 1.0
+anchor_bottom = 0.975229
 alignment = 1
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 52.0
-margin_right = 173.0
-margin_bottom = 120.0
+margin_top = 53.0
+margin_right = 183.0
+margin_bottom = 121.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 4 )
 text = "Select"
@@ -456,9 +456,9 @@ clip_text = true
 align = 0
 
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 124.0
-margin_right = 173.0
-margin_bottom = 192.0
+margin_top = 125.0
+margin_right = 183.0
+margin_bottom = 193.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 6 )
 text = "Build"
@@ -466,9 +466,9 @@ icon = ExtResource( 10 )
 align = 0
 
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 196.0
-margin_right = 173.0
-margin_bottom = 264.0
+margin_top = 197.0
+margin_right = 183.0
+margin_bottom = 265.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 8 )
 text = "Texture"
@@ -476,9 +476,9 @@ icon = ExtResource( 13 )
 align = 0
 
 [node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 268.0
-margin_right = 173.0
-margin_bottom = 336.0
+margin_top = 269.0
+margin_right = 183.0
+margin_bottom = 337.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 10 )
 text = "Entity"
@@ -488,9 +488,9 @@ align = 0
 [node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
 
 [node name="ContextPanel" type="Panel" parent="Menu/Control"]
-anchor_top = 0.3
+anchor_top = 0.0666667
 anchor_right = 0.2
-anchor_bottom = 0.68
+anchor_bottom = 1.0
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -501,7 +501,8 @@ anchorRightHidden = -0.05
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/Control/ContextPanel"]
 anchor_right = 1.0
-anchor_bottom = 0.1
+anchor_bottom = 0.05
+margin_bottom = 0.48
 custom_constants/separation = 4
 alignment = 2
 __meta__ = {
@@ -525,7 +526,7 @@ __meta__ = {
 [node name="Add" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
 margin_left = 352.0
 margin_right = 384.0
-margin_bottom = 41.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 32, 0 )
 icon = ExtResource( 24 )
 expand_icon = true
@@ -535,12 +536,12 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="Menu/Control/ContextPanel"]
-anchor_top = 0.1
+anchor_top = 0.05
 anchor_right = 1.0
 anchor_bottom = 1.0
 tabs_visible = false
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Entities" type="ScrollContainer" parent="Menu/Control/ContextPanel/TabContainer"]
@@ -553,7 +554,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
 margin_right = 376.0
-margin_bottom = 357.36
+margin_bottom = 945.6
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -569,7 +570,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
 margin_right = 376.0
-margin_bottom = 357.36
+margin_bottom = 945.6
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
