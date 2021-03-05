@@ -25,7 +25,7 @@ func _on_file_selected(path: String) -> void:
 		copy.store_buffer(original.get_buffer(original.get_len()))
 		copy.close()
 		original.close()
-		image.resize(64, 64, Image.INTERPOLATE_LANCZOS)
+		#image.resize(64, 64, Image.INTERPOLATE_LANCZOS)
 		var texture = ImageTexture.new()
 		texture.create_from_image(image, 1)
 		var ID: String = path.split("/")[-1]
