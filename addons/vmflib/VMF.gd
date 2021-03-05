@@ -98,8 +98,8 @@ class Axis:
 	var y: int
 	var z: int
 	var translat: int
-	var scale: int
-	func _init(x: int = 0, y: int = 0, z: int = 0, translat: int = 0, scale: float = 0.25) -> void:
+	var scale: float
+	func _init(x: int = 0, y: int = 0, z: int = 0, translat: int = 0, scale: float = 1.0) -> void:
 		self.x = x
 		self.y = y
 		self.z = z
@@ -154,8 +154,8 @@ class ValvePlane:
 		return self.getAsStr()
 	func sensible_axes() -> Array:
 		"""Returns a sensible uaxis and vaxis for this plane."""
-		# TODO: Rewrite this method to allow non-90deg planes to work
-		# Figure out which axes the plane exists in
+		# This method does not allow non-90deg planes
+		# It also aligns textures to world instead of to face
 		var axes: Array = [1, 1, 1]
 		if self.v0.x == self.v1.x and self.v0.x == self.v2.x and self.v1.x == self.v2.x:
 			axes[0] = 0
@@ -328,7 +328,7 @@ class Side extends "res://addons/vmflib/VMFRoot.gd":
 	var smoothing_groups: int
 	var uaxis: Axis
 	var vaxis: Axis
-	func _init(plane: ValvePlane = ValvePlane.new(), material: String = "BRICK/BRICKFLOOR001A").("side"):
+	func _init(plane: ValvePlane = ValvePlane.new(), material: String = "TOOLS/TOOLSNODRAW").("side"):
 		self.plane = plane
 		self.material = material
 		self.rotation = 0
@@ -406,30 +406,38 @@ class Block:
 			Vertex.new(x - a, y + b, z + c),
 			Vertex.new(x + a, y + b, z + c),
 			Vertex.new(x + a, y - b, z + c))
+		self.brush.children[0].uaxis = Axis.new(1,0,0)
+		self.brush.children[0].vaxis = Axis.new(0,-1,0)
 		self.brush.children[1].plane = ValvePlane.new(
 			Vertex.new(x - a, y - b, z - c),
 			Vertex.new(x + a, y - b, z - c),
 			Vertex.new(x + a, y + b, z - c))
+		self.brush.children[1].uaxis = Axis.new(-1,0,0)
+		self.brush.children[1].vaxis = Axis.new(0,-1,0)
 		self.brush.children[2].plane = ValvePlane.new(
 			Vertex.new(x - a, y + b, z + c),
 			Vertex.new(x - a, y - b, z + c),
 			Vertex.new(x - a, y - b, z - c))
+		self.brush.children[2].uaxis = Axis.new(0,-1,0)
+		self.brush.children[2].vaxis = Axis.new(0,0,-1)
 		self.brush.children[3].plane = ValvePlane.new(
 			Vertex.new(x + a, y + b, z - c),
 			Vertex.new(x + a, y - b, z - c),
 			Vertex.new(x + a, y - b, z + c))
+		self.brush.children[3].uaxis = Axis.new(0,1,0)
+		self.brush.children[3].vaxis = Axis.new(0,0,-1)
 		self.brush.children[4].plane = ValvePlane.new(
 			Vertex.new(x + a, y + b, z + c),
 			Vertex.new(x - a, y + b, z + c),
 			Vertex.new(x - a, y + b, z - c))
+		self.brush.children[4].uaxis = Axis.new(-1,0,0)
+		self.brush.children[4].vaxis = Axis.new(0,0,-1)
 		self.brush.children[5].plane = ValvePlane.new(
 			Vertex.new(x + a, y - b, z - c),
 			Vertex.new(x - a, y - b, z - c),
 			Vertex.new(x - a, y - b, z + c))
-		for side in self.brush.children:
-			var axes: Array = side.plane.sensible_axes()
-			side.uaxis = axes[0]
-			side.vaxis = axes[1]
+		self.brush.children[5].uaxis = Axis.new(1,0,0)
+		self.brush.children[5].vaxis = Axis.new(0,0,-1)
 	func set_material(material: String) -> void:
 		for side in self.brush.children:
 			side.material = material
