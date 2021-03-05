@@ -1,19 +1,12 @@
 extends Spatial
 
 
-var XP: Sprite3D
-var XM: Sprite3D
-var YP: Sprite3D
-var YM: Sprite3D
-var ZP: Sprite3D
-var ZM: Sprite3D
-
-var XPH: Spatial
-var XMH: Spatial
-var YPH: Spatial
-var YMH: Spatial
-var ZPH: Spatial
-var ZMH: Spatial
+var XP: MeshInstance
+var XM: MeshInstance
+var YP: MeshInstance
+var YM: MeshInstance
+var ZP: MeshInstance
+var ZM: MeshInstance
 
 var planes: Dictionary
 var textureNode: Tree
@@ -34,53 +27,40 @@ func __init(pos: Vector3, type: String, id: int):
 	self.ZP = get_node("ZP")
 	self.ZM = get_node("ZM")
 	
-	self.XPH = get_node("XPH")
-	self.XMH = get_node("XMH")
-	self.YPH = get_node("YPH")
-	self.YMH = get_node("YMH")
-	self.ZPH = get_node("ZPH")
-	self.ZMH = get_node("ZMH")
-	
 	self.planes = {
 		Globals.PLANEID.XP: {
 			"node": self.XP,
 			"texture": null,
-			"highlightnode": self.XPH,
 			"highlighted": false,
 			"disabled": false
 		},
 		Globals.PLANEID.XM: {
 			"node": self.XM,
 			"texture": null,
-			"highlightnode": self.XMH,
 			"highlighted": false,
 			"disabled": false
 		},
 		Globals.PLANEID.YP: {
 			"node": self.YP,
 			"texture": null,
-			"highlightnode": self.YPH,
 			"highlighted": false,
 			"disabled": false
 		},
 		Globals.PLANEID.YM: {
 			"node": self.YM,
 			"texture": null,
-			"highlightnode": self.YMH,
 			"highlighted": false,
 			"disabled": false
 		},
 		Globals.PLANEID.ZP: {
 			"node": self.ZP,
 			"texture": null,
-			"highlightnode": self.ZPH,
 			"highlighted": false,
 			"disabled": false
 		},
 		Globals.PLANEID.ZM: {
 			"node": self.ZM,
 			"texture": null,
-			"highlightnode": self.ZMH,
 			"highlighted": false,
 			"disabled": false
 		}
@@ -124,7 +104,7 @@ func get_plane(planeid: int):
 		Globals.PLANEID.ZM:
 			return self.ZM
 		_:
-			print("Room.get_plane says how?")
+			assert(false, "Room.get_plane says how?")
 
 # warning-ignore:shadowed_variable
 func set_data(planes: Dictionary) -> void:
@@ -140,7 +120,7 @@ func set_type_all(type: String) -> void:
 		self.set_type(i, type)
 
 func set_type(plane: int, type: String) -> void:
-	self.planes[plane]["node"].texture = self.textureNode.get_texture(type)
+	self.planes[plane]["node"].material_override.albedo_texture = self.textureNode.get_texture(type)
 	self.planes[plane]["texture"] = type
 
 func get_type(plane: int) -> String:
@@ -158,9 +138,9 @@ func get_position_grid() -> Vector3:
 
 func set_face_highlight(plane: int, highlighted: bool) -> void:
 	if highlighted:
-		self.planes[plane]["highlightnode"].show()
+		self.planes[plane]["node"].material_override.albedo_color = Color.cadetblue
 	else:
-		self.planes[plane]["highlightnode"].hide()
+		self.planes[plane]["node"].material_override.albedo_color = Color.white
 	self.planes[plane]["highlighted"] = highlighted
 
 func set_all_face_highlight(highlighted: bool) -> void:
@@ -195,7 +175,7 @@ func _on_select(plane: int, event: InputEvent):
 				return
 			get_parent()._on_face_selected(self.get_id(), plane, btn, true)
 		_:
-			print("Cube._on_select says how?")
+			assert(false, "Cube._on_select says how?")
 
 func _on_XP_select(_camera: Node, event: InputEvent, _click_position: Vector3, _click_normal: Vector3, _shape_idx: int) -> void:
 	self._on_select(Globals.PLANEID.XP, event)

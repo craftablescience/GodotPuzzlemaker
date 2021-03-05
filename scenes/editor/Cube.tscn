@@ -1,14 +1,56 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://images/editor/white.png" type="Texture" id=1]
+[ext_resource path="res://images/editor/textures/white.png" type="Texture" id=1]
 [ext_resource path="res://scripts/editor/Cube.gd" type="Script" id=2]
-[ext_resource path="res://images/editor/highlight.png" type="Texture" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 5, 5, 5 )
 
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.001, 5, 5 )
+[sub_resource type="SpatialMaterial" id=5]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=6]
+size = Vector2( 10, 10 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.1, 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=7]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=8]
+size = Vector2( 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=9]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=10]
+flip_faces = true
+size = Vector2( 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=11]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=12]
+size = Vector2( 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=13]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=14]
+size = Vector2( 10, 10 )
+
+[sub_resource type="SpatialMaterial" id=15]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=16]
+size = Vector2( 10, 10 )
 
 [node name="Cube" type="Spatial"]
 script = ExtResource( 2 )
@@ -21,192 +63,93 @@ __meta__ = {
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 1 )
 
-[node name="XP" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0 )
+[node name="XP" type="MeshInstance" parent="."]
+transform = Transform( 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0, 1, 5, 0, 0 )
+material_override = SubResource( 5 )
 use_in_baked_light = true
-pixel_size = 0.1563
-axis = 0
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
+mesh = SubResource( 6 )
+material/0 = null
 
 [node name="Area" type="Area" parent="XP"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="XP/Area"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
-[node name="XM" type="Sprite3D" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5, 0, 0 )
+[node name="XM" type="MeshInstance" parent="."]
+transform = Transform( 4.37114e-08, -1, 1.4243e-14, -1, -4.37114e-08, -3.25841e-07, 3.25841e-07, 0, -1, -5, 0, 0 )
+material_override = SubResource( 7 )
 use_in_baked_light = true
-pixel_size = 0.1563
-axis = 0
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
+mesh = SubResource( 8 )
+material/0 = null
 
 [node name="Area" type="Area" parent="XM"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="XM/Area"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
-[node name="YP" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+[node name="YM" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0 )
+material_override = SubResource( 9 )
 use_in_baked_light = true
-pixel_size = 0.1563
-axis = 1
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
-
-[node name="Area" type="Area" parent="YP"]
-input_capture_on_drag = true
-
-[node name="CollisionShape" type="CollisionShape" parent="YP/Area"]
-transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 2 )
-
-[node name="YM" type="Sprite3D" parent="."]
-transform = Transform( -1, 3.25841e-07, 0, -3.25841e-07, -1, 0, 0, 0, 1, 0, -5, 0 )
-use_in_baked_light = true
-pixel_size = 0.1563
-axis = 1
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
+mesh = SubResource( 10 )
+material/0 = null
 
 [node name="Area" type="Area" parent="YM"]
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="YM/Area"]
 transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
-[node name="ZP" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+[node name="YP" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+material_override = SubResource( 11 )
+mesh = SubResource( 12 )
+material/0 = null
+
+[node name="Area" type="Area" parent="YP"]
+input_capture_on_drag = true
+
+[node name="CollisionShape" type="CollisionShape" parent="YP/Area"]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="ZP" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 5 )
+material_override = SubResource( 13 )
 use_in_baked_light = true
-pixel_size = 0.1563
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
+mesh = SubResource( 14 )
+material/0 = null
 
 [node name="Area" type="Area" parent="ZP"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="ZP/Area"]
 transform = Transform( 4.88762e-07, -1, 5.30863e-14, 1.62921e-07, 2.65431e-14, -1, 1, 4.88762e-07, 1.62921e-07, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
-[node name="ZM" type="Sprite3D" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, -5 )
+[node name="ZM" type="MeshInstance" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 3.25841e-07, -4.37114e-08, -1, -1.4243e-14, -1, 4.37114e-08, 0, 0, -5 )
+material_override = SubResource( 15 )
 use_in_baked_light = true
-pixel_size = 0.1563
-transparent = false
-shaded = true
-double_sided = false
-texture = ExtResource( 1 )
+mesh = SubResource( 16 )
+material/0 = null
 
 [node name="Area" type="Area" parent="ZM"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="ZM/Area"]
 transform = Transform( 4.88762e-07, -1, 5.30863e-14, 1.62921e-07, 2.65431e-14, -1, 1, 4.88762e-07, 1.62921e-07, 0, 0, 0 )
-shape = SubResource( 2 )
-
-[node name="XPH" type="Spatial" parent="."]
-visible = false
-
-[node name="XPH_Outer" type="Sprite3D" parent="XPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.01, 0, 0 )
-pixel_size = 0.1563
-axis = 0
-texture = ExtResource( 3 )
-
-[node name="XPH_Inner" type="Sprite3D" parent="XPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99, 0, 0 )
-pixel_size = 0.1563
-axis = 0
-texture = ExtResource( 3 )
-
-[node name="XMH" type="Spatial" parent="."]
-visible = false
-
-[node name="XMH_Outer" type="Sprite3D" parent="XMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.01, 0, 0 )
-pixel_size = 0.1563
-axis = 0
-texture = ExtResource( 3 )
-
-[node name="XMH_Inner" type="Sprite3D" parent="XMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99, 0, 0 )
-pixel_size = 0.1563
-axis = 0
-texture = ExtResource( 3 )
-
-[node name="YPH" type="Spatial" parent="."]
-visible = false
-
-[node name="YPH_Outer" type="Sprite3D" parent="YPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.01, 0 )
-pixel_size = 0.1563
-axis = 1
-texture = ExtResource( 3 )
-
-[node name="YPH_Inner" type="Sprite3D" parent="YPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.99, 0 )
-pixel_size = 0.1563
-axis = 1
-texture = ExtResource( 3 )
-
-[node name="YMH" type="Spatial" parent="."]
-visible = false
-
-[node name="YMH_Outer" type="Sprite3D" parent="YMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.01, 0 )
-pixel_size = 0.1563
-axis = 1
-texture = ExtResource( 3 )
-
-[node name="YMH_Inner" type="Sprite3D" parent="YMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.99, 0 )
-pixel_size = 0.1563
-axis = 1
-texture = ExtResource( 3 )
-
-[node name="ZPH" type="Spatial" parent="."]
-visible = false
-
-[node name="ZPH_Outer" type="Sprite3D" parent="ZPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.01 )
-pixel_size = 0.1563
-texture = ExtResource( 3 )
-
-[node name="ZPH_Inner" type="Sprite3D" parent="ZPH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.99 )
-pixel_size = 0.1563
-texture = ExtResource( 3 )
-
-[node name="ZMH" type="Spatial" parent="."]
-visible = false
-
-[node name="ZMH_Outer" type="Sprite3D" parent="ZMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.01 )
-pixel_size = 0.1563
-texture = ExtResource( 3 )
-
-[node name="ZMH_Inner" type="Sprite3D" parent="ZMH"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.99 )
-pixel_size = 0.1563
-texture = ExtResource( 3 )
+shape = SubResource( 4 )
 [connection signal="input_event" from="XP/Area" to="." method="_on_XP_select"]
 [connection signal="input_event" from="XM/Area" to="." method="_on_XM_select"]
-[connection signal="input_event" from="YP/Area" to="." method="_on_YP_select"]
 [connection signal="input_event" from="YM/Area" to="." method="_on_YM_select"]
+[connection signal="input_event" from="YP/Area" to="." method="_on_YP_select"]
 [connection signal="input_event" from="ZP/Area" to="." method="_on_ZP_select"]
 [connection signal="input_event" from="ZM/Area" to="." method="_on_ZM_select"]
