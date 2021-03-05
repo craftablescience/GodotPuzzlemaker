@@ -1,0 +1,239 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/editor/TouchControls.gd" type="Script" id=1]
+[ext_resource path="res://images/icons/right.png" type="Texture" id=2]
+[ext_resource path="res://images/icons/up.png" type="Texture" id=3]
+[ext_resource path="res://images/icons/left.png" type="Texture" id=4]
+[ext_resource path="res://images/icons/down.png" type="Texture" id=5]
+[ext_resource path="res://images/icons/mouse_right.png" type="Texture" id=6]
+[ext_resource path="res://images/icons/mouse_left.png" type="Texture" id=7]
+
+[node name="TouchControls" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Up" type="Button" parent="."]
+anchor_left = 0.21
+anchor_top = 0.65
+anchor_right = 0.27
+anchor_bottom = 0.77
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 3 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Down" type="Button" parent="."]
+anchor_left = 0.21
+anchor_top = 0.78
+anchor_right = 0.27
+anchor_bottom = 0.9
+margin_left = 0.409912
+margin_top = -6.10352e-05
+margin_right = 0.409912
+margin_bottom = -0.00012207
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 5 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LeftClick" type="Button" parent="."]
+anchor_left = 0.73
+anchor_top = 0.65
+anchor_right = 0.79
+anchor_bottom = 0.77
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_mask = 3
+icon = ExtResource( 7 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RightClick" type="Button" parent="."]
+anchor_left = 0.73
+anchor_top = 0.78
+anchor_right = 0.79
+anchor_bottom = 0.9
+margin_left = 0.409912
+margin_top = -6.10352e-05
+margin_right = 0.409912
+margin_bottom = -0.00012207
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_mask = 3
+icon = ExtResource( 6 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Move" type="Panel" parent="."]
+anchor_left = -0.000208333
+anchor_top = 0.649704
+anchor_right = 0.2
+anchor_bottom = 0.899704
+margin_left = -0.6
+margin_top = 0.319946
+margin_right = 0.879974
+margin_bottom = 0.319946
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Forward" type="Button" parent="Move"]
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 0.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 3 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Back" type="Button" parent="Move"]
+anchor_left = 0.33
+anchor_top = 0.5
+anchor_right = 0.66
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 5 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Left" type="Button" parent="Move"]
+anchor_top = 0.250048
+anchor_right = 0.33
+anchor_bottom = 0.750048
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 4 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Right" type="Button" parent="Move"]
+anchor_left = 0.66
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+icon = ExtResource( 2 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Look" type="Panel" parent="."]
+anchor_left = 0.8
+anchor_top = 0.649704
+anchor_right = 1.0
+anchor_bottom = 0.899704
+margin_left = -0.6
+margin_top = 0.319946
+margin_right = 0.879974
+margin_bottom = 0.319946
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Up" type="Button" parent="Look"]
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 0.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 3 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Down" type="Button" parent="Look"]
+anchor_left = 0.33
+anchor_top = 0.5
+anchor_right = 0.66
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 5 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Left" type="Button" parent="Look"]
+anchor_top = 0.250048
+anchor_right = 0.33
+anchor_bottom = 0.750048
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 4 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Right" type="Button" parent="Look"]
+anchor_left = 0.66
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.75
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource( 2 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+[connection signal="button_down" from="Up" to="." method="_on_Up_button_down"]
+[connection signal="button_up" from="Up" to="." method="_on_Up_button_up"]
+[connection signal="button_down" from="Down" to="." method="_on_Down_button_down"]
+[connection signal="button_up" from="Down" to="." method="_on_Down_button_up"]
+[connection signal="pressed" from="LeftClick" to="." method="_on_LeftClick_pressed"]
+[connection signal="pressed" from="RightClick" to="." method="_on_RightClick_pressed"]
+[connection signal="button_down" from="Move/Forward" to="." method="_on_Forward_button_down"]
+[connection signal="button_up" from="Move/Forward" to="." method="_on_Forward_button_up"]
+[connection signal="button_down" from="Move/Back" to="." method="_on_Back_button_down"]
+[connection signal="button_up" from="Move/Back" to="." method="_on_Back_button_up"]
+[connection signal="button_down" from="Move/Left" to="." method="_on_Left_button_down"]
+[connection signal="button_up" from="Move/Left" to="." method="_on_Left_button_up"]
+[connection signal="button_down" from="Move/Right" to="." method="_on_Right_button_down"]
+[connection signal="button_up" from="Move/Right" to="." method="_on_Right_button_up"]
+[connection signal="button_down" from="Look/Up" to="." method="_on_LookUp_button_down"]
+[connection signal="button_up" from="Look/Up" to="." method="_on_LookUp_button_up"]
+[connection signal="button_down" from="Look/Down" to="." method="_on_LookDown_button_down"]
+[connection signal="button_up" from="Look/Down" to="." method="_on_LookDown_button_up"]
+[connection signal="button_down" from="Look/Left" to="." method="_on_LookLeft_button_down"]
+[connection signal="button_up" from="Look/Left" to="." method="_on_LookLeft_button_up"]
+[connection signal="button_down" from="Look/Right" to="." method="_on_LookRight_button_down"]
+[connection signal="button_up" from="Look/Right" to="." method="_on_LookRight_button_up"]

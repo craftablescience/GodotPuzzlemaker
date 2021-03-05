@@ -98,7 +98,7 @@ func update() -> void:
 		sound.set_disabled(!self.soundtgl)
 	# Mobile
 	if self.mobilebtn:
-		get_parent().get_node("TopBar/CenterMenu/Mobile").show()
+		get_parent().get_node("TopBar/CenterMenu/Mobile").hide()
 	else:
 		get_parent().get_node("TopBar/CenterMenu/Mobile").hide()
 	
