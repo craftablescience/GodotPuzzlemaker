@@ -7,7 +7,7 @@
 [ext_resource path="res://scripts/menu/Edit.gd" type="Script" id=5]
 [ext_resource path="res://scripts/editor/Camera.gd" type="Script" id=6]
 [ext_resource path="res://scripts/menu/Crosshair.gd" type="Script" id=7]
-[ext_resource path="res://images/editor/crosshair.png" type="Texture" id=8]
+[ext_resource path="res://images/icons/crosshair.png" type="Texture" id=8]
 [ext_resource path="res://scenes/editor/Room.tscn" type="PackedScene" id=9]
 [ext_resource path="res://images/icons/voxel.png" type="Texture" id=10]
 [ext_resource path="res://images/icons/select.png" type="Texture" id=11]
@@ -445,9 +445,9 @@ __meta__ = {
 }
 
 [node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 53.0
+margin_top = 52.0
 margin_right = 183.0
-margin_bottom = 121.0
+margin_bottom = 120.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 4 )
 text = "Select"
@@ -456,9 +456,9 @@ clip_text = true
 align = 0
 
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 125.0
+margin_top = 124.0
 margin_right = 183.0
-margin_bottom = 193.0
+margin_bottom = 192.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 6 )
 text = "Build"
@@ -466,9 +466,9 @@ icon = ExtResource( 10 )
 align = 0
 
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 197.0
+margin_top = 196.0
 margin_right = 183.0
-margin_bottom = 265.0
+margin_bottom = 264.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 8 )
 text = "Texture"
@@ -476,9 +476,9 @@ icon = ExtResource( 13 )
 align = 0
 
 [node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 269.0
+margin_top = 268.0
 margin_right = 183.0
-margin_bottom = 337.0
+margin_bottom = 336.0
 shortcut_in_tooltip = false
 shortcut = SubResource( 10 )
 text = "Entity"
@@ -1019,10 +1019,29 @@ size_flags_horizontal = 3
 placeholder_text = "C:/.../Portal 2/bin/vbsp.exe"
 caret_blink = true
 
-[node name="VVIS" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+[node name="BSPZIP" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
 margin_top = 147.0
 margin_right = 952.0
 margin_bottom = 171.0
+
+[node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/BSPZIP"]
+margin_top = 5.0
+margin_right = 154.0
+margin_bottom = 19.0
+text = "BSPZIP Executable Path:"
+
+[node name="LineEdit" type="LineEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/BSPZIP"]
+margin_left = 158.0
+margin_right = 952.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "C:/.../Portal 2/bin/bspzip.exe"
+caret_blink = true
+
+[node name="VVIS" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
+margin_top = 175.0
+margin_right = 952.0
+margin_bottom = 199.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS"]
 margin_top = 5.0
@@ -1039,9 +1058,9 @@ placeholder_text = "C:/.../Portal 2/bin/vvis.exe"
 caret_blink = true
 
 [node name="VRAD" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 175.0
+margin_top = 203.0
 margin_right = 952.0
-margin_bottom = 199.0
+margin_bottom = 227.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/VRAD"]
 margin_top = 5.0
@@ -1058,9 +1077,9 @@ placeholder_text = "C:/.../Portal 2/bin/vrad.exe"
 caret_blink = true
 
 [node name="RunGame" type="HBoxContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 203.0
+margin_top = 231.0
 margin_right = 952.0
-margin_bottom = 243.0
+margin_bottom = 271.0
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/RunGame"]
 margin_right = 210.0
@@ -1073,7 +1092,7 @@ size_flags_horizontal = 3
 text = "Run Game On Build:"
 
 [node name="TextEdit" type="TextEdit" parent="Menu/Control/ExportDialog/TabContainer/Portal 2"]
-margin_top = 247.0
+margin_top = 275.0
 margin_right = 952.0
 margin_bottom = 693.0
 size_flags_vertical = 3

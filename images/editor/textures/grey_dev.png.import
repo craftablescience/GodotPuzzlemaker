@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightbulb.png-e5d57a755ad77668a691fe8cba62cae2.stex"
+path="res://.import/grey_dev.png-687578581a9048dce384a329ecad2b71.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/icons/lightbulb.png"
-dest_files=[ "res://.import/lightbulb.png-e5d57a755ad77668a691fe8cba62cae2.stex" ]
+source_file="res://images/editor/textures/grey_dev.png"
+dest_files=[ "res://.import/grey_dev.png-687578581a9048dce384a329ecad2b71.stex" ]
 
 [params]
 

@@ -67,6 +67,8 @@ func _ready() -> void:
 					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/ExePath/LineEdit").text = str(line["p2exe"])
 				if "p2vbsp" in line.keys():
 					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/VBSP/LineEdit").text = str(line["p2vbsp"])
+				if "p2bspzip" in line.keys():
+					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/BSPZIP/LineEdit").text = str(line["p2bspzip"])
 				if "p2vvis" in line.keys():
 					get_node("Menu/Control/ExportDialog/TabContainer/Portal 2/VVIS/LineEdit").text = str(line["p2vvis"])
 				if "p2vrad" in line.keys():

@@ -15,6 +15,7 @@ var p2_gamedir: String
 var p2_gameinfo: String
 var p2_vvis: String
 var p2_vbsp: String
+var p2_bspzip: String
 var p2_vrad: String
 var p2_runonbuild: bool
 
@@ -50,6 +51,7 @@ func __init() -> void:
 	self.p2_gameinfo = get_parent().get_node("ExportDialog/TabContainer/Portal 2/GameInfo/LineEdit").text
 	self.p2_vvis = get_parent().get_node("ExportDialog/TabContainer/Portal 2/VVIS/LineEdit").text
 	self.p2_vbsp = get_parent().get_node("ExportDialog/TabContainer/Portal 2/VBSP/LineEdit").text
+	self.p2_bspzip = get_parent().get_node("ExportDialog/TabContainer/Portal 2/BSPZIP/LineEdit").text
 	self.p2_vrad = get_parent().get_node("ExportDialog/TabContainer/Portal 2/VRAD/LineEdit").text
 	self.p2_runonbuild = get_parent().get_node("ExportDialog/TabContainer/Portal 2/RunGame/CenterContainer/CheckButton").pressed
 	
@@ -76,6 +78,7 @@ func save() -> void:
 	out += "\n" + "{\"p2exe\":" + "\"" + str(self.p2_exe) + "\""                                               + "}"
 	out += "\n" + "{\"p2vvis\":" + "\"" + str(self.p2_vvis) + "\""                                             + "}"
 	out += "\n" + "{\"p2vbsp\":" + "\"" + str(self.p2_vbsp) + "\""                                             + "}"
+	out += "\n" + "{\"p2bspzip\":" + "\"" + str(self.p2_bspzip) + "\""                                         + "}"
 	out += "\n" + "{\"p2vrad\":" + "\"" + str(self.p2_vrad) + "\""                                             + "}"
 	out += "\n" + "{\"p2runonbuild\":" + str(self.p2_runonbuild).to_lower()                                    + "}"
 	
@@ -135,10 +138,11 @@ func update() -> void:
 	else:
 		get_parent().get_node("ExportDialog").set_portal2_visibility(false)
 
-func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
+func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, bspzip: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
 	self.p2_exe = p2exe
 	self.p2_gamedir = gamedir
 	self.p2_vbsp = vbsp
+	self.p2_bspzip = bspzip
 	self.p2_vrad = vrad
 	self.p2_vvis = vvis
 	self.p2_runonbuild = runonbuild

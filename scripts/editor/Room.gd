@@ -481,13 +481,43 @@ func export_to_vmf(filenam: String) -> void:
 				continue
 			var planeTexture: String = cube.get_type(plane)
 			if planeTexture == "builtin:white":
-				block.set_material_side("TILE/WHITE_WALL_TILE001A", dirs[plane])
+				block.set_material_side("GPZ/BUILTIN_WHITE", dirs[plane])
 			elif planeTexture == "builtin:black":
-				block.set_material_side("METAL/BLACK_WALL_METAL_002D", dirs[plane])
+				block.set_material_side("GPZ/BUILTIN_BLACK", dirs[plane])
 			elif planeTexture == "builtin:dev_orange":
-				block.set_material_side(vmf.COMMON_MATERIALS.DEV_MEASUREWALL01A, dirs[plane])
+				block.set_material_side("GPZ/BUILTIN_ORANGE_DEV", dirs[plane])
 			elif planeTexture == "builtin:dev_grey":
-				block.set_material_side(vmf.COMMON_MATERIALS.DEV_MEASUREWALL01D, dirs[plane])
+				block.set_material_side("GPZ/BUILTIN_GREY_DEV", dirs[plane])
+			elif planeTexture == "builtin:brick_1":
+				block.set_material_side("GPZ/BUILTIN_BRICK_1", dirs[plane])
+			elif planeTexture == "builtin:building_1":
+				block.set_material_side("GPZ/BUILTIN_BUILDING_1", dirs[plane])
+			elif planeTexture == "builtin:building_2":
+				block.set_material_side("GPZ/BUILTIN_BUILDING_2", dirs[plane])
+			elif planeTexture == "builtin:carpet_1":
+				block.set_material_side("GPZ/BUILTIN_CARPET_1", dirs[plane])
+			elif planeTexture == "builtin:concrete_1":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_1", dirs[plane])
+			elif planeTexture == "builtin:concrete_2":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_2", dirs[plane])
+			elif planeTexture == "builtin:concrete_3":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_3", dirs[plane])
+			elif planeTexture == "builtin:concrete_4":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_4", dirs[plane])
+			elif planeTexture == "builtin:concrete_5":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_5", dirs[plane])
+			elif planeTexture == "builtin:concrete_6":
+				block.set_material_side("GPZ/BUILTIN_CONCRETE_6", dirs[plane])
+			elif planeTexture == "builtin:dirt_1":
+				block.set_material_side("GPZ/BUILTIN_DIRT_1", dirs[plane])
+			elif planeTexture == "builtin:grass_1":
+				block.set_material_side("GPZ/BUILTIN_GRASS_1", dirs[plane])
+			elif planeTexture == "builtin:leather_1":
+				block.set_material_side("GPZ/BUILTIN_LEATHER_1", dirs[plane])
+			elif planeTexture == "builtin:stone_1":
+				block.set_material_side("GPZ/BUILTIN_STONE_1", dirs[plane])
+			elif planeTexture == "builtin:wall_1":
+				block.set_material_side("GPZ/BUILTIN_WALL_1", dirs[plane])
 		vmf.add_solid(block.brush)
 	for entity in self.ents:
 		if entity["ID"] == "builtin:" + Globals.PLAYER_START:
