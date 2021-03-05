@@ -388,7 +388,7 @@ func load_texture(data: String, ID: String) -> void:
 	cache.open("user://.cache/" + ID, cache.WRITE)
 	cache.store_buffer(Marshalls.base64_to_raw(data))
 	cache.close()
-	i.resize(64, 64, Image.INTERPOLATE_NEAREST)
+	#i.resize(64, 64, Image.INTERPOLATE_LANCZOS)
 	img.create_from_image(i, 1)
 	if !(Globals.CUSTOMID + ":" + ID in self.textureNode.TEXTURES):
 		self.textureNode.add_item(Globals.CUSTOMID,
