@@ -1,3 +1,7 @@
+white.png      = Brendan Lewis
+black.png      = Brendan Lewis
+orange_dev.png = Brendan Lewis
+grey_dev.png   = Brendan Lewis
 stone_1.jpg    = https://www.textures.com/download/BrickRound0044/9218
 brick_1.jpg    = https://www.textures.com/download/BrickLargeBlocks0037/113930
 grass_1.jpg    = https://www.textures.com/download/Grass0131/38957

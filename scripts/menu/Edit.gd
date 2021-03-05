@@ -55,7 +55,7 @@ func _on_item_pressed(id : int) -> void:
 		0:
 			get_parent().get_parent().get_parent().get_node("Properties").popup_centered()
 		_:
-			print("Edit says how?")
+			assert(false, "Edit says how?")
 
 func _on_item_pressed_theme(id: int) -> void:
 	self.themeID = id
@@ -78,4 +78,4 @@ func _on_item_pressed_advanced(id: int) -> void:
 		0:
 			print("(Save VMF...) was pressed")
 		_:
-			print("Edit.Advanced says how?")
+			assert(false, "Edit.Advanced says how?")

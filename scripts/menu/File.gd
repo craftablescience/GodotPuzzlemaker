@@ -59,4 +59,4 @@ func _on_item_pressed(id : int) -> void:
 				self.emit_signal("save_level", self.levelName.text)
 			get_parent().get_parent().get_parent().get_node("QuitRequest").popup_centered()
 		_:
-			print("File says how?")
+			assert(false, "File says how?")
