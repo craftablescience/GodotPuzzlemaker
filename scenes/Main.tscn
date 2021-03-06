@@ -576,6 +576,15 @@ current_dir = "user://"
 current_path = "user://"
 script = ExtResource( 19 )
 
+[node name="DragAndDrop" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 58.0
+window_title = "Drag and Drop"
+dialog_text = "In the web version of this applicationn, please drag textures and entities onto the screen, and they will be automatically imported."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TextureFileSelect" type="FileDialog" parent="Menu/Control"]
 anchor_left = 0.1
 anchor_top = 0.1
