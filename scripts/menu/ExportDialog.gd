@@ -11,6 +11,7 @@ func set_portal2_visibility(visible: bool) -> void:
 		$"TabContainer/Portal 2/VRAD".show()
 		$"TabContainer/Portal 2/RunGame".show()
 		$"TabContainer/Portal 2/TextEdit".show()
+		$"TabContainer/Portal 2/BSPZIP".show()
 		$"TabContainer/Portal 2/Unusable".hide()
 	else:
 		$"TabContainer/Portal 2/GameDir".hide()
@@ -21,6 +22,7 @@ func set_portal2_visibility(visible: bool) -> void:
 		$"TabContainer/Portal 2/VRAD".hide()
 		$"TabContainer/Portal 2/RunGame".hide()
 		$"TabContainer/Portal 2/TextEdit".hide()
+		$"TabContainer/Portal 2/BSPZIP".hide()
 		$"TabContainer/Portal 2/Unusable".show()
 
 func _on_Close_pressed() -> void:
