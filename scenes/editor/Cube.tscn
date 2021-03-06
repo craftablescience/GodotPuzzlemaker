@@ -6,6 +6,16 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 5, 5, 5 )
 
+[sub_resource type="SpatialMaterial" id=2]
+resource_local_to_scene = true
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 10, 10 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.1, 5, 5 )
+
 [sub_resource type="SpatialMaterial" id=5]
 resource_local_to_scene = true
 albedo_texture = ExtResource( 1 )
@@ -13,14 +23,12 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="PlaneMesh" id=6]
 size = Vector2( 10, 10 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.1, 5, 5 )
-
 [sub_resource type="SpatialMaterial" id=7]
 resource_local_to_scene = true
 albedo_texture = ExtResource( 1 )
 
 [sub_resource type="PlaneMesh" id=8]
+flip_faces = true
 size = Vector2( 10, 10 )
 
 [sub_resource type="SpatialMaterial" id=9]
@@ -28,7 +36,6 @@ resource_local_to_scene = true
 albedo_texture = ExtResource( 1 )
 
 [sub_resource type="PlaneMesh" id=10]
-flip_faces = true
 size = Vector2( 10, 10 )
 
 [sub_resource type="SpatialMaterial" id=11]
@@ -45,13 +52,6 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="PlaneMesh" id=14]
 size = Vector2( 10, 10 )
 
-[sub_resource type="SpatialMaterial" id=15]
-resource_local_to_scene = true
-albedo_texture = ExtResource( 1 )
-
-[sub_resource type="PlaneMesh" id=16]
-size = Vector2( 10, 10 )
-
 [node name="Cube" type="Spatial"]
 script = ExtResource( 2 )
 __meta__ = {
@@ -64,10 +64,10 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="XP" type="MeshInstance" parent="."]
-transform = Transform( 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0, 1, 5, 0, 0 )
-material_override = SubResource( 5 )
+transform = Transform( 1.19249e-08, 1, 0, 4.37114e-08, -5.21254e-16, -1, -1, 1.19249e-08, -4.37114e-08, 5, 0, 0 )
+material_override = SubResource( 2 )
 use_in_baked_light = true
-mesh = SubResource( 6 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Area" type="Area" parent="XP"]
@@ -78,10 +78,10 @@ input_capture_on_drag = true
 shape = SubResource( 4 )
 
 [node name="XM" type="MeshInstance" parent="."]
-transform = Transform( 4.37114e-08, -1, 1.4243e-14, -1, -4.37114e-08, -3.25841e-07, 3.25841e-07, 0, -1, -5, 0, 0 )
-material_override = SubResource( 7 )
+transform = Transform( 4.37114e-08, -1, 1.4243e-14, 1.94707e-07, -5.73206e-15, -1, 1, 4.37114e-08, 1.94707e-07, -5, 0, 0 )
+material_override = SubResource( 5 )
 use_in_baked_light = true
-mesh = SubResource( 8 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [node name="Area" type="Area" parent="XM"]
@@ -93,9 +93,9 @@ shape = SubResource( 4 )
 
 [node name="YM" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0 )
-material_override = SubResource( 9 )
+material_override = SubResource( 7 )
 use_in_baked_light = true
-mesh = SubResource( 10 )
+mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Area" type="Area" parent="YM"]
@@ -107,8 +107,8 @@ shape = SubResource( 4 )
 
 [node name="YP" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-material_override = SubResource( 11 )
-mesh = SubResource( 12 )
+material_override = SubResource( 9 )
+mesh = SubResource( 10 )
 material/0 = null
 
 [node name="Area" type="Area" parent="YP"]
@@ -120,9 +120,9 @@ shape = SubResource( 4 )
 
 [node name="ZP" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 5 )
-material_override = SubResource( 13 )
+material_override = SubResource( 11 )
 use_in_baked_light = true
-mesh = SubResource( 14 )
+mesh = SubResource( 12 )
 material/0 = null
 
 [node name="Area" type="Area" parent="ZP"]
@@ -135,9 +135,9 @@ shape = SubResource( 4 )
 
 [node name="ZM" type="MeshInstance" parent="."]
 transform = Transform( -1, 0, -3.25841e-07, 3.25841e-07, -4.37114e-08, -1, -1.4243e-14, -1, 4.37114e-08, 0, 0, -5 )
-material_override = SubResource( 15 )
+material_override = SubResource( 13 )
 use_in_baked_light = true
-mesh = SubResource( 16 )
+mesh = SubResource( 14 )
 material/0 = null
 
 [node name="Area" type="Area" parent="ZM"]
