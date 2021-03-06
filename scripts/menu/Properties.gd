@@ -135,8 +135,10 @@ func update() -> void:
 	
 	if OS.get_name() == "Windows":
 		get_parent().get_node("ExportDialog").set_portal2_visibility(p2vmfexport)
+		$TabContainer/Experimental/P2VMFExport.show()
 	else:
 		get_parent().get_node("ExportDialog").set_portal2_visibility(false)
+		$TabContainer/Experimental/P2VMFExport.hide()
 
 func set_portal2_properties(p2exe: String, gamedir: String, vbsp: String, bspzip: String, vvis: String, vrad: String, gameinfo: String, runonbuild: bool) -> void:
 	self.p2_exe = p2exe
