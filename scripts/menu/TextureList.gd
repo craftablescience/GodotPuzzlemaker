@@ -58,8 +58,8 @@ func _ready() -> void:
 	self.add_item("builtin", "Wall 1", "wall_1", preload("res://images/editor/textures/wall_1.png"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)
-
-	add_to_group("TEXTURELIST", true)
+	
+	PackLoader.set_texture_list(self)
 
 
 func add_category(catName: String, ID: String) -> void:

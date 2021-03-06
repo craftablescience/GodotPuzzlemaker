@@ -11,8 +11,6 @@ var camPivot: Spatial
 var actionGizmo: Spatial
 var currentSave: String
 var levelName: String
-var textureNode: Tree
-var entityNode: Tree
 
 signal grow_sidebar
 signal shrink_sidebar
@@ -29,8 +27,6 @@ func _ready():
 	self.camPivot = get_parent().get_node("CameraPivot")
 	self.currentSave = ""
 	self.levelName = ""
-	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
-	self.entityNode = get_tree().get_nodes_in_group("ENTITYLIST")[0]
 	
 	# warning-ignore:return_value_discarded
 	self.add_cube(Vector3(), Globals.TEXTUREFALLBACK)
@@ -146,10 +142,10 @@ func update_empty_surrounding_cull_faces(gridPos: Vector3) -> void:
 		ZP.set_disabled(Globals.PLANEID.ZM, false)
 
 func add_entity(pos: Vector3) -> void:
-	self.add_entity_from_id(pos, self.entityNode.get_selected_entity())
+	self.add_entity_from_id(pos, PackLoader.entityNode.get_selected_entity())
 
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
-	var ent: Node = self.entityNode.ENTITIES[ID].instance()
+	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
 	ent.name = "E" + str(len(self.ents))
 	ent.translate(pos)
 	self.add_child(ent)
@@ -168,7 +164,7 @@ func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
 	self.add_child(ent)
 	self.ents.append({
 		"node": ent,
-		"ID": self.entityNode.get_entity_ID(scene),
+		"ID": PackLoader.entityNode.get_entity_ID(scene),
 		"posx": ent.global_transform.origin.x,
 		"posy": ent.global_transform.origin.y,
 		"posz": ent.global_transform.origin.z
@@ -376,25 +372,6 @@ func save(levelname: String) -> void:
 	save.store_string(self.currentSave)
 	save.close()
 
-func load_texture(data: String, ID: String) -> void:
-	var cache: File = File.new()
-	var img: ImageTexture = ImageTexture.new()
-	var i = Image.new()
-	if ID.split(".")[-1] == "jpg":
-		i.load_jpg_from_buffer(Marshalls.base64_to_raw(data))
-	elif ID.split(".")[-1] == "png":
-		i.load_png_from_buffer(Marshalls.base64_to_raw(data))
-	# warning-ignore:return_value_discarded
-	cache.open("user://.cache/" + ID, cache.WRITE)
-	cache.store_buffer(Marshalls.base64_to_raw(data))
-	cache.close()
-	#i.resize(64, 64, Image.INTERPOLATE_LANCZOS)
-	img.create_from_image(i, 1)
-	if !(Globals.CUSTOMID + ":" + ID in self.textureNode.TEXTURES):
-		self.textureNode.add_item(Globals.CUSTOMID,
-		ID.split("/")[-1].split(".")[0], ID,
-		img)
-
 func load_save(path: String) -> void:
 	var save = File.new()
 	save.open(path, File.READ)
@@ -406,7 +383,6 @@ func load_save(path: String) -> void:
 			get_parent().get_parent().get_node("Menu/Control/LoadFileFormatHigh").popup_centered()
 		else:
 			contents.remove(0)
-			var textures64: Dictionary = {}
 			self.currentSave = ""
 			self.clear()
 			self.remove_child(self.cubes[0])
@@ -415,22 +391,12 @@ func load_save(path: String) -> void:
 			for data in contents:
 				data = parse_json(data)
 				if data != null:
-					if data.keys()[0].substr(0,2) == "T_":
-						textures64[data.keys()[0].substr(2,-1)] = data.values()[0]
-						continue
-					elif data.keys()[0].substr(0,2) == "E_":
-						if !(data.keys()[0].substr(2) in self.entityNode.ENTITIES.keys()):
-							var efile: File = File.new()
-							# warning-ignore:return_value_discarded
-							efile.open("user://.cache/" + data.keys()[0].split(":")[-1], efile.WRITE)
-							efile.store_buffer(Marshalls.base64_to_raw(data[data.keys()[0]]))
-							efile.close()
-							self.entityNode.add_item(
-								Globals.CUSTOMID,
-								data.keys()[0].split(":")[-1].split(".")[0],
-								data.keys()[0].split(":")[-1],
-								load("user://.cache/" + data.keys()[0].split(":")[-1]))
-						continue
+					if data.keys()[0].begins_with("T_"):
+						if !(data.keys()[0].substr(2) in PackLoader.textureNode.TEXTURES.keys()):
+							PackLoader.load_texture(data.values()[0], data.keys()[0].substr(2))
+					elif data.keys()[0].begins_with("E_"):
+						if !(data.keys()[0].substr(2) in PackLoader.entityNode.ENTITIES.keys()):
+							PackLoader.load_entity(data[data.keys()[0]], data.keys()[0].split(":")[0].substr(2), data.keys()[0].split(":")[-1])
 					elif data.keys()[0] == "0":
 						var cube: Spatial = self.add_cube(Vector3(data["posx"], data["posy"], data["posz"]), Globals.TEXTUREFALLBACK)
 						for i in range(6):
@@ -443,10 +409,8 @@ func load_save(path: String) -> void:
 									ID = ID.substr(0, len(ID) - 1)
 								else:
 									ID = ary[1]
-								if !((Globals.CUSTOMID + ":" + ID) in self.textureNode.TEXTURES):
-									self.load_texture(textures64[ID], ID)
-								else:
-									data[str(i)]["texdata"] = self.textureNode.get_texture(Globals.CUSTOMID + ":" + ID)
+								if (Globals.CUSTOMID + ":" + ID) in PackLoader.textureNode.TEXTURES:
+									data[str(i)]["texdata"] = PackLoader.textureNode.get_texture(Globals.CUSTOMID + ":" + ID)
 							cube.set_type(i, data[str(i)]["texture"])
 							cube.set_disabled(i, data[str(i)]["disabled"])
 					elif data.keys()[0] == "ID":
@@ -579,14 +543,14 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 			if key == BUTTON_LEFT and not drag:
 				pass # TODO: add context menu here
 			elif key == BUTTON_RIGHT:
-				var tex: String = self.textureNode.get_selected_texture()
+				var tex: String = PackLoader.textureNode.get_selected_texture()
 				if tex == "":
 					tex = Globals.TEXTUREFALLBACK
 				self.cubes[cubeid].set_type(plane, tex)
 		
 		Globals.TOOL.PLACEENTITY:
 			if key == BUTTON_LEFT:
-				var ent: String = self.entityNode.get_selected_entity()
+				var ent: String = PackLoader.entityNode.get_selected_entity()
 				if ent != "" and plane == Globals.PLANEID.YP:
 					self.add_entity(self.get_placed_ent_pos(cubeid, plane))
 		

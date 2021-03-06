@@ -35,6 +35,7 @@ config/quit_on_go_back=false
 
 Globals="*res://scripts/Globals.gd"
 VMFDataManager="*res://addons/vmflib/VMFDataManager.gd"
+PackLoader="*res://scripts/util/PackLoader.gd"
 
 [display]
 

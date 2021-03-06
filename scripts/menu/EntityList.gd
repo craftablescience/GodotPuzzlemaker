@@ -32,8 +32,8 @@ func _ready() -> void:
 	self.add_item("builtin", "Light", "omnilight", preload("res://scenes/entities/LightEntity.scn"))
 	
 	self.add_category("Custom", Globals.CUSTOMID)
-
-	add_to_group("ENTITYLIST", true)
+	
+	PackLoader.set_entity_list(self)
 
 
 func add_category(catName: String, ID: String) -> void:

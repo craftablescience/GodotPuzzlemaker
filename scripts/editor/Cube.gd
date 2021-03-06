@@ -9,7 +9,6 @@ var ZP: MeshInstance
 var ZM: MeshInstance
 
 var planes: Dictionary
-var textureNode: Tree
 
 
 enum FACE_SELECTION_MODE {
@@ -65,13 +64,9 @@ func __init(pos: Vector3, type: String, id: int):
 			"disabled": false
 		}
 	}
-	self.load_textures()
 	self.set_type_all(type)
 	self.set_position_grid(pos)
 	self.set_id(id)
-
-func load_textures() -> void:
-	self.textureNode = get_tree().get_nodes_in_group("TEXTURELIST")[0]
 
 func get_id() -> int:
 	return int(self.name)
@@ -120,7 +115,7 @@ func set_type_all(type: String) -> void:
 		self.set_type(i, type)
 
 func set_type(plane: int, type: String) -> void:
-	self.planes[plane]["node"].material_override.albedo_texture = self.textureNode.get_texture(type)
+	self.planes[plane]["node"].material_override.albedo_texture = PackLoader.textureNode.get_texture(type)
 	self.planes[plane]["texture"] = type
 
 func get_type(plane: int) -> String:
