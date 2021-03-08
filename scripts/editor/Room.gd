@@ -544,9 +544,8 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 				pass # TODO: add context menu here
 			elif key == BUTTON_RIGHT:
 				var tex: String = PackLoader.textureNode.get_selected_texture()
-				if tex == "":
-					tex = Globals.TEXTUREFALLBACK
-				self.cubes[cubeid].set_type(plane, tex)
+				if tex != "":
+					self.cubes[cubeid].set_type(plane, tex)
 		
 		Globals.TOOL.PLACEENTITY:
 			if key == BUTTON_LEFT:

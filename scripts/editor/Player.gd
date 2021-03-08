@@ -33,32 +33,33 @@ func _physics_process(delta: float) -> void:
 			self.esc_pressed = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-	if Input.is_action_pressed("editor_camera_forward"):
-		self.movement.z = -1
-	if Input.is_action_pressed("editor_camera_back"):
-		self.movement.z = 1
-	if !Input.is_action_pressed("editor_camera_forward") and !Input.is_action_pressed("editor_camera_back"):
-		self.movement.z = 0
-	if Input.is_action_pressed("editor_camera_left"):
-		self.movement.x = -1
-	if Input.is_action_pressed("editor_camera_right"):
-		self.movement.x = 1
-	if !Input.is_action_pressed("editor_camera_left") and !Input.is_action_pressed("editor_camera_right"):
-		self.movement.x = 0
+	if self.active:
+		if Input.is_action_pressed("editor_camera_forward"):
+			self.movement.z = -1
+		if Input.is_action_pressed("editor_camera_back"):
+			self.movement.z = 1
+		if !Input.is_action_pressed("editor_camera_forward") and !Input.is_action_pressed("editor_camera_back"):
+			self.movement.z = 0
+		if Input.is_action_pressed("editor_camera_left"):
+			self.movement.x = -1
+		if Input.is_action_pressed("editor_camera_right"):
+			self.movement.x = 1
+		if !Input.is_action_pressed("editor_camera_left") and !Input.is_action_pressed("editor_camera_right"):
+			self.movement.x = 0
 	
-	var snap: Vector3 = Vector3(0,-0.25,0)
+		var snap: Vector3 = Vector3(0,-0.25,0)
 	
-	if self.is_on_floor():
-		self.movement.y = 0
-	else:
-		self.movement.y += gravity * delta
+		if self.is_on_floor():
+			self.movement.y = 0
+		else:
+			self.movement.y += gravity * delta
 	
-	if Input.is_action_just_pressed("editor_camera_up") and self.is_on_floor():
-		self.movement.y = 4
-		snap = Vector3()
+		if Input.is_action_just_pressed("editor_camera_up") and self.is_on_floor():
+			self.movement.y = 4
+			snap = Vector3()
 	
-	# warning-ignore:return_value_discarded
-	self.move_and_slide_with_snap(transform.basis.xform(movement) * 20, snap, Vector3(0,1,0))
+		# warning-ignore:return_value_discarded
+		self.move_and_slide_with_snap(transform.basis.xform(movement) * 20, snap, Vector3(0,1,0))
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
