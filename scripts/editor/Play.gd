@@ -26,6 +26,7 @@ func _on_toggled(button_pressed: bool) -> void:
 		var resp: Array = self.room.get_player_start()
 		if !resp[0]:
 			get_parent().get_parent().get_parent().get_node("PlayModeError").popup_centered()
+			self.pressed = false
 			self.player._set_active(false)
 			self.player.hide()
 		else:
