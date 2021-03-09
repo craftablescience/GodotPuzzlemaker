@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/menu.theme" type="Theme" id=2]
@@ -31,7 +31,12 @@
 [ext_resource path="res://scripts/editor/SoundEffect.gd" type="Script" id=29]
 [ext_resource path="res://scripts/menu/Feedback.gd" type="Script" id=30]
 [ext_resource path="res://theme/main.theme" type="Theme" id=31]
+[ext_resource path="res://theme/main/button/pressed.stylebox" type="StyleBox" id=32]
+[ext_resource path="res://theme/main/panel/panel.stylebox" type="StyleBox" id=33]
+[ext_resource path="res://theme/main/button/hover.stylebox" type="StyleBox" id=34]
 [ext_resource path="res://images/icons/mobile.png" type="Texture" id=35]
+[ext_resource path="res://theme/main/button/normal.stylebox" type="StyleBox" id=36]
+[ext_resource path="res://theme/main/button/disabled.stylebox" type="StyleBox" id=37]
 [ext_resource path="res://scripts/menu/LevelName.gd" type="Script" id=38]
 [ext_resource path="res://scripts/menu/Add.gd" type="Script" id=39]
 [ext_resource path="res://scripts/menu/TextureFileSelect.gd" type="Script" id=40]
@@ -40,12 +45,28 @@
 [ext_resource path="res://scripts/editor/LightPanel.gd" type="Script" id=43]
 [ext_resource path="res://scripts/menu/LightingButton.gd" type="Script" id=44]
 [ext_resource path="res://scripts/editor/Play.gd" type="Script" id=45]
+[ext_resource path="res://fonts/rubik/Rubik_18.tres" type="DynamicFont" id=46]
 
 [sub_resource type="InputEventAction" id=1]
 action = "ui_play"
 
 [sub_resource type="ShortCut" id=2]
 shortcut = SubResource( 1 )
+
+[sub_resource type="Theme" id=12]
+default_font = ExtResource( 46 )
+Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/colors/font_color_disabled = Color( 0.878431, 0.878431, 0.878431, 0.490196 )
+Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = ExtResource( 37 )
+Button/styles/focus = ExtResource( 32 )
+Button/styles/hover = ExtResource( 34 )
+Button/styles/normal = ExtResource( 36 )
+Button/styles/pressed = ExtResource( 32 )
+Panel/styles/panel = ExtResource( 33 )
 
 [sub_resource type="InputEventAction" id=3]
 action = "tool_select"
@@ -154,7 +175,6 @@ anchor_left = 0.35
 anchor_right = 0.725
 anchor_bottom = 0.997151
 theme = ExtResource( 31 )
-custom_constants/separation = 16
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": true
@@ -174,7 +194,7 @@ expand_icon = true
 script = ExtResource( 45 )
 
 [node name="LevelName" type="LineEdit" parent="Menu/Control/TopBar/CenterMenu"]
-margin_left = 166.0
+margin_left = 154.0
 margin_right = 720.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 200, 0 )
@@ -182,7 +202,7 @@ size_flags_horizontal = 3
 max_length = 32
 expand_to_text_length = true
 clear_button_enabled = true
-placeholder_text = "  Filename..."
+placeholder_text = " Filename..."
 placeholder_alpha = 0.7
 caret_blink = true
 script = ExtResource( 38 )
@@ -224,7 +244,7 @@ anchor_bottom = 0.68
 margin_left = -0.560059
 margin_right = 0.199951
 margin_bottom = -0.240051
-theme = ExtResource( 2 )
+theme = SubResource( 12 )
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -244,10 +264,13 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 52.0
+[node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
+"TOOL_BUTTON",
+]]
+margin_top = 60.0
 margin_right = 183.0
-margin_bottom = 120.0
+margin_bottom = 124.0
+toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 4 )
 text = "Select"
@@ -255,30 +278,39 @@ icon = ExtResource( 11 )
 clip_text = true
 align = 0
 
-[node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 124.0
+[node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
+"TOOL_BUTTON",
+]]
+margin_top = 128.0
 margin_right = 183.0
 margin_bottom = 192.0
+toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 6 )
 text = "Build"
 icon = ExtResource( 10 )
 align = 0
 
-[node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
+[node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
+"TOOL_BUTTON",
+]]
 margin_top = 196.0
 margin_right = 183.0
-margin_bottom = 264.0
+margin_bottom = 260.0
+toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 8 )
 text = "Texture"
 icon = ExtResource( 13 )
 align = 0
 
-[node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer"]
-margin_top = 268.0
+[node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
+"TOOL_BUTTON",
+]]
+margin_top = 264.0
 margin_right = 183.0
-margin_bottom = 336.0
+margin_bottom = 328.0
+toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 10 )
 text = "Entity"
@@ -309,16 +341,17 @@ __meta__ = {
 }
 
 [node name="Search" type="LineEdit" parent="Menu/Control/ContextPanel/HBoxContainer"]
-margin_right = 312.0
+margin_right = 348.0
 margin_bottom = 50.0
 hint_tooltip = "Search for a texture or entity."
 size_flags_horizontal = 3
 align = 3
 shortcut_keys_enabled = false
-placeholder_text = "Search..."
+placeholder_text = " Search..."
 caret_blink = true
 
 [node name="Remove" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
+visible = false
 margin_left = 316.0
 margin_right = 348.0
 margin_bottom = 50.0
@@ -745,7 +778,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 40.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -755,9 +788,8 @@ margin_bottom = 31.0
 
 [node name="Label" type="Label" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/Unusable"]
 margin_left = 235.0
-margin_top = -8.0
 margin_right = 716.0
-margin_bottom = 39.0
+margin_bottom = 47.0
 text = "
 This export option can only be used on Windows platforms."
 
@@ -904,9 +936,8 @@ margin_right = 210.0
 margin_bottom = 40.0
 
 [node name="CheckButton" type="CheckButton" parent="Menu/Control/ExportDialog/TabContainer/Portal 2/RunGame/CenterContainer"]
-margin_left = -11.0
 margin_top = 4.0
-margin_right = 220.0
+margin_right = 231.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 text = "Run Game On Build:"
@@ -1133,7 +1164,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 40.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -1181,6 +1212,10 @@ script = ExtResource( 7 )
 layer = 0
 
 [node name="Room" parent="Scene" instance=ExtResource( 9 )]
+tool_select = NodePath("../../Menu/Control/ToolBar/VBoxContainer/Select")
+tool_build = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelBuild")
+tool_texture = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelTextured")
+tool_placeentity = NodePath("../../Menu/Control/ToolBar/VBoxContainer/PlaceEntity")
 
 [node name="CameraPivot" type="Spatial" parent="Scene"]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 15, 10, 15 )
@@ -1221,8 +1256,8 @@ script = ExtResource( 29 )
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
-[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
+[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Tree_cell_selected"]

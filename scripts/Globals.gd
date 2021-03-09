@@ -80,3 +80,7 @@ static func GET_OFFSET_ON_AXIS(pos: Vector3, direction: int):
 			return Vector3(pos.x, pos.y, pos.z + 1)
 		_:
 			return null
+
+func CLEAR_SELECTED_TOOLS() -> void:
+	for node in get_tree().get_nodes_in_group("TOOL_BUTTON"):
+		node.pressed = false
