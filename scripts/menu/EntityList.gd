@@ -30,6 +30,7 @@ func _ready() -> void:
 	self.add_category("Custom", Globals.CUSTOMID)
 	
 	PackLoader.set_entity_list(self)
+	self._on_search_text_changed("")
 
 
 func add_category(catName: String, ID: String) -> void:
