@@ -45,8 +45,11 @@ func _process(_delta: float) -> void:
 			var planes = self.cubeFacesSelected[cubeid].keys()
 			self.cubes[cubeid].set_all_face_highlight(false)
 			self.cubeFacesSelected[cubeid] = {}
+			var tex: String = PackLoader.textureNode.get_selected_texture()
+			if tex == "":
+				tex = Globals.TEXTUREFALLBACK
 			for plane in planes:
-				var cube = self.add_cube_if_empty(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
+				var cube = self.add_cube_if_empty(self.get_placed_cube_pos(cubeid, plane), tex)
 				if cube != null:
 					cube.set_face_highlight(plane, true)
 					self.cubeFacesSelected[cube.get_id()][plane] = true
@@ -93,6 +96,12 @@ func remove_cube(cubeid: int) -> void:
 		self.cubes[cubeid] = null
 		self.cubeFacesSelected[cubeid] = {}
 		self.remove_null_cubes()
+
+func remove_textures(ids: Array) -> void:
+	pass
+
+func remove_entities(ids: Array) -> void:
+	pass
 
 func update_surrounding_cull_faces(cubeid: int, gridPos: Vector3) -> void:
 	var cube = self.cubes[cubeid]
@@ -393,7 +402,7 @@ func load_save(path: String) -> void:
 				if data != null:
 					if data.keys()[0].begins_with("T_"):
 						if !(data.keys()[0].substr(2) in PackLoader.textureNode.TEXTURES.keys()):
-							PackLoader.load_texture(data.values()[0], data.keys()[0].substr(2))
+							PackLoader.load_texture(data.values()[0], Globals.CUSTOMID, data.keys()[0].substr(2))
 					elif data.keys()[0].begins_with("E_"):
 						if !(data.keys()[0].substr(2) in PackLoader.entityNode.ENTITIES.keys()):
 							PackLoader.load_entity(data[data.keys()[0]], data.keys()[0].split(":")[0].substr(2), data.keys()[0].split(":")[-1])
@@ -535,7 +544,10 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 		Globals.TOOL.VOXEL:
 			if key == BUTTON_LEFT and not drag:
 				# warning-ignore:return_value_discarded
-				self.add_cube(self.get_placed_cube_pos(cubeid, plane), Globals.TEXTUREFALLBACK)
+				var tex: String = PackLoader.textureNode.get_selected_texture()
+				if tex == "":
+					tex = Globals.TEXTUREFALLBACK
+				self.add_cube(self.get_placed_cube_pos(cubeid, plane), tex)
 			elif key == BUTTON_RIGHT and not drag:
 				self.remove_cube(cubeid)
 		
