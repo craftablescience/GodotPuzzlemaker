@@ -2,22 +2,24 @@ extends Node
 
 
 const gdunzip_file = preload("res://addons/gdunzip/gdunzip.gd")
-var gdunzip
-var textureNode
-var entityNode
+onready var gdunzip = gdunzip_file.new()
+var textureNode: Tree
+var entityNode: Tree
+var textureMap: Dictionary
+var textures: Dictionary
+var entityMap: Dictionary
+var entities: Dictionary
 
 
 func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	get_tree().connect("files_dropped", self, "_get_dropped_files")
-	
-	gdunzip = gdunzip_file.new()
 	self.load_resource_pack("res://asset_pack/", false)
 
-func set_texture_list(node: Node) -> void:
+func set_texture_list(node: Tree) -> void:
 	self.textureNode = node
 
-func set_entity_list(node: Node) -> void:
+func set_entity_list(node: Tree) -> void:
 	self.entityNode = node
 
 func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
@@ -63,7 +65,7 @@ func load_resource_pack(path: String, zip: bool = true) -> void:
 	"""todo: add warning on import saying which textures do not have portal 2 textures if portal 2 export enabled"""
 	pass
 
-func load_texture(data: String, ID: String) -> void:
+func load_texture(data: String, category: String, ID: String) -> void:
 	var cache: File = File.new()
 	var img: ImageTexture = ImageTexture.new()
 	var i: Image = Image.new()
@@ -84,6 +86,9 @@ func load_texture(data: String, ID: String) -> void:
 		ID.split("/")[-1].split(".")[0], ID,
 		img)
 
+func load_raw_texture(image: Image, category: String, ID: String) -> void:
+	pass
+
 func load_entity(data: String, category: String, ID: String) -> void:
 	var efile: File = File.new()
 	# warning-ignore:return_value_discarded
@@ -91,3 +96,6 @@ func load_entity(data: String, category: String, ID: String) -> void:
 	efile.store_buffer(Marshalls.base64_to_raw(data))
 	efile.close()
 	self.entityNode.add_item(category, ID.split(".")[0], ID, load("user://.cache/" + ID))
+
+func get_selected_texture() -> String:
+	return textureNode.get_selected_texture()
