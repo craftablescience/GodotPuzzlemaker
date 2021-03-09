@@ -74,7 +74,7 @@ func add_item(category: String, itemName: String, itemID: String, texture: Textu
 	}
 	self.children[category]["children"][itemID]["item"].set_text(0, itemName)
 	self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
-	self.children[category]["children"][itemID]["item"].set_icon_max_width(0, 16)
+	self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 	self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 	return true;
 
@@ -106,7 +106,7 @@ func _on_search_text_changed(new_text: String) -> void:
 				self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 				self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
 				self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
-				self.children[category]["children"][itemID]["item"].set_icon_max_width(0, 16)
+				self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 				self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 	else:
 		for category in self.children.keys():
@@ -115,5 +115,5 @@ func _on_search_text_changed(new_text: String) -> void:
 					self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 					self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
 					self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
-					self.children[category]["children"][itemID]["item"].set_icon_max_width(0, 16)
+					self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 					self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)

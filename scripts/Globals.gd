@@ -39,6 +39,8 @@ var PLAY_MODE: bool = false
 const CUSTOMID: String = "usercustom"
 const PLAYER_START: String = "player_start"
 
+var TEXTURE_PREVIEW_WIDTH = 64
+
 static func SET_THEME(tm: int) -> void:
 	if tm == Globals.THEME.LIGHT:
 		var c: float = 166.0 / 255.0
