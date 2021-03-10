@@ -577,9 +577,13 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 		_:
 			print("Room._on_face_selected says how?")
 
+func clearSelectedTools() -> void:
+	for node in get_tree().get_nodes_in_group("TOOL_BUTTON"):
+		node.pressed = false
+
 func _on_Select_pressed():
 	self.toolSelected = Globals.TOOL.SELECT
-	Globals.CLEAR_SELECTED_TOOLS()
+	self.clearSelectedTools()
 	self.tool_select_btn.pressed = true
 	self.emit_signal("shrink_sidebar")
 	for ent in self.ents:
@@ -587,7 +591,7 @@ func _on_Select_pressed():
 
 func _on_VoxelBuild_pressed():
 	self.toolSelected = Globals.TOOL.VOXEL
-	Globals.CLEAR_SELECTED_TOOLS()
+	self.clearSelectedTools()
 	self.tool_build_btn.pressed = true
 	self.unhighlight_all()
 	self.emit_signal("shrink_sidebar")
@@ -596,7 +600,7 @@ func _on_VoxelBuild_pressed():
 
 func _on_VoxelTextured_pressed():
 	self.toolSelected = Globals.TOOL.TEXTURE
-	Globals.CLEAR_SELECTED_TOOLS()
+	self.clearSelectedTools()
 	self.tool_texture_btn.pressed = true
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
@@ -605,7 +609,7 @@ func _on_VoxelTextured_pressed():
 
 func _on_PlaceEntity_pressed() -> void:
 	self.toolSelected = Globals.TOOL.PLACEENTITY
-	Globals.CLEAR_SELECTED_TOOLS()
+	self.clearSelectedTools()
 	self.tool_placeentity_btn.pressed = true
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
