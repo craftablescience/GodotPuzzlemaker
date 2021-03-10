@@ -46,7 +46,12 @@ window/size/fullscreen=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "entity_node", "vmflib" )
+enabled=PoolStringArray( "entity_node", "gd2cs", "gd2cs.py", "vmflib" )
+
+[gd2cs]
+
+config/ask_no_python=true
+config/python="py"
 
 [gdnative]
 
