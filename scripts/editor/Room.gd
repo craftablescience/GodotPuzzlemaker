@@ -14,6 +14,7 @@ var cubes: Array
 var cubeFacesSelected: Array
 var ents: Array
 var toolSelected: int
+var currentEntID: int
 var CubeScene: PackedScene
 var cam: Camera
 var camPivot: Spatial
@@ -29,6 +30,7 @@ func __init():
 	self.cubes = []
 	self.cubeFacesSelected = []
 	self.ents = []
+	self.currentEntID = 0
 	self.CubeScene = preload("res://scenes/editor/Cube.tscn")
 	self.toolSelected = Globals.FIRSTTOOL
 	self.actionGizmo = get_node("ActionGizmo")
@@ -158,7 +160,8 @@ func add_entity(pos: Vector3) -> void:
 
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
-	ent.name = "E" + str(len(self.ents))
+	ent.name = "E" + str(self.currentEntID)
+	self.currentEntID += 1
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -171,7 +174,8 @@ func add_entity_from_id(pos: Vector3, ID: String) -> void:
 
 func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
 	var ent: Spatial = scene.instance()
-	ent.name = "E" + str(len(self.ents))
+	ent.name = "E" + str(self.currentEntID)
+	self.currentEntID += 1
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
