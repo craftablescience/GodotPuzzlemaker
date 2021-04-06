@@ -75,6 +75,14 @@ static func COPY_FILE(original_path: String, new_path: String) -> void:
 	copy.close()
 	original.close()
 
+static func SAVE_DATA(data: PoolByteArray, path: String) -> void:
+	var copy: File = File.new()
+	# warning-ignore:return_value_discarded
+	copy.open(path, copy.WRITE)
+	# warning-ignore:return_value_discarded
+	copy.store_buffer(data)
+	copy.close()
+
 static func GET_OFFSET_ON_AXIS(pos: Vector3, direction: int):
 	match (direction):
 		PLANEID.XM:
