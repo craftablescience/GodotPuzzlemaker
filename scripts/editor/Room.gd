@@ -300,7 +300,7 @@ func serialize() -> String:
 		var dict: Dictionary = cube.get_data().duplicate(true)
 		for i in range(6):
 			var customTex: String = ""
-			if dict[i]["texture"].split(":")[0] != "builtin":
+			if dict[i]["texture"].split(":")[0] != "builtin" and dict[i]["texture"].split(":")[0] != "default":
 				var ary: Array = dict[i]["texture"].split(":")
 				var image: File = File.new()
 				var ID: String = ""
@@ -335,7 +335,7 @@ func serialize() -> String:
 			dict[i].erase("highlighted")
 			dict[i].erase("highlightnode")
 			
-			if dict[i]["texture"].split(":")[0] != "builtin":
+			if dict[i]["texture"].split(":")[0] != "builtin" and dict[i]["texture"].split(":")[0] != "default":
 				var ary: Array = dict[i]["texture"].split(":")
 				var ID: String = ""
 				if len(ary) > 2:

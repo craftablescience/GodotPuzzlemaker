@@ -87,8 +87,8 @@ func load_resource_pack(path: String) -> void:
 		var textures: Array      = manifest.result["textures"]
 		var entities: Array      = manifest.result["entities"]
 		var categoryID: String = category["id"]
-		var texcount: int
-		var entcount: int
+		var texcount: int = 0
+		var entcount: int = 0
 		if !textures.empty():
 			self.textureNode.add_category(category["name"], categoryID)
 			var cache: File = File.new()
