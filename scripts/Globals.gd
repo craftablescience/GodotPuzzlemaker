@@ -32,7 +32,7 @@ const FIRSTTOOL: int = TOOL.VOXEL
 const FILEFORMAT: int = 17
 const FILESETTINGSFORMAT: int = 19
 
-const TEXTUREFALLBACK: String = "builtin:white"
+const TEXTUREFALLBACK: String = "default:white"
 
 var PLAY_MODE: bool = false
 
@@ -63,6 +63,25 @@ static func LIST_FILES_IN_DIR(path) -> Array:
 
 	dir.list_dir_end()
 	return files
+
+static func COPY_FILE(original_path: String, new_path: String) -> void:
+	var copy: File = File.new()
+	var original: File = File.new()
+	# warning-ignore:return_value_discarded
+	copy.open(new_path, copy.WRITE)
+	# warning-ignore:return_value_discarded
+	original.open(original_path, original.READ)
+	copy.store_buffer(original.get_buffer(original.get_len()))
+	copy.close()
+	original.close()
+
+static func SAVE_DATA(data: PoolByteArray, path: String) -> void:
+	var copy: File = File.new()
+	# warning-ignore:return_value_discarded
+	copy.open(path, copy.WRITE)
+	# warning-ignore:return_value_discarded
+	copy.store_buffer(data)
+	copy.close()
 
 static func GET_OFFSET_ON_AXIS(pos: Vector3, direction: int):
 	match (direction):

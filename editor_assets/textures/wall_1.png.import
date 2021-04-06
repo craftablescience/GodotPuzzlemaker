@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/wall_1.png-90ba50b011b8b28d107123887aa1f2f4.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/wall_1.png"
+dest_files=[ "res://.import/wall_1.png-90ba50b011b8b28d107123887aa1f2f4.image" ]
+
+[params]
+

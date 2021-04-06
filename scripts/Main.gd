@@ -8,6 +8,11 @@ func _ready() -> void:
 	else:
 		get_node("Menu/Control/TopBar/CenterMenu/Mobile").hide()
 	
+	var cache: Directory = Directory.new()
+	if !cache.dir_exists("user://.cache"):
+		# warning-ignore:return_value_discarded
+		cache.make_dir("user://.cache")
+	
 	var settings: File = File.new()
 	var ary: Array = []
 	if settings.file_exists("user://settings.cfg"):
@@ -96,9 +101,20 @@ func _ready() -> void:
 		get_node("Menu/Control/Properties/TabContainer/General/WindowSize/HBoxContainer/WindowSize").select(0)
 		get_node("Menu/Control/Properties/TabContainer/General/WindowSize").hide()
 	
+	var textree: Tree = get_node("Menu/Control/ContextPanel/TabContainer/Textures/Tree")
+	PackLoader.set_texture_list(textree)
+	var enttree: Tree = get_node("Menu/Control/ContextPanel/TabContainer/Entities/Tree")
+	PackLoader.set_entity_list(enttree)
+	PackLoader.set_error_dialog(get_node("Menu/Control/ResourcePackLoadError"))
+	PackLoader.set_export_dialog(get_node("Menu/Control/ExportDialog"))
+	PackLoader.load_default_resource_pack("res://editor_assets/")
+	textree.add_category("Custom", Globals.CUSTOMID)
+	enttree.add_category("Custom", Globals.CUSTOMID)
+	
 	get_node("Menu/Control/Properties").__init()
 	get_node("Menu/Control/LightPanel").__init(false, true, 0, 0, 100, 100)
-
+	get_node("Scene/Room").__init()
+	
 func _notification(notification):
 	if notification == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		if get_node("Menu/Control/TopBar/CenterMenu/LevelName").text != "":

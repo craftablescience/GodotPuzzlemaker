@@ -28,7 +28,6 @@ resource_local_to_scene = true
 albedo_texture = ExtResource( 1 )
 
 [sub_resource type="PlaneMesh" id=8]
-flip_faces = true
 size = Vector2( 10, 10 )
 
 [sub_resource type="SpatialMaterial" id=9]
@@ -92,7 +91,7 @@ input_capture_on_drag = true
 shape = SubResource( 4 )
 
 [node name="YM" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0 )
+transform = Transform( -1, 3.25841e-07, 0, -3.25841e-07, -1, 0, 0, 0, 1, 0, -5, 0 )
 material_override = SubResource( 7 )
 use_in_baked_light = true
 mesh = SubResource( 8 )

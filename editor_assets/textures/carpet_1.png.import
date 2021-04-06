@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/carpet_1.png-cb22c31b1df78cf5149c8fec4920086f.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/carpet_1.png"
+dest_files=[ "res://.import/carpet_1.png-cb22c31b1df78cf5149c8fec4920086f.image" ]
+
+[params]
+

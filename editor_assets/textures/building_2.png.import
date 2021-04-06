@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/building_2.png-e4733e4d9bf088a36189cda22e4c3e3e.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/building_2.png"
+dest_files=[ "res://.import/building_2.png-e4733e4d9bf088a36189cda22e4c3e3e.image" ]
+
+[params]
+

@@ -5,33 +5,15 @@ var ENTITIES: Dictionary
 var root: TreeItem
 var children: Dictionary
 
+signal RemoveEntity(id)
+
 
 func _ready() -> void:
 	self.root = self.create_item()
 	self.set_hide_root(true)
 	self.ENTITIES = {}
 	self.children = {}
-	
-	self.add_category("Built-In", "builtin")
-	
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Player Spawn", Globals.PLAYER_START, preload("res://scenes/entities/PlayerStart.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Coin", "coin", preload("res://scenes/entities/CoinEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Table", "table", preload("res://scenes/entities/TableEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Enemy", "enemy", preload("res://scenes/entities/EnemyEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Direction Helper", "direction_gizmo", preload("res://scenes/entities/DirectionGizmo.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Light", "omnilight", preload("res://scenes/entities/LightEntity.scn"))
-	
-	self.add_category("Custom", Globals.CUSTOMID)
-	
-	PackLoader.set_entity_list(self)
 	self._on_search_text_changed("")
-
 
 func add_category(catName: String, ID: String) -> void:
 	self.children[ID] = {"parent": self.create_item(root), "children": {}}
@@ -96,3 +78,14 @@ func _on_search_text_changed(new_text: String) -> void:
 					self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 					self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
 					self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
+
+func _on_Remove_pressed() -> void:
+	if self.get_selected() != null and self.get_selected().get_metadata(0) != "__category__" and !self.get_selected().get_metadata(0).begins_with("builtin"):
+		for category in self.children.keys():
+			var namae: String = self.get_selected().get_metadata(0)
+			if namae.split(":")[-1] in self.children[category]["children"]:
+				self.emit_signal("RemoveEntity", namae)
+				self.children[category]["children"][namae.split(":")[-1]]["item"].free()
+				self.children[category]["children"].erase(namae.split(":")[-1])
+				self._on_search_text_changed(get_parent().get_parent().get_parent().get_node("HBoxContainer/Search").text)
+				break

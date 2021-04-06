@@ -320,7 +320,7 @@ align = 0
 [node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
 
 [node name="ContextPanel" type="Panel" parent="Menu/Control"]
-anchor_top = 0.0666667
+anchor_top = 0.065
 anchor_right = 0.2
 anchor_bottom = 1.0
 script = ExtResource( 12 )
@@ -341,7 +341,7 @@ __meta__ = {
 }
 
 [node name="Search" type="LineEdit" parent="Menu/Control/ContextPanel/HBoxContainer"]
-margin_right = 348.0
+margin_right = 312.0
 margin_bottom = 50.0
 hint_tooltip = "Search for a texture or entity."
 size_flags_horizontal = 3
@@ -351,7 +351,6 @@ placeholder_text = " Search..."
 caret_blink = true
 
 [node name="Remove" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
-visible = false
 margin_left = 316.0
 margin_right = 348.0
 margin_bottom = 50.0
@@ -395,7 +394,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
 margin_right = 376.0
-margin_bottom = 945.6
+margin_bottom = 947.31
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -411,7 +410,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
 margin_right = 376.0
-margin_bottom = 945.6
+margin_bottom = 947.31
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
@@ -638,7 +637,7 @@ popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
-filters = PoolStringArray( "*.png ; PNG File", "*.jpg ; JPG File" )
+filters = PoolStringArray( "*.png ; PNG File", "*.jpg ; JPG File", "*.zip ; ZIP File" )
 current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
 current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
 script = ExtResource( 40 )
@@ -655,7 +654,7 @@ popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
-filters = PoolStringArray( "*.tscn ; Scene File", "*.scn ; Scene File" )
+filters = PoolStringArray( "*.tscn ; Scene File", "*.scn ; Scene File", "*.zip ; ZIP File" )
 current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
 current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
 script = ExtResource( 42 )
@@ -669,6 +668,13 @@ margin_bottom = 58.0
 popup_exclusive = true
 window_title = "Error"
 dialog_text = "Error loading custom texture."
+
+[node name="ResourcePackLoadError" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+window_title = "Resource Pack Loader"
+dialog_text = "This text will be replaced by code in PackLoader.gd!"
 
 [node name="ConfirmNewLevel" type="ConfirmationDialog" parent="Menu/Control"]
 margin_right = 545.0
@@ -1258,8 +1264,12 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Remove_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
+[connection signal="RemoveEntity" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Scene/Room" method="_on_RemoveEntity"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
+[connection signal="RemoveTexture" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Scene/Room" method="_on_RemoveTexture"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Tree_cell_selected"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]

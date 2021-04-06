@@ -14,6 +14,7 @@ var cubes: Array
 var cubeFacesSelected: Array
 var ents: Array
 var toolSelected: int
+var currentEntID: int
 var CubeScene: PackedScene
 var cam: Camera
 var camPivot: Spatial
@@ -25,10 +26,11 @@ signal grow_sidebar
 signal shrink_sidebar
 
 
-func _ready():
+func __init():
 	self.cubes = []
 	self.cubeFacesSelected = []
 	self.ents = []
+	self.currentEntID = 0
 	self.CubeScene = preload("res://scenes/editor/Cube.tscn")
 	self.toolSelected = Globals.FIRSTTOOL
 	self.actionGizmo = get_node("ActionGizmo")
@@ -54,7 +56,7 @@ func _process(_delta: float) -> void:
 			var planes = self.cubeFacesSelected[cubeid].keys()
 			self.cubes[cubeid].set_all_face_highlight(false)
 			self.cubeFacesSelected[cubeid] = {}
-			var tex: String = PackLoader.textureNode.get_selected_texture()
+			var tex: String = PackLoader.get_selected_texture()
 			if tex == "":
 				tex = Globals.TEXTUREFALLBACK
 			for plane in planes:
@@ -106,12 +108,6 @@ func remove_cube(cubeid: int) -> void:
 		self.cubeFacesSelected[cubeid] = {}
 		self.remove_null_cubes()
 
-func remove_textures(ids: Array) -> void:
-	pass
-
-func remove_entities(ids: Array) -> void:
-	pass
-
 func update_surrounding_cull_faces(cubeid: int, gridPos: Vector3) -> void:
 	var cube = self.cubes[cubeid]
 	var XM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XM))
@@ -160,11 +156,12 @@ func update_empty_surrounding_cull_faces(gridPos: Vector3) -> void:
 		ZP.set_disabled(Globals.PLANEID.ZM, false)
 
 func add_entity(pos: Vector3) -> void:
-	self.add_entity_from_id(pos, PackLoader.entityNode.get_selected_entity())
+	self.add_entity_from_id(pos, PackLoader.get_selected_entity())
 
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
-	ent.name = "E" + str(len(self.ents))
+	ent.name = "E" + str(self.currentEntID)
+	self.currentEntID += 1
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -177,7 +174,8 @@ func add_entity_from_id(pos: Vector3, ID: String) -> void:
 
 func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
 	var ent: Spatial = scene.instance()
-	ent.name = "E" + str(len(self.ents))
+	ent.name = "E" + str(self.currentEntID)
+	self.currentEntID += 1
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -300,7 +298,7 @@ func serialize() -> String:
 		var dict: Dictionary = cube.get_data().duplicate(true)
 		for i in range(6):
 			var customTex: String = ""
-			if dict[i]["texture"].split(":")[0] != "builtin":
+			if dict[i]["texture"].split(":")[0] != "builtin" and dict[i]["texture"].split(":")[0] != "default":
 				var ary: Array = dict[i]["texture"].split(":")
 				var image: File = File.new()
 				var ID: String = ""
@@ -335,7 +333,7 @@ func serialize() -> String:
 			dict[i].erase("highlighted")
 			dict[i].erase("highlightnode")
 			
-			if dict[i]["texture"].split(":")[0] != "builtin":
+			if dict[i]["texture"].split(":")[0] != "builtin" and dict[i]["texture"].split(":")[0] != "default":
 				var ary: Array = dict[i]["texture"].split(":")
 				var ID: String = ""
 				if len(ary) > 2:
@@ -427,7 +425,7 @@ func load_save(path: String) -> void:
 									ID = ID.substr(0, len(ID) - 1)
 								else:
 									ID = ary[1]
-								if (Globals.CUSTOMID + ":" + ID) in PackLoader.textureNode.TEXTURES:
+								if (Globals.CUSTOMID + ":" + ID) in PackLoader.textureNode.TEXTURES.keys():
 									data[str(i)]["texdata"] = PackLoader.textureNode.get_texture(Globals.CUSTOMID + ":" + ID)
 							cube.set_type(i, data[str(i)]["texture"])
 							cube.set_disabled(i, data[str(i)]["disabled"])
@@ -461,51 +459,14 @@ func export_to_vmf(filenam: String) -> void:
 			if cube.get_disabled(plane):
 				block.set_material_side(vmf.COMMON_MATERIALS.TOOLS_TOOLSNODRAW, dirs[plane])
 				continue
-			var planeTexture: String = cube.get_type(plane)
-			if planeTexture == "builtin:white":
-				block.set_material_side("GPZ/BUILTIN_WHITE", dirs[plane])
-			elif planeTexture == "builtin:black":
-				block.set_material_side("GPZ/BUILTIN_BLACK", dirs[plane])
-			elif planeTexture == "builtin:dev_orange":
-				block.set_material_side("GPZ/BUILTIN_ORANGE_DEV", dirs[plane])
-			elif planeTexture == "builtin:dev_grey":
-				block.set_material_side("GPZ/BUILTIN_GREY_DEV", dirs[plane])
-			elif planeTexture == "builtin:brick_1":
-				block.set_material_side("GPZ/BUILTIN_BRICK_1", dirs[plane])
-			elif planeTexture == "builtin:building_1":
-				block.set_material_side("GPZ/BUILTIN_BUILDING_1", dirs[plane])
-			elif planeTexture == "builtin:building_2":
-				block.set_material_side("GPZ/BUILTIN_BUILDING_2", dirs[plane])
-			elif planeTexture == "builtin:carpet_1":
-				block.set_material_side("GPZ/BUILTIN_CARPET_1", dirs[plane])
-			elif planeTexture == "builtin:concrete_1":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_1", dirs[plane])
-			elif planeTexture == "builtin:concrete_2":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_2", dirs[plane])
-			elif planeTexture == "builtin:concrete_3":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_3", dirs[plane])
-			elif planeTexture == "builtin:concrete_4":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_4", dirs[plane])
-			elif planeTexture == "builtin:concrete_5":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_5", dirs[plane])
-			elif planeTexture == "builtin:concrete_6":
-				block.set_material_side("GPZ/BUILTIN_CONCRETE_6", dirs[plane])
-			elif planeTexture == "builtin:dirt_1":
-				block.set_material_side("GPZ/BUILTIN_DIRT_1", dirs[plane])
-			elif planeTexture == "builtin:grass_1":
-				block.set_material_side("GPZ/BUILTIN_GRASS_1", dirs[plane])
-			elif planeTexture == "builtin:leather_1":
-				block.set_material_side("GPZ/BUILTIN_LEATHER_1", dirs[plane])
-			elif planeTexture == "builtin:stone_1":
-				block.set_material_side("GPZ/BUILTIN_STONE_1", dirs[plane])
-			elif planeTexture == "builtin:wall_1":
-				block.set_material_side("GPZ/BUILTIN_WALL_1", dirs[plane])
+			block.set_material_side(cube.get_portal2_type(plane), dirs[plane])
 		vmf.add_solid(block.brush)
 	for entity in self.ents:
-		if entity["ID"] == "builtin:" + Globals.PLAYER_START:
+		var portal2id: String = PackLoader.get_entity_portal2_id(entity["ID"].split(":")[-1])
+		if portal2id == "info_player_start":
 			# warning-ignore:return_value_discarded
 			VMF.Entities.Common.InfoPlayerStartEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"], entity["posz"]))
-		elif entity["ID"] == "builtin:omnilight":
+		elif portal2id == "light":
 			# warning-ignore:return_value_discarded
 			VMF.Entities.Common.LightEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"] + 5, entity["posz"]))
 	vmf.write_vmf(filenam)
@@ -553,7 +514,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 		Globals.TOOL.VOXEL:
 			if key == BUTTON_LEFT and not drag:
 				# warning-ignore:return_value_discarded
-				var tex: String = PackLoader.textureNode.get_selected_texture()
+				var tex: String = PackLoader.get_selected_texture()
 				if tex == "":
 					tex = Globals.TEXTUREFALLBACK
 				self.add_cube(self.get_placed_cube_pos(cubeid, plane), tex)
@@ -564,13 +525,13 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 			if key == BUTTON_LEFT and not drag:
 				pass # TODO: add context menu here
 			elif key == BUTTON_RIGHT:
-				var tex: String = PackLoader.textureNode.get_selected_texture()
+				var tex: String = PackLoader.get_selected_texture()
 				if tex != "":
 					self.cubes[cubeid].set_type(plane, tex)
 		
 		Globals.TOOL.PLACEENTITY:
 			if key == BUTTON_LEFT:
-				var ent: String = PackLoader.entityNode.get_selected_entity()
+				var ent: String = PackLoader.get_selected_entity()
 				if ent != "" and plane == Globals.PLANEID.YP:
 					self.add_entity(self.get_placed_ent_pos(cubeid, plane))
 		
@@ -615,3 +576,14 @@ func _on_PlaceEntity_pressed() -> void:
 	self.emit_signal("grow_sidebar")
 	for ent in self.ents:
 		ent["node"].set_collider_disabled(false)
+
+func _on_RemoveTexture(id) -> void:
+	for cube in self.cubes:
+		for i in range(6):
+			if cube.get_type(i) == id:
+				cube.set_type(i, Globals.TEXTUREFALLBACK)
+
+func _on_RemoveEntity(id) -> void:
+	for ent in self.ents:
+		if ent["ID"] == id:
+			ent["node"].queue_free()

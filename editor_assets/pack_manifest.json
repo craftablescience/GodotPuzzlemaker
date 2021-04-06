@@ -1,0 +1,204 @@
+{
+  "category": {
+    "id": "builtin",
+    "name": "Built-In"
+  },
+  "textures": [
+	{
+      "id": "black",
+      "name": "Black",
+      "path": "black.png",
+      "portal2_path": {
+        "vtf": "portal2/builtin_black.vtf",
+        "vmt": "portal2/builtin_black.vmt"
+      }
+	},
+	{
+      "id": "dev_orange",
+      "name": "Dev Orange",
+      "path": "orange_dev.png",
+      "portal2_path": {
+        "vtf": "portal2/builtin_dev_orange.vtf",
+        "vmt": "portal2/builtin_dev_orange.vmt"
+      }
+    },
+	{
+      "id": "dev_grey",
+      "name": "Dev Grey",
+      "path": "grey_dev.png",
+      "portal2_path": {
+        "vtf": "portal2/builtin_dev_grey.vtf",
+        "vmt": "portal2/builtin_dev_grey.vmt"
+      }
+	},
+	{
+	  "id": "brick_1",
+	  "name": "Brick 1",
+	  "path": "brick_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_brick_1.vtf",
+		"vmt": "portal2/builtin_brick_1.vmt"
+	  }
+	},
+	{
+	  "id": "building_1",
+	  "name": "Building 1",
+	  "path": "building_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_building_1.vtf",
+		"vmt": "portal2/builtin_building_1.vmt"
+	  }
+	},
+	{
+	  "id": "building_2",
+	  "name": "Building 2",
+	  "path": "building_2.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_building_2.vtf",
+		"vmt": "portal2/builtin_building_2.vmt"
+	  }
+	},
+	{
+	  "id": "carpet_1",
+	  "name": "Carpet 1",
+	  "path": "carpet_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_carpet_1.vtf",
+		"vmt": "portal2/builtin_carpet_1.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_1",
+	  "name": "Concrete 1",
+	  "path": "concrete_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_1.vtf",
+		"vmt": "portal2/builtin_concrete_1.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_2",
+	  "name": "Concrete 2",
+	  "path": "concrete_2.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_2.vtf",
+		"vmt": "portal2/builtin_concrete_2.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_3",
+	  "name": "Concrete 3",
+	  "path": "concrete_3.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_3.vtf",
+		"vmt": "portal2/builtin_concrete_3.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_4",
+	  "name": "Concrete 4",
+	  "path": "concrete_4.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_4.vtf",
+		"vmt": "portal2/builtin_concrete_4.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_5",
+	  "name": "Concrete 5",
+	  "path": "concrete_5.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_5.vtf",
+		"vmt": "portal2/builtin_concrete_5.vmt"
+	  }
+	},
+	{
+	  "id": "concrete_6",
+	  "name": "Concrete 6",
+	  "path": "concrete_6.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_concrete_6.vtf",
+		"vmt": "portal2/builtin_concrete_6.vmt"
+	  }
+	},
+	{
+	  "id": "dirt_1",
+	  "name": "Dirt 1",
+	  "path": "dirt_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_dirt_1.vtf",
+		"vmt": "portal2/builtin_dirt_1.vmt"
+	  }
+	},
+	{
+	  "id": "grass_1",
+	  "name": "Grass 1",
+	  "path": "grass_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_grass_1.vtf",
+		"vmt": "portal2/builtin_grass_1.vmt"
+	  }
+	},
+	{
+	  "id": "leather_1",
+	  "name": "Leather 1",
+	  "path": "leather_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_leather_1.vtf",
+		"vmt": "portal2/builtin_leather_1.vmt"
+	  }
+	},
+	{
+	  "id": "stone_1",
+	  "name": "Stone 1",
+	  "path": "stone_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_stone_1.vtf",
+		"vmt": "portal2/builtin_stone_1.vmt"
+	  }
+	},
+	{
+	  "id": "wall_1",
+	  "name": "Wall 1",
+	  "path": "wall_1.png",
+	  "portal2_path": {
+		"vtf": "portal2/builtin_wall_1.vtf",
+		"vmt": "portal2/builtin_wall_1.vmt"
+	  }
+	}
+  ],
+  "entities": [
+    {
+      "id": "player_start",
+      "name": "Player Spawn",
+      "path": "PlayerStart.scn",
+      "portal2_equivalent": "info_player_start"
+    },
+	{
+      "id": "coin",
+      "name": "Coin",
+      "path": "CoinEntity.scn"
+    },
+	{
+      "id": "table",
+      "name": "Table",
+      "path": "TableEntity.scn"
+    },
+	{
+      "id": "enemy",
+      "name": "Enemy",
+      "path": "EnemyEntity.scn"
+    },
+	{
+      "id": "direction_gizmo",
+      "name": "Direction Helper",
+      "path": "DirectionGizmo.scn"
+    },
+	{
+      "id": "omnilight",
+      "name": "Light",
+      "path": "LightEntity.scn",
+      "portal2_equivalent": "light"
+    }
+  ]
+}

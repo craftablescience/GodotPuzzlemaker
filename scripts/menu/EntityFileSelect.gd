@@ -5,14 +5,11 @@ func _on_about_to_show() -> void:
 	self.invalidate()
 
 func _on_file_selected(path: String) -> void:
+	if path.ends_with("zip"):
+		PackLoader.load_resource_pack(path)
+		return
 	var scn: PackedScene = load(path)
 	var ID: String = path.split("/")[-1]
-	var cache: Directory = Directory.new()
-	if !cache.dir_exists("user://.cache"):
-		# warning-ignore:return_value_discarded
-		cache.make_dir("user://.cache")
-	# warning-ignore:return_value_discarded
-	cache.open("user://.cache")
 	var copy: File = File.new()
 	var original: File = File.new()
 	# warning-ignore:return_value_discarded
