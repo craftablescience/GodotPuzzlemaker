@@ -1,7 +1,10 @@
 extends Popup
 
 
-onready var TEXTURES: Array = []
+onready var TEXTURES: Array = [
+	{"file": "res://images/editor/textures/portal2/default_white.vtf", "name": "materials/gpz/default_white.vtf", "short": "default_white.vtf"},
+	{"file": "res://images/editor/textures/portal2/default_white.vmt", "name": "materials/gpz/default_white.vmt", "short": "default_white.vmt"}
+]
 
 
 func set_portal2_visibility(visible: bool) -> void:

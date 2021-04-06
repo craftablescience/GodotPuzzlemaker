@@ -15,7 +15,7 @@ func _ready() -> void:
 	self.children = {}
 	self.add_category("Default", "default")
 	# warning-ignore:return_value_discarded
-	self.add_item("default", "White", "white", preload("res://images/editor/textures/white.png"))
+	self.add_item("default", "White", "white", preload("res://images/editor/textures/white.png"), "gpz/default_white")
 	self._on_search_text_changed("")
 
 func add_category(catName: String, ID: String) -> void:

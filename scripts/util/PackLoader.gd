@@ -232,7 +232,7 @@ func get_selected_entity() -> String:
 func get_portal2_texture_from_id(texture: String) -> String:
 	if "portal2path" in self.textureNode.TEXTURES[texture].keys():
 		return self.textureNode.TEXTURES[texture]["portal2path"]
-	return ""
+	return "gpz/default_white"
 
 func get_entity_portal2_id(id: String) -> String:
 	if portal2entities.has(id):
