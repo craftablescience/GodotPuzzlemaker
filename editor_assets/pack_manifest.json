@@ -18,8 +18,8 @@
       "name": "Dev Orange",
       "path": "orange_dev.png",
       "portal2_path": {
-        "vtf": "portal2/builtin_orange_dev.vtf",
-        "vmt": "portal2/builtin_orange_dev.vmt"
+        "vtf": "portal2/builtin_dev_orange.vtf",
+        "vmt": "portal2/builtin_dev_orange.vmt"
       }
     },
 	{
@@ -27,8 +27,8 @@
       "name": "Dev Grey",
       "path": "grey_dev.png",
       "portal2_path": {
-        "vtf": "portal2/builtin_grey_dev.vtf",
-        "vmt": "portal2/builtin_grey_dev.vmt"
+        "vtf": "portal2/builtin_dev_grey.vtf",
+        "vmt": "portal2/builtin_dev_grey.vmt"
       }
 	},
 	{

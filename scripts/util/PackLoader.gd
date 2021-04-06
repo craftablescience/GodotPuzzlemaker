@@ -6,6 +6,7 @@ onready var gdunzip = gdunzip_file.new()
 var textureNode: Tree
 var entityNode: Tree
 var errorPopup: AcceptDialog
+var exportDialog: Popup
 var portal2entities: Dictionary
 
 
@@ -21,6 +22,9 @@ func set_entity_list(node: Tree) -> void:
 
 func set_error_dialog(node: AcceptDialog) -> void:
 	self.errorPopup = node
+
+func set_export_dialog(node: Popup) -> void:
+	self.exportDialog = node
 
 func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
 	for path in filepaths:
@@ -64,7 +68,6 @@ func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
 			load_resource_pack(path)
 
 func load_resource_pack(path: String) -> void:
-	# TODO: add warning on import saying which textures do not have portal 2 textures if portal 2 export enabled
 	var copy: File = File.new()
 	var original: File = File.new()
 	# warning-ignore:return_value_discarded
@@ -110,6 +113,16 @@ func load_resource_pack(path: String) -> void:
 				cache.store_buffer(imgdata)
 				cache.close()
 				self.add_texture(image, texdict["name"], categoryID, texdict["id"])
+				if texdict.has("portal2_path"):
+					var p2: Dictionary = texdict["portal2_path"]
+					if p2.has("builtin"):
+						textureNode.TEXTURES[categoryID + ":" + texdict["id"]]["portal2path"] = p2["builtin"]
+					elif p2.has("vtf") or p2.has("vmt"):
+						textureNode.TEXTURES[categoryID + ":" + texdict["id"]]["portal2path"] = "gpz/" + categoryID + "_" + texdict["id"]
+						Globals.SAVE_DATA(gdunzip.uncompress(p2["vtf"]), "user://.cache/" + p2["vtf"].split("/")[-1])
+						Globals.SAVE_DATA(gdunzip.uncompress(p2["vmt"]), "user://.cache/" + p2["vmt"].split("/")[-1])
+						exportDialog.TEXTURES.append({"file": "user://.cache/" + p2["vtf"].split("/")[-1], "name": "materials/gpz/" + p2["vtf"].split("/")[-1], "short": p2["vtf"].split("/")[-1]})
+						exportDialog.TEXTURES.append({"file": "user://.cache/" + p2["vmt"].split("/")[-1], "name": "materials/gpz/" + p2["vmt"].split("/")[-1], "short": p2["vmt"].split("/")[-1]})
 		if !entities.empty():
 			self.entityNode.add_category(category["name"], categoryID)
 			for entdict in entities:
@@ -151,6 +164,16 @@ func load_default_resource_pack(path: String) -> void:
 				var i: Image = load(path + "textures/" + filepath)
 				image.create_from_image(i, 1)
 				self.add_texture(image, texdict["name"], categoryID, texdict["id"])
+				if texdict.has("portal2_path"):
+					var p2: Dictionary = texdict["portal2_path"]
+					if p2.has("builtin"):
+						textureNode.TEXTURES[categoryID + ":" + texdict["id"]]["portal2path"] = p2["builtin"]
+					elif p2.has("vtf") or p2.has("vmt"):
+						textureNode.TEXTURES[categoryID + ":" + texdict["id"]]["portal2path"] = "gpz/" + categoryID + "_" + texdict["id"]
+						Globals.COPY_FILE(path + "textures/" + p2["vtf"], "user://.cache/" + p2["vtf"].split("/")[-1])
+						Globals.COPY_FILE(path + "textures/" + p2["vmt"], "user://.cache/" + p2["vmt"].split("/")[-1])
+						exportDialog.TEXTURES.append({"file": "user://.cache/" + p2["vtf"].split("/")[-1], "name": "materials/gpz/" + p2["vtf"].split("/")[-1], "short": p2["vtf"].split("/")[-1]})
+						exportDialog.TEXTURES.append({"file": "user://.cache/" + p2["vmt"].split("/")[-1], "name": "materials/gpz/" + p2["vmt"].split("/")[-1], "short": p2["vmt"].split("/")[-1]})
 		if !entities.empty():
 			self.entityNode.add_category(category["name"], categoryID)
 			for entdict in entities:
@@ -207,11 +230,8 @@ func get_selected_entity() -> String:
 	return entityNode.get_selected_entity()
 
 func get_portal2_texture_from_id(texture: String) -> String:
-	if "portal2" in self.textureNode.TEXTURES[texture].keys():
-		if self.textureNode.TEXTURES["portal2"]["builtin"]:
-			return self.textureNode.TEXTURES["portal2"]["path"]
-		else:
-			return "GPZ/" + self.textureNode.TEXTURES["portal2"]["vtf"].split("/")[-1].substr(0,-4).to_upper()
+	if "portal2path" in self.textureNode.TEXTURES[texture].keys():
+		return self.textureNode.TEXTURES[texture]["portal2path"]
 	return ""
 
 func get_entity_portal2_id(id: String) -> String:

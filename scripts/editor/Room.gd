@@ -459,7 +459,7 @@ func export_to_vmf(filenam: String) -> void:
 			if cube.get_disabled(plane):
 				block.set_material_side(vmf.COMMON_MATERIALS.TOOLS_TOOLSNODRAW, dirs[plane])
 				continue
-			block.set_material_side(cube.get_portal2_type(plane))
+			block.set_material_side(cube.get_portal2_type(plane), dirs[plane])
 		vmf.add_solid(block.brush)
 	for entity in self.ents:
 		var portal2id: String = PackLoader.get_entity_portal2_id(entity["ID"])

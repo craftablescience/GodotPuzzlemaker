@@ -106,6 +106,7 @@ func _ready() -> void:
 	var enttree: Tree = get_node("Menu/Control/ContextPanel/TabContainer/Entities/Tree")
 	PackLoader.set_entity_list(enttree)
 	PackLoader.set_error_dialog(get_node("Menu/Control/ResourcePackLoadError"))
+	PackLoader.set_export_dialog(get_node("Menu/Control/ExportDialog"))
 	PackLoader.load_default_resource_pack("res://editor_assets/")
 	textree.add_category("Custom", Globals.CUSTOMID)
 	enttree.add_category("Custom", Globals.CUSTOMID)

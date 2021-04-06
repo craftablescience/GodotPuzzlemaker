@@ -23,13 +23,13 @@ func add_category(catName: String, ID: String) -> void:
 	self.children[ID]["parent"].set_text(0, catName)
 	self.children[ID]["parent"].set_metadata(0, "__category__")
 
-func add_item(category: String, itemName: String, itemID: String, texture: Texture, portal2builtin = null, portal2vtf = null, portal2vmt = null) -> bool:
+func add_item(category: String, itemName: String, itemID: String, texture: Texture, portal2path = null) -> bool:
 	if !(category in self.children.keys()):
 		return false;
-	if portal2builtin != null:
-		self.TEXTURES[category + ":" + itemID] = {"texture": texture, "portal2": {"builtin": true, "path": portal2builtin}}
+	if portal2path == null:
+		self.TEXTURES[category + ":" + itemID] = {"texture": texture}
 	else:
-		self.TEXTURES[category + ":" + itemID] = {"texture": texture, "portal2": {"builtin": false, "vtf": portal2vtf, "vmt": portal2vmt}}
+		self.TEXTURES[category + ":" + itemID] = {"texture": texture, "portal2path": portal2path}
 	self.children[category]["children"][itemID] = {
 		"item": self.create_item(self.children[category]["parent"]),
 		"name": itemName,
