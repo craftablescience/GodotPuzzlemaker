@@ -11,27 +11,7 @@ func _ready() -> void:
 	self.set_hide_root(true)
 	self.ENTITIES = {}
 	self.children = {}
-	
-	self.add_category("Built-In", "builtin")
-	
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Player Spawn", Globals.PLAYER_START, preload("res://scenes/entities/PlayerStart.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Coin", "coin", preload("res://scenes/entities/CoinEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Table", "table", preload("res://scenes/entities/TableEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Enemy", "enemy", preload("res://scenes/entities/EnemyEntity.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Direction Helper", "direction_gizmo", preload("res://scenes/entities/DirectionGizmo.scn"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Light", "omnilight", preload("res://scenes/entities/LightEntity.scn"))
-	
-	self.add_category("Custom", Globals.CUSTOMID)
-	
-	PackLoader.set_entity_list(self)
 	self._on_search_text_changed("")
-
 
 func add_category(catName: String, ID: String) -> void:
 	self.children[ID] = {"parent": self.create_item(root), "children": {}}

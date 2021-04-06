@@ -5,22 +5,22 @@ const gdunzip_file = preload("res://addons/gdunzip/gdunzip.gd")
 onready var gdunzip = gdunzip_file.new()
 var textureNode: Tree
 var entityNode: Tree
-var textureMap: Dictionary
-var textures: Dictionary
-var entityMap: Dictionary
-var entities: Dictionary
+var errorPopup: AcceptDialog
+var portal2entities: Dictionary
 
 
 func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	get_tree().connect("files_dropped", self, "_get_dropped_files")
-	self.load_resource_pack("res://asset_pack/", false)
 
 func set_texture_list(node: Tree) -> void:
 	self.textureNode = node
 
 func set_entity_list(node: Tree) -> void:
 	self.entityNode = node
+
+func set_error_dialog(node: AcceptDialog) -> void:
+	self.errorPopup = node
 
 func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
 	for path in filepaths:
@@ -35,7 +35,7 @@ func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
 			var buffer: PoolByteArray = loadedFile.get_buffer(loadedFile.get_len())
 			loadedFile.close()
 			if path.ends_with("png"):
-			# warning-ignore:return_value_discarded
+				# warning-ignore:return_value_discarded
 				i.load_png_from_buffer(buffer)
 			if path.ends_with("jpg"):
 				# warning-ignore:return_value_discarded
@@ -60,10 +60,111 @@ func _get_dropped_files(filepaths: PoolStringArray, _screen: int) -> void:
 			efile.close()
 			input.close()
 			self.entityNode.add_item(Globals.CUSTOMID, path.split("/")[-1].split(".")[0], path.split("/")[-1], load("user://.cache/" + path.split("/")[-1]))
+		elif path.ends_with("zip"):
+			load_resource_pack(path)
 
-func load_resource_pack(path: String, zip: bool = true) -> void:
-	"""todo: add warning on import saying which textures do not have portal 2 textures if portal 2 export enabled"""
-	pass
+func load_resource_pack(path: String) -> void:
+	# TODO: add warning on import saying which textures do not have portal 2 textures if portal 2 export enabled
+	var copy: File = File.new()
+	var original: File = File.new()
+	# warning-ignore:return_value_discarded
+	copy.open("user://.cache/" + path.split("/")[-1], File.WRITE)
+	# warning-ignore:return_value_discarded
+	original.open(path, File.READ)
+	copy.store_buffer(original.get_buffer(original.get_len()))
+	copy.close()
+	original.close()
+	path = "user://.cache/" + path.split("/")[-1]
+	gdunzip.load(path)
+	var manifest_fil = gdunzip.uncompress("pack_manifest.json")
+	if !manifest_fil:
+		self.errorPopup.dialog_text = "Error loading custom resource pack: Missing pack manifest"
+		self.errorPopup.popup_centered()
+		return
+	var manifest = JSON.parse(manifest_fil.get_string_from_utf8())
+	if manifest.error == OK:
+		var category: Dictionary = manifest.result["category"]
+		var textures: Array      = manifest.result["textures"]
+		var entities: Array      = manifest.result["entities"]
+		var categoryID: String = category["id"]
+		if !textures.empty():
+			self.textureNode.add_category(category["name"], categoryID)
+			var cache: File = File.new()
+			for texdict in textures:
+				var filepath: String = texdict["path"]
+				var image: ImageTexture = ImageTexture.new()
+				var imgdata = gdunzip.uncompress("textures/" + filepath)
+				var i: Image = Image.new()
+				if filepath.ends_with("png"):
+					# warning-ignore:return_value_discarded
+					i.load_png_from_buffer(imgdata)
+				elif filepath.ends_with("jpg"):
+					# warning-ignore:return_value_discarded
+					i.load_jpg_from_buffer(imgdata)
+				image.create_from_image(i, 1)
+				# warning-ignore:return_value_discarded
+				cache.open("user://.cache/" + texdict["path"].split("/")[-1], cache.WRITE)
+				cache.store_buffer(imgdata)
+				cache.close()
+				self.add_texture(image, texdict["name"], categoryID, texdict["id"])
+		if !entities.empty():
+			self.entityNode.add_category(category["name"], categoryID)
+			for entdict in entities:
+				var filepath: String = entdict["path"]
+				var scndata = gdunzip.uncompress("entities/" + filepath)
+				var cpy: File = File.new()
+				# warning-ignore:return_value_discarded
+				cpy.open("user://.cache/" + filepath, copy.WRITE)
+				cpy.store_buffer(scndata)
+				cpy.close()
+				entityNode.add_item(categoryID, entdict["name"], entdict["id"], load("user://.cache/" + filepath))
+				if entdict.has("portal2_equivalent"):
+					portal2entities[entdict["id"]] = entdict["portal2_equivalent"]
+	else:
+		self.errorPopup.dialog_text = "Error loading resource pack: Malformed JSON"
+		self.errorPopup.popup_centered()
+	var d = Directory.new()
+	d.remove(path)
+
+func load_default_resource_pack(path: String) -> void:
+	var pmf: File = File.new()
+	# warning-ignore:return_value_discarded
+	pmf.open("res://editor_assets/pack_manifest.json", File.READ)
+	var manifest = JSON.parse(pmf.get_as_text())
+	pmf.close()
+	if manifest.error == OK:
+		var category: Dictionary = manifest.result["category"]
+		var textures: Array      = manifest.result["textures"]
+		var entities: Array      = manifest.result["entities"]
+		var categoryID: String = category["id"]
+		if !textures.empty():
+			self.textureNode.add_category(category["name"], categoryID)
+			for texdict in textures:
+				var filepath: String = texdict["path"]
+				var image: ImageTexture = ImageTexture.new()
+				var i: Image = load(path + "textures/" + filepath)
+				image.create_from_image(i, 1)
+				self.add_texture(image, texdict["name"], categoryID, texdict["id"])
+		if !entities.empty():
+			self.entityNode.add_category(category["name"], categoryID)
+			for entdict in entities:
+				entityNode.add_item(categoryID, entdict["name"], entdict["id"], load(path + "entities/" + entdict["path"]))
+				if entdict.has("portal2_equivalent"):
+					portal2entities[entdict["id"]] = entdict["portal2_equivalent"]
+
+func add_texture(image: ImageTexture, namae: String, category: String, ID: String) -> void:
+	if !(category + ":" + ID in self.textureNode.TEXTURES):
+		self.textureNode.add_item(category, namae, ID, image)
+
+func add_texture_category(namae: String, category: String) -> void:
+	self.textureNode.add_category(namae, category)
+
+func add_entity(namae: String, category: String, ID: String, ent: PackedScene) -> void:
+	if !(category + ":" + ID in self.entityNode.ENTITIES):
+		self.entityNode.add_item(category, namae, ID, ent)
+
+func add_entity_category(namae: String, category: String) -> void:
+	self.entityNode.add_category(namae, category)
 
 func load_texture(data: String, category: String, ID: String) -> void:
 	var cache: File = File.new()
@@ -79,15 +180,11 @@ func load_texture(data: String, category: String, ID: String) -> void:
 	cache.open("user://.cache/" + ID, cache.WRITE)
 	cache.store_buffer(Marshalls.base64_to_raw(data))
 	cache.close()
-	#i.resize(64, 64, Image.INTERPOLATE_LANCZOS)
 	img.create_from_image(i, 1)
-	if !(Globals.CUSTOMID + ":" + ID in self.textureNode.TEXTURES):
-		self.textureNode.add_item(Globals.CUSTOMID,
+	if !(category + ":" + ID in self.textureNode.TEXTURES):
+		self.textureNode.add_item(category,
 		ID.split("/")[-1].split(".")[0], ID,
 		img)
-
-func load_raw_texture(image: Image, category: String, ID: String) -> void:
-	pass
 
 func load_entity(data: String, category: String, ID: String) -> void:
 	var efile: File = File.new()
@@ -99,3 +196,20 @@ func load_entity(data: String, category: String, ID: String) -> void:
 
 func get_selected_texture() -> String:
 	return textureNode.get_selected_texture()
+
+func get_selected_entity() -> String:
+	return entityNode.get_selected_entity()
+
+func get_portal2_texture_from_id(texture: String) -> String:
+	if "portal2" in self.textureNode.TEXTURES[texture].keys():
+		if self.textureNode.TEXTURES["portal2"]["builtin"]:
+			return self.textureNode.TEXTURES["portal2"]["path"]
+		else:
+			return "GPZ/" + self.textureNode.TEXTURES["portal2"]["vtf"].split("/")[-1].substr(0,-4).to_upper()
+	return ""
+
+func get_entity_portal2_id(id: String) -> String:
+	if portal2entities.has(id):
+		return portal2entities[id]
+	else:
+		return ""

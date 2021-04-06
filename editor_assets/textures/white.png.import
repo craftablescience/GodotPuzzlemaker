@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/white.png-3a1b0406d764d39524430e5812bec6e7.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/white.png"
+dest_files=[ "res://.import/white.png-3a1b0406d764d39524430e5812bec6e7.image" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/concrete_3.png-bbe2906f4dd3cca848dcb1ed0fd3791c.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/concrete_3.png"
+dest_files=[ "res://.import/concrete_3.png-bbe2906f4dd3cca848dcb1ed0fd3791c.image" ]
+
+[params]
+

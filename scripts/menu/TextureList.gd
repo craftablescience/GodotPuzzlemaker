@@ -11,69 +11,30 @@ func _ready() -> void:
 	self.set_hide_root(true)
 	self.TEXTURES = {}
 	self.children = {}
-	
-	self.add_category("Built-In", "builtin")
+	self.add_category("Default", "default")
 	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "White", "white", preload("res://images/editor/textures/white.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Black", "black", preload("res://images/editor/textures/black.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Dev Orange", "dev_orange", preload("res://images/editor/textures/orange_dev.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Dev Grey", "dev_grey", preload("res://images/editor/textures/grey_dev.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Brick 1", "brick_1", preload("res://images/editor/textures/brick_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Building 1", "building_1", preload("res://images/editor/textures/building_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Building 2", "building_2", preload("res://images/editor/textures/building_2.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Carpet 1", "carpet_1", preload("res://images/editor/textures/carpet_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 1", "concrete_1", preload("res://images/editor/textures/concrete_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 2", "concrete_2", preload("res://images/editor/textures/concrete_2.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 3", "concrete_3", preload("res://images/editor/textures/concrete_3.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 4", "concrete_4", preload("res://images/editor/textures/concrete_4.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 5", "concrete_5", preload("res://images/editor/textures/concrete_5.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Concrete 6", "concrete_6", preload("res://images/editor/textures/concrete_6.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Dirt 1", "dirt_1", preload("res://images/editor/textures/dirt_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Grass 1", "grass_1", preload("res://images/editor/textures/grass_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Leather 1", "leather_1", preload("res://images/editor/textures/leather_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Stone 1", "stone_1", preload("res://images/editor/textures/stone_1.png"))
-	# warning-ignore:return_value_discarded
-	self.add_item("builtin", "Wall 1", "wall_1", preload("res://images/editor/textures/wall_1.png"))
-	
-	self.add_category("Custom", Globals.CUSTOMID)
-	
-	PackLoader.set_texture_list(self)
+	self.add_item("default", "White", "white", preload("res://images/editor/textures/white.png"))
 	self._on_search_text_changed("")
-
 
 func add_category(catName: String, ID: String) -> void:
 	self.children[ID] = {"parent": self.create_item(root), "children": {}}
 	self.children[ID]["parent"].set_text(0, catName)
 	self.children[ID]["parent"].set_metadata(0, "__category__")
 
-func add_item(category: String, itemName: String, itemID: String, texture: Texture) -> bool:
+func add_item(category: String, itemName: String, itemID: String, texture: Texture, portal2builtin = null, portal2vtf = null, portal2vmt = null) -> bool:
 	if !(category in self.children.keys()):
 		return false;
-	self.TEXTURES[category + ":" + itemID] = texture
+	if portal2builtin != null:
+		self.TEXTURES[category + ":" + itemID] = {"texture": texture, "portal2": {"builtin": true, "path": portal2builtin}}
+	else:
+		self.TEXTURES[category + ":" + itemID] = {"texture": texture, "portal2": {"builtin": false, "vtf": portal2vtf, "vmt": portal2vmt}}
 	self.children[category]["children"][itemID] = {
 		"item": self.create_item(self.children[category]["parent"]),
 		"name": itemName,
 		"node": texture
 	}
 	self.children[category]["children"][itemID]["item"].set_text(0, itemName)
-	self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
+	self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID]["texture"])
 	self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 	self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 	return true;
@@ -85,7 +46,7 @@ func get_selected_texture() -> String:
 		return ""
 
 func get_texture(texName: String) -> Texture:
-	return self.TEXTURES[texName]
+	return self.TEXTURES[texName]["texture"]
 
 func _on_texture_button_pressed() -> void:
 	for node in get_parent().get_parent().get_children():
@@ -105,7 +66,7 @@ func _on_search_text_changed(new_text: String) -> void:
 			for itemID in self.children[category]["children"].keys():
 				self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 				self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
-				self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
+				self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID]["texture"])
 				self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 				self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 	else:

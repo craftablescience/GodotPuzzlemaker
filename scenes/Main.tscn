@@ -638,7 +638,7 @@ popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
-filters = PoolStringArray( "*.png ; PNG File", "*.jpg ; JPG File" )
+filters = PoolStringArray( "*.png ; PNG File", "*.jpg ; JPG File", "*.zip ; ZIP File" )
 current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
 current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
 script = ExtResource( 40 )
@@ -655,7 +655,7 @@ popup_exclusive = true
 window_title = "Open a File"
 mode = 0
 access = 2
-filters = PoolStringArray( "*.tscn ; Scene File", "*.scn ; Scene File" )
+filters = PoolStringArray( "*.tscn ; Scene File", "*.scn ; Scene File", "*.zip ; ZIP File" )
 current_dir = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker"
 current_path = "/Users/Brend/OneDrive/Desktop/Godot Projects/GodotPuzzlemaker/"
 script = ExtResource( 42 )
@@ -669,6 +669,13 @@ margin_bottom = 58.0
 popup_exclusive = true
 window_title = "Error"
 dialog_text = "Error loading custom texture."
+
+[node name="ResourcePackLoadError" type="AcceptDialog" parent="Menu/Control"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+window_title = "Error"
+dialog_text = "This text will be replaced by code in PackLoader.gd!"
 
 [node name="ConfirmNewLevel" type="ConfirmationDialog" parent="Menu/Control"]
 margin_right = 545.0
@@ -1250,12 +1257,12 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]

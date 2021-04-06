@@ -32,7 +32,7 @@ const FIRSTTOOL: int = TOOL.VOXEL
 const FILEFORMAT: int = 17
 const FILESETTINGSFORMAT: int = 19
 
-const TEXTUREFALLBACK: String = "builtin:white"
+const TEXTUREFALLBACK: String = "default:white"
 
 var PLAY_MODE: bool = false
 

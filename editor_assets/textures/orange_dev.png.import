@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/orange_dev.png-fdb8896fe81e9e80badde483e5fcd100.image"
+
+[deps]
+
+source_file="res://editor_assets/textures/orange_dev.png"
+dest_files=[ "res://.import/orange_dev.png-fdb8896fe81e9e80badde483e5fcd100.image" ]
+
+[params]
+

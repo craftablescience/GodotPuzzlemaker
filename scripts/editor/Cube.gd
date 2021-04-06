@@ -121,6 +121,9 @@ func set_type(plane: int, type: String) -> void:
 func get_type(plane: int) -> String:
 	return self.planes[plane]["texture"]
 
+func get_portal2_type(plane: int) -> String:
+	return PackLoader.get_portal2_texture_from_id(self.planes[plane]["texture"])
+
 func set_position_grid(pos: Vector3) -> void:
 	self.transform.origin.x = pos.x * 10
 	self.transform.origin.y = pos.y * 10
