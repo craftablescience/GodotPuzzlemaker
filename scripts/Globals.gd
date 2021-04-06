@@ -64,6 +64,17 @@ static func LIST_FILES_IN_DIR(path) -> Array:
 	dir.list_dir_end()
 	return files
 
+static func COPY_FILE(original_path: String, new_path: String) -> void:
+	var copy: File = File.new()
+	var original: File = File.new()
+	# warning-ignore:return_value_discarded
+	copy.open(new_path, copy.WRITE)
+	# warning-ignore:return_value_discarded
+	original.open(original_path, original.READ)
+	copy.store_buffer(original.get_buffer(original.get_len()))
+	copy.close()
+	original.close()
+
 static func GET_OFFSET_ON_AXIS(pos: Vector3, direction: int):
 	match (direction):
 		PLANEID.XM:
