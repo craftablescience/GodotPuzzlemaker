@@ -5,6 +5,8 @@ var ENTITIES: Dictionary
 var root: TreeItem
 var children: Dictionary
 
+signal RemoveEntity(id)
+
 
 func _ready() -> void:
 	self.root = self.create_item()
@@ -76,3 +78,14 @@ func _on_search_text_changed(new_text: String) -> void:
 					self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 					self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
 					self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
+
+func _on_Remove_pressed() -> void:
+	if self.get_selected() != null and self.get_selected().get_metadata(0) != "__category__" and !self.get_selected().get_metadata(0).begins_with("builtin"):
+		for category in self.children.keys():
+			var namae: String = self.get_selected().get_metadata(0)
+			if namae.split(":")[-1] in self.children[category]["children"]:
+				self.emit_signal("RemoveEntity", namae)
+				self.children[category]["children"][namae.split(":")[-1]]["item"].free()
+				self.children[category]["children"].erase(namae.split(":")[-1])
+				self._on_search_text_changed(get_parent().get_parent().get_parent().get_node("HBoxContainer/Search").text)
+				break

@@ -341,7 +341,7 @@ __meta__ = {
 }
 
 [node name="Search" type="LineEdit" parent="Menu/Control/ContextPanel/HBoxContainer"]
-margin_right = 348.0
+margin_right = 312.0
 margin_bottom = 50.0
 hint_tooltip = "Search for a texture or entity."
 size_flags_horizontal = 3
@@ -351,7 +351,6 @@ placeholder_text = " Search..."
 caret_blink = true
 
 [node name="Remove" type="Button" parent="Menu/Control/ContextPanel/HBoxContainer"]
-visible = false
 margin_left = 316.0
 margin_right = 348.0
 margin_bottom = 50.0
@@ -1265,8 +1264,12 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Remove_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
+[connection signal="RemoveEntity" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Scene/Room" method="_on_RemoveEntity"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
+[connection signal="RemoveTexture" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Scene/Room" method="_on_RemoveTexture"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Textures/Tree" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Tree_cell_selected"]
 [connection signal="toggled" from="Menu/Control/LightPanel/SunEnable" to="Menu/Control/LightPanel" method="_on_SunEnable_toggled"]
 [connection signal="toggled" from="Menu/Control/LightPanel/GIEnable" to="Menu/Control/LightPanel" method="_on_GIEnable_toggled"]

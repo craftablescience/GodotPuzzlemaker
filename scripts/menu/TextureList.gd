@@ -5,6 +5,8 @@ var TEXTURES: Dictionary
 var root: TreeItem
 var children: Dictionary
 
+signal RemoveTexture(id)
+
 
 func _ready() -> void:
 	self.root = self.create_item()
@@ -78,3 +80,14 @@ func _on_search_text_changed(new_text: String) -> void:
 					self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
 					self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 					self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
+
+func _on_Remove_pressed() -> void:
+	if self.get_selected() != null and self.get_selected().get_metadata(0) != "__category__" and !self.get_selected().get_metadata(0).begins_with("builtin") and !self.get_selected().get_metadata(0).begins_with("default"):
+		for category in self.children.keys():
+			var namae: String = self.get_selected().get_metadata(0)
+			if namae.split(":")[-1] in self.children[category]["children"]:
+				self.emit_signal("RemoveTexture", namae)
+				self.children[category]["children"][namae.split(":")[-1]]["item"].free()
+				self.children[category]["children"].erase(namae.split(":")[-1])
+				self._on_search_text_changed(get_parent().get_parent().get_parent().get_node("HBoxContainer/Search").text)
+				break

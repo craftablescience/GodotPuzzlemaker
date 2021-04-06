@@ -106,12 +106,6 @@ func remove_cube(cubeid: int) -> void:
 		self.cubeFacesSelected[cubeid] = {}
 		self.remove_null_cubes()
 
-func remove_textures(ids: Array) -> void:
-	pass
-
-func remove_entities(ids: Array) -> void:
-	pass
-
 func update_surrounding_cull_faces(cubeid: int, gridPos: Vector3) -> void:
 	var cube = self.cubes[cubeid]
 	var XM = self.get_cube_at_grid_pos(Globals.GET_OFFSET_ON_AXIS(gridPos, Globals.PLANEID.XM))
@@ -574,3 +568,14 @@ func _on_PlaceEntity_pressed() -> void:
 	self.emit_signal("grow_sidebar")
 	for ent in self.ents:
 		ent["node"].set_collider_disabled(false)
+
+func _on_RemoveTexture(id) -> void:
+	for cube in self.cubes:
+		for i in range(6):
+			if cube.get_type(i) == id:
+				cube.set_type(i, Globals.TEXTUREFALLBACK)
+
+func _on_RemoveEntity(id) -> void:
+	for ent in self.ents:
+		if ent["ID"] == id:
+			ent["node"].queue_free()
