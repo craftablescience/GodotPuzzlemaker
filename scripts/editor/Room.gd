@@ -462,7 +462,7 @@ func export_to_vmf(filenam: String) -> void:
 			block.set_material_side(cube.get_portal2_type(plane), dirs[plane])
 		vmf.add_solid(block.brush)
 	for entity in self.ents:
-		var portal2id: String = PackLoader.get_entity_portal2_id(entity["ID"])
+		var portal2id: String = PackLoader.get_entity_portal2_id(entity["ID"].split(":")[-1])
 		if portal2id == "info_player_start":
 			# warning-ignore:return_value_discarded
 			VMF.Entities.Common.InfoPlayerStartEntity.new(vmf, self.get_translated_entity_position_in_vmf(entity["posx"], entity["posy"], entity["posz"]))

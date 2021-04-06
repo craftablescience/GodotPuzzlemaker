@@ -320,7 +320,7 @@ align = 0
 [node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
 
 [node name="ContextPanel" type="Panel" parent="Menu/Control"]
-anchor_top = 0.0666667
+anchor_top = 0.065
 anchor_right = 0.2
 anchor_bottom = 1.0
 script = ExtResource( 12 )
@@ -394,7 +394,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
 margin_right = 376.0
-margin_bottom = 945.6
+margin_bottom = 947.31
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 20 )
@@ -410,7 +410,7 @@ margin_bottom = -4.0
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
 margin_right = 376.0
-margin_bottom = 945.6
+margin_bottom = 947.31
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
