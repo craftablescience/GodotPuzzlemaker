@@ -674,7 +674,7 @@ dialog_text = "Error loading custom texture."
 margin_right = 83.0
 margin_bottom = 58.0
 popup_exclusive = true
-window_title = "Error"
+window_title = "Resource Pack Loader"
 dialog_text = "This text will be replaced by code in PackLoader.gd!"
 
 [node name="ConfirmNewLevel" type="ConfirmationDialog" parent="Menu/Control"]

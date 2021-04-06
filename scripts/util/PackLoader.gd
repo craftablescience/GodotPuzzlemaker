@@ -87,10 +87,13 @@ func load_resource_pack(path: String) -> void:
 		var textures: Array      = manifest.result["textures"]
 		var entities: Array      = manifest.result["entities"]
 		var categoryID: String = category["id"]
+		var texcount: int
+		var entcount: int
 		if !textures.empty():
 			self.textureNode.add_category(category["name"], categoryID)
 			var cache: File = File.new()
 			for texdict in textures:
+				texcount += 1
 				var filepath: String = texdict["path"]
 				var image: ImageTexture = ImageTexture.new()
 				var imgdata = gdunzip.uncompress("textures/" + filepath)
@@ -110,6 +113,7 @@ func load_resource_pack(path: String) -> void:
 		if !entities.empty():
 			self.entityNode.add_category(category["name"], categoryID)
 			for entdict in entities:
+				entcount += 1
 				var filepath: String = entdict["path"]
 				var scndata = gdunzip.uncompress("entities/" + filepath)
 				var cpy: File = File.new()
@@ -120,6 +124,8 @@ func load_resource_pack(path: String) -> void:
 				entityNode.add_item(categoryID, entdict["name"], entdict["id"], load("user://.cache/" + filepath))
 				if entdict.has("portal2_equivalent"):
 					portal2entities[entdict["id"]] = entdict["portal2_equivalent"]
+		self.errorPopup.dialog_text = "Loaded resource pack with " + str(texcount) + " textures and " + str(entcount) + " entities."
+		self.errorPopup.popup_centered()
 	else:
 		self.errorPopup.dialog_text = "Error loading resource pack: Malformed JSON"
 		self.errorPopup.popup_centered()
