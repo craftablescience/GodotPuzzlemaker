@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/trash_clickbitmap.bmp-fefcfd447cda8ef82cc1eb3e27e99e5e.res"
+
+[deps]
+
+source_file="res://images/icons/trash_clickbitmap.bmp"
+dest_files=[ "res://.import/trash_clickbitmap.bmp-fefcfd447cda8ef82cc1eb3e27e99e5e.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
