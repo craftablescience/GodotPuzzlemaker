@@ -180,6 +180,11 @@
       "path": "CoinEntity.scn"
     },
 	{
+      "id": "door",
+      "name": "Door",
+      "path": "DoorEntity.scn"
+    },
+	{
       "id": "table",
       "name": "Table",
       "path": "TableEntity.scn"
