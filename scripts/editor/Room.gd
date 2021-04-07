@@ -9,6 +9,8 @@ export(NodePath) var tool_texture: NodePath
 onready var tool_texture_btn: Button = get_node(tool_texture)
 export(NodePath) var tool_placeentity: NodePath
 onready var tool_placeentity_btn: Button = get_node(tool_placeentity)
+export(NodePath) var tool_connection: NodePath
+onready var tool_connection_btn: Button = get_node(tool_connection)
 
 var cubes: Array
 var cubeFacesSelected: Array
@@ -550,6 +552,9 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 				if ent != "" and plane == Globals.PLANEID.YP:
 					self.add_entity(self.get_placed_ent_pos(cubeid, plane))
 		
+		Globals.TOOL.CONNECTION:
+			pass
+		
 		_:
 			print("Room._on_face_selected says how?")
 
@@ -587,6 +592,13 @@ func _on_PlaceEntity_pressed() -> void:
 	self.emit_signal("grow_sidebar")
 	for ent in self.ents:
 		ent["node"].set_collider_disabled(false)
+
+func _on_Connection_pressed() -> void:
+	self.toolSelected = Globals.TOOL.CONNECTION
+	Globals.CLEAR_SELECTED_TOOLS()
+	self.tool_connection_btn.pressed = true
+	self.unhighlight_all()
+	self.emit_signal("grow_sidebar")
 
 func _on_RemoveTexture(id) -> void:
 	for cube in self.cubes:

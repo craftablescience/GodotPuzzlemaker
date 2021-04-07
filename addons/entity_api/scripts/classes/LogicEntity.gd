@@ -53,8 +53,10 @@ func set_collider_disabled(disabled: bool) -> void:
 func get_collider_disabled() -> bool:
 	return self.collider.disabled
 
-func set_collider(collider: Shape) -> void:
+func set_click_collider(collider: Shape) -> void:
 	self.collider.shape = collider
+
+func set_logic_collider(collider: Shape) -> void:
 	self.object_collider.shape = collider
 
 func set_logic_id(id: int) -> void:

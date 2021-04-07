@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://theme/menu.theme" type="Theme" id=2]
@@ -46,6 +46,8 @@
 [ext_resource path="res://scripts/menu/LightingButton.gd" type="Script" id=44]
 [ext_resource path="res://scripts/editor/Play.gd" type="Script" id=45]
 [ext_resource path="res://fonts/rubik/Rubik_18.tres" type="DynamicFont" id=46]
+[ext_resource path="res://images/icons/connection.png" type="Texture" id=47]
+[ext_resource path="res://scripts/menu/ConnectionList.gd" type="Script" id=48]
 
 [sub_resource type="InputEventAction" id=1]
 action = "ui_play"
@@ -87,7 +89,7 @@ action = "tool_texture"
 shortcut = SubResource( 8 )
 
 [sub_resource type="InputEventAction" id=10]
-action = "tool_entity"
+action = "tool_connection"
 
 [sub_resource type="ShortCut" id=11]
 shortcut = SubResource( 10 )
@@ -240,7 +242,7 @@ __meta__ = {
 anchor_left = 0.899771
 anchor_top = 0.3
 anchor_right = 0.999896
-anchor_bottom = 0.68
+anchor_bottom = 0.72
 margin_left = -0.560059
 margin_right = 0.199951
 margin_bottom = -0.240051
@@ -267,9 +269,9 @@ __meta__ = {
 [node name="Select" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
 "TOOL_BUTTON",
 ]]
-margin_top = 60.0
+margin_top = 47.0
 margin_right = 183.0
-margin_bottom = 124.0
+margin_bottom = 111.0
 toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 5 )
@@ -281,9 +283,9 @@ align = 0
 [node name="VoxelBuild" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
 "TOOL_BUTTON",
 ]]
-margin_top = 128.0
+margin_top = 115.0
 margin_right = 183.0
-margin_bottom = 192.0
+margin_bottom = 179.0
 toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 7 )
@@ -294,9 +296,9 @@ align = 0
 [node name="VoxelTextured" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
 "TOOL_BUTTON",
 ]]
-margin_top = 196.0
+margin_top = 183.0
 margin_right = 183.0
-margin_bottom = 260.0
+margin_bottom = 247.0
 toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 9 )
@@ -307,14 +309,27 @@ align = 0
 [node name="PlaceEntity" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
 "TOOL_BUTTON",
 ]]
-margin_top = 264.0
+margin_top = 251.0
 margin_right = 183.0
-margin_bottom = 328.0
+margin_bottom = 315.0
 toggle_mode = true
 shortcut_in_tooltip = false
 shortcut = SubResource( 11 )
 text = "Entity"
 icon = ExtResource( 23 )
+align = 0
+
+[node name="Connect" type="Button" parent="Menu/Control/ToolBar/VBoxContainer" groups=[
+"TOOL_BUTTON",
+]]
+margin_top = 319.0
+margin_right = 183.0
+margin_bottom = 383.0
+toggle_mode = true
+shortcut_in_tooltip = false
+shortcut = SubResource( 11 )
+text = "Connect"
+icon = ExtResource( 47 )
 align = 0
 
 [node name="Tween" type="Tween" parent="Menu/Control/ToolBar"]
@@ -414,6 +429,21 @@ margin_bottom = 947.31
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
+
+[node name="Connections" type="CenterContainer" parent="Menu/Control/ContextPanel/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -340.0
+margin_bottom = -911.31
+
+[node name="List" type="VBoxContainer" parent="Menu/Control/ContextPanel/TabContainer/Connections"]
+margin_top = 9.0
+margin_right = 148.0
+margin_bottom = 31.0
+script = ExtResource( 48 )
 
 [node name="Tween" type="Tween" parent="Menu/Control/ContextPanel"]
 
@@ -1222,6 +1252,7 @@ tool_select = NodePath("../../Menu/Control/ToolBar/VBoxContainer/Select")
 tool_build = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelBuild")
 tool_texture = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelTextured")
 tool_placeentity = NodePath("../../Menu/Control/ToolBar/VBoxContainer/PlaceEntity")
+tool_connection = NodePath("../../Menu/Control/ToolBar/VBoxContainer/Connect")
 
 [node name="CameraPivot" type="Spatial" parent="Scene"]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 15, 10, 15 )
@@ -1256,16 +1287,20 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
-[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
+[connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_grow"]
+[connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_shrink"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ContextPanel/TabContainer/Connections/List" method="_on_connection_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Scene/Room" method="_on_Connection_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
+[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Remove_pressed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="RemoveEntity" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Scene/Room" method="_on_RemoveEntity"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
