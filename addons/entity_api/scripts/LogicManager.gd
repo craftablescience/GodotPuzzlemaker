@@ -27,12 +27,13 @@ func add_input(input_name: String, id: int, function_name: String) -> void:
 func broadcast(output_name: String, arguments: Dictionary) -> void:
 	if inputs.has(output_name):
 		for input in inputs[output_name]:
-			input["function"].call_func(arguments)
+			if input["function"].is_valid():
+				input["function"].call_func(arguments)
 
-func broadcast_to_id(output_name: String, id: int, arguments: Dictionary) -> void:
+func broadcast_to(output_name: String, id: int, arguments: Dictionary) -> void:
 	if inputs.has(output_name):
 		for input in inputs[output_name]:
-			if input["id"] == id:
+			if input["id"] == id and input["function"].is_valid():
 				input["function"].call_func(arguments)
 
 func get_entity_from_id(id: int) -> Node:
