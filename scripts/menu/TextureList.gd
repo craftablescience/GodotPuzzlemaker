@@ -77,7 +77,7 @@ func _on_search_text_changed(new_text: String) -> void:
 				if new_text.to_lower() in self.children[category]["children"][itemID]["name"].to_lower():
 					self.children[category]["children"][itemID]["item"] = self.create_item(self.children[category]["parent"])
 					self.children[category]["children"][itemID]["item"].set_text(0, self.children[category]["children"][itemID]["name"])
-					self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID])
+					self.children[category]["children"][itemID]["item"].set_icon(0, self.TEXTURES[category + ":" + itemID]["texture"])
 					self.children[category]["children"][itemID]["item"].set_icon_max_width(0, Globals.TEXTURE_PREVIEW_WIDTH)
 					self.children[category]["children"][itemID]["item"].set_metadata(0, category + ":" + itemID)
 
