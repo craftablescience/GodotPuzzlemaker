@@ -11,6 +11,12 @@ export(NodePath) var tool_placeentity: NodePath
 onready var tool_placeentity_btn: Button = get_node(tool_placeentity)
 export(NodePath) var tool_connection: NodePath
 onready var tool_connection_btn: Button = get_node(tool_connection)
+export(NodePath) var add_button_path: NodePath
+onready var add_button: Button = get_node(add_button_path)
+export(NodePath) var remove_button_path: NodePath
+onready var remove_button: Button = get_node(remove_button_path)
+export(NodePath) var search_box_path: NodePath
+onready var search_box: LineEdit = get_node(search_box_path)
 
 var cubes: Array
 var cubeFacesSelected: Array
@@ -26,6 +32,7 @@ var levelName: String
 
 signal grow_sidebar
 signal shrink_sidebar
+signal rebuild_connectionlist(removed_ent_ids)
 
 
 func __init():
@@ -165,6 +172,8 @@ func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
 	ent.name = "E" + str(self.currentEntID)
 	ent.set_logic_id(self.currentEntID)
+	ent._editor_set_room(self)
+	ent._editor_set_collision_list(get_parent().get_parent().get_node("Menu/Control/ContextPanel/TabContainer/Connections/List"))
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -293,13 +302,16 @@ func remove_null_cubes() -> void:
 			i += 1
 
 func remove_null_ents() -> void:
+	var ary: Array = []
 	var i: int = 0
 	for ent in self.ents:
 		if is_instance_valid(ent["node"]):
 			ent["node"].name = "E" + str(i)
 			i += 1
 		else:
+			ary.append(ent["logicID"])
 			ents.remove(i)
+	self.emit_signal("rebuild_connectionlist", ary)
 
 func clear_entities() -> void:
 	for ent in self.ents:
@@ -579,6 +591,9 @@ func _on_VoxelTextured_pressed():
 	self.toolSelected = Globals.TOOL.TEXTURE
 	Globals.CLEAR_SELECTED_TOOLS()
 	self.tool_texture_btn.pressed = true
+	self.add_button.disabled = false
+	self.remove_button.disabled = false
+	self.search_box.editable = true
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
 	for ent in self.ents:
@@ -588,6 +603,9 @@ func _on_PlaceEntity_pressed() -> void:
 	self.toolSelected = Globals.TOOL.PLACEENTITY
 	Globals.CLEAR_SELECTED_TOOLS()
 	self.tool_placeentity_btn.pressed = true
+	self.add_button.disabled = false
+	self.remove_button.disabled = false
+	self.search_box.editable = true
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
 	for ent in self.ents:
@@ -597,8 +615,13 @@ func _on_Connection_pressed() -> void:
 	self.toolSelected = Globals.TOOL.CONNECTION
 	Globals.CLEAR_SELECTED_TOOLS()
 	self.tool_connection_btn.pressed = true
+	self.add_button.disabled = true
+	self.remove_button.disabled = true
+	self.search_box.editable = false
 	self.unhighlight_all()
 	self.emit_signal("grow_sidebar")
+	for ent in self.ents:
+		ent["node"].set_collider_disabled(false)
 
 func _on_RemoveTexture(id) -> void:
 	for cube in self.cubes:
