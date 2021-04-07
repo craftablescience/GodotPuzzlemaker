@@ -171,7 +171,8 @@ func _on_select(plane: int, event: InputEvent):
 				btn = BUTTON_RIGHT
 			else:
 				return
-			get_parent()._on_face_selected(self.get_id(), plane, btn, true)
+			if is_instance_valid(get_parent()):
+				get_parent()._on_face_selected(self.get_id(), plane, btn, true)
 		_:
 			assert(false, "Cube._on_select says how?")
 
