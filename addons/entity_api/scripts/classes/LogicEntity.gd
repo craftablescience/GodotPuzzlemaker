@@ -59,6 +59,7 @@ func set_collider(collider: Shape) -> void:
 
 func set_logic_id(id: int) -> void:
 	logic_id = id
+	LogicManager.add_logic_entity(logic_id, self)
 
 func register_input(input_name: String, function_name: String) -> void:
 	LogicManager.add_input(input_name, logic_id, function_name)

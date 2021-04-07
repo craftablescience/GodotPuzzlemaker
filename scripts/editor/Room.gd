@@ -162,7 +162,7 @@ func add_entity(pos: Vector3) -> void:
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
 	ent.name = "E" + str(self.currentEntID)
-	ent.set_logic_id(self.currentEntID)	
+	ent.set_logic_id(self.currentEntID)
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -173,7 +173,6 @@ func add_entity_from_id(pos: Vector3, ID: String) -> void:
 		"posy": ent.global_transform.origin.y,
 		"posz": ent.global_transform.origin.z
 	})
-	LogicManager.add_logic_entity(self.currentEntID, ent)
 	self.currentEntID += 1
 
 func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
