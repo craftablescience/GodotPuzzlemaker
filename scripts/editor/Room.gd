@@ -48,6 +48,7 @@ func _process(_delta: float) -> void:
 		for ent in ents:
 			if !is_instance_valid(ent["node"]):
 				self.ents.remove(i)
+				self.remove_null_ents()
 			else:
 				self.ents[i]["node"].name = "E" + str(i)
 				i += 1
@@ -161,30 +162,36 @@ func add_entity(pos: Vector3) -> void:
 func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	var ent: Node = PackLoader.entityNode.ENTITIES[ID].instance()
 	ent.name = "E" + str(self.currentEntID)
-	self.currentEntID += 1
+	ent.set_logic_id(self.currentEntID)	
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
 		"node": ent,
 		"ID": ID,
+		"logicID": self.currentEntID,
 		"posx": ent.global_transform.origin.x,
 		"posy": ent.global_transform.origin.y,
 		"posz": ent.global_transform.origin.z
 	})
+	LogicManager.add_logic_entity(self.currentEntID, ent)
+	self.currentEntID += 1
 
 func add_entity_from_scene(pos: Vector3, scene: PackedScene) -> void:
 	var ent: Spatial = scene.instance()
 	ent.name = "E" + str(self.currentEntID)
-	self.currentEntID += 1
+	ent.set_logic_id(self.currentEntID)
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
 		"node": ent,
 		"ID": PackLoader.entityNode.get_entity_ID(scene),
+		"logicID": self.currentEntID,
 		"posx": ent.global_transform.origin.x,
 		"posy": ent.global_transform.origin.y,
 		"posz": ent.global_transform.origin.z
 	})
+	LogicManager.add_logic_entity(self.currentEntID, ent)
+	self.currentEntID += 1
 
 func get_player_start() -> Array:
 	for ent in self.ents:
@@ -283,6 +290,15 @@ func remove_null_cubes() -> void:
 		else:
 			self.cubes[i].set_id(i)
 			i += 1
+
+func remove_null_ents() -> void:
+	var i: int = 0
+	for ent in self.ents:
+		if is_instance_valid(ent["node"]):
+			ent["node"].name = "E" + str(i)
+			i += 1
+		else:
+			ents.remove(i)
 
 func clear_entities() -> void:
 	for ent in self.ents:
@@ -582,4 +598,5 @@ func _on_RemoveTexture(id) -> void:
 func _on_RemoveEntity(id) -> void:
 	for ent in self.ents:
 		if ent["ID"] == id:
+			LogicManager.remove_logic_entity(ent["logicID"])
 			ent["node"].queue_free()

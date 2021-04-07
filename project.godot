@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "LogicEntity",
+"language": "GDScript",
+"path": "res://addons/entity_api/scripts/classes/LogicEntity.gd"
+}, {
 "base": "Node",
 "class": "VMF",
 "language": "GDScript",
 "path": "res://addons/vmflib/VMF.gd"
 } ]
 _global_script_class_icons={
+"LogicEntity": "res://addons/entity_api/icon.png",
 "VMF": ""
 }
 
@@ -34,8 +40,9 @@ config/quit_on_go_back=false
 [autoload]
 
 Globals="*res://scripts/Globals.gd"
-VMFDataManager="*res://addons/vmflib/VMFDataManager.gd"
 PackLoader="*res://scripts/util/PackLoader.gd"
+LogicManager="*res://addons/entity_api/scripts/LogicManager.gd"
+VMFDataManager="*res://addons/vmflib/VMFDataManager.gd"
 
 [display]
 
@@ -45,7 +52,7 @@ window/size/fullscreen=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "entity_node", "vmflib" )
+enabled=PoolStringArray( "entity_api", "vmflib" )
 
 [gdnative]
 

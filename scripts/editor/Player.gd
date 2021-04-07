@@ -15,9 +15,13 @@ func _ready() -> void:
 	self.gravity = -10.0
 	self.movement = Vector3()
 
+func _i_am_the_player_fear_me_() -> void:
+	pass # very convoluted (but in a few lines) way of telling player apart from other nodes
+
 # warning-ignore:shadowed_variable
 func _set_active(active: bool) -> void:
 	self.active = active
+	LogicManager.set_active(active)
 	if active:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		self.esc_pressed = false
