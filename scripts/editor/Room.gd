@@ -173,7 +173,7 @@ func add_entity_from_id(pos: Vector3, ID: String) -> void:
 	ent.name = "E" + str(self.currentEntID)
 	ent.set_logic_id(self.currentEntID)
 	ent._editor_set_room(self)
-	ent._editor_set_collision_list(get_parent().get_parent().get_node("Menu/Control/ContextPanel/TabContainer/Connections/List"))
+	ent._editor_set_connection_list(get_parent().get_parent().get_node("Menu/Control/ContextPanel/TabContainer/Connections/List"))
 	ent.translate(pos)
 	self.add_child(ent)
 	self.ents.append({
@@ -559,7 +559,7 @@ func _on_face_selected(cubeid: int, plane: int, key: int, drag: bool) -> void:
 					self.cubes[cubeid].set_type(plane, tex)
 		
 		Globals.TOOL.PLACEENTITY:
-			if key == BUTTON_LEFT:
+			if key == BUTTON_RIGHT and not drag:
 				var ent: String = PackLoader.get_selected_entity()
 				if ent != "" and plane == Globals.PLANEID.YP:
 					self.add_entity(self.get_placed_ent_pos(cubeid, plane))

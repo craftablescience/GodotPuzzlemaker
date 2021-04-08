@@ -370,7 +370,7 @@ margin_left = 316.0
 margin_right = 348.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 32, 0 )
-hint_tooltip = "Remove a texture, entity, or category from the map."
+hint_tooltip = "Remove a texture or entity from the map."
 icon = ExtResource( 25 )
 expand_icon = true
 __meta__ = {
@@ -406,6 +406,7 @@ margin_left = 4.0
 margin_top = 8.0
 margin_right = -4.0
 margin_bottom = -4.0
+scroll_horizontal_enabled = false
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Entities"]
 margin_right = 376.0
@@ -422,6 +423,7 @@ margin_left = 4.0
 margin_top = 8.0
 margin_right = -4.0
 margin_bottom = -4.0
+scroll_horizontal_enabled = false
 
 [node name="Tree" type="Tree" parent="Menu/Control/ContextPanel/TabContainer/Textures"]
 margin_right = 376.0
@@ -430,20 +432,26 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 22 )
 
-[node name="Connections" type="CenterContainer" parent="Menu/Control/ContextPanel/TabContainer"]
+[node name="Connections" type="ScrollContainer" parent="Menu/Control/ContextPanel/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 8.0
-margin_right = -340.0
-margin_bottom = -911.31
+margin_right = -4.0
+margin_bottom = -4.0
+scroll_horizontal_enabled = false
 
 [node name="List" type="VBoxContainer" parent="Menu/Control/ContextPanel/TabContainer/Connections"]
-margin_top = 9.0
-margin_right = 148.0
-margin_bottom = 31.0
+margin_right = 376.0
+margin_bottom = 947.31
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
 script = ExtResource( 48 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Tween" type="Tween" parent="Menu/Control/ContextPanel"]
 
@@ -1253,6 +1261,9 @@ tool_build = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelBuild")
 tool_texture = NodePath("../../Menu/Control/ToolBar/VBoxContainer/VoxelTextured")
 tool_placeentity = NodePath("../../Menu/Control/ToolBar/VBoxContainer/PlaceEntity")
 tool_connection = NodePath("../../Menu/Control/ToolBar/VBoxContainer/Connect")
+add_button_path = NodePath("../../Menu/Control/ContextPanel/HBoxContainer/Add")
+remove_button_path = NodePath("../../Menu/Control/ContextPanel/HBoxContainer/Remove")
+search_box_path = NodePath("../../Menu/Control/ContextPanel/HBoxContainer/Search")
 
 [node name="CameraPivot" type="Spatial" parent="Scene"]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 15, 10, 15 )
@@ -1287,20 +1298,20 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ContextPanel/TabContainer/Connections/List" method="_on_connection_button_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Scene/Room" method="_on_Connection_pressed"]
-[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ContextPanel/TabContainer/Connections/List" method="_on_connection_button_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
-[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Remove_pressed"]
+[connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
+[connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_Remove_pressed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Add" to="Menu/Control/ContextPanel/HBoxContainer/Add" method="_on_pressed"]
 [connection signal="RemoveEntity" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Scene/Room" method="_on_RemoveEntity"]
 [connection signal="cell_selected" from="Menu/Control/ContextPanel/TabContainer/Entities/Tree" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Tree_cell_selected"]
@@ -1334,6 +1345,7 @@ script = ExtResource( 29 )
 [connection signal="toggled" from="Menu/Control/Properties/TabContainer/Experimental/P2VMFExport/P2VMFExport" to="Menu/Control/Properties" method="_on_P2VMFExport_toggled"]
 [connection signal="pressed" from="Menu/Control/Properties/Panel/HBoxContainer/Close" to="Menu/Control/Properties" method="_on_Close_pressed"]
 [connection signal="grow_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_grow"]
+[connection signal="rebuild_connectionlist" from="Scene/Room" to="Menu/Control/ContextPanel/TabContainer/Connections/List" method="_on_rebuild_connectionlist"]
 [connection signal="shrink_sidebar" from="Scene/Room" to="Menu/Control/ContextPanel" method="_on_shrink"]
 [connection signal="editor_camera_active" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_active"]
 [connection signal="editor_camera_inactive" from="Scene/CameraPivot/Camera" to="Menu/Crosshair" method="_on_editor_camera_inactive"]

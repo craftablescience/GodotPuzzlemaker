@@ -4,6 +4,8 @@ extends Node
 var entity_registry: Dictionary
 # string input names -:- array of dictionaries of [entity ID that subscribes to the input -:- FuncRef that takes one dictionary as input]
 var inputs: Dictionary
+# output id -:- dict{output name -:- array[of dicts{input id -:- FuncRef}]}
+var connections: Dictionary = {}
 onready var is_active: bool = false
 
 const ON_LOGIC_MANAGER_ACTIVATE = "OnLogicManagerActivate"
@@ -35,6 +37,9 @@ func broadcast_to(output_name: String, id: int, arguments: Dictionary) -> void:
 		for input in inputs[output_name]:
 			if input["id"] == id and input["function"].is_valid():
 				input["function"].call_func(arguments)
+
+func fire_output(output_id: int, output: String, arguments: Dictionary) -> void:
+	pass
 
 func get_entity_from_id(id: int) -> Node:
 	return entity_registry[id]
