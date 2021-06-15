@@ -52,6 +52,7 @@ func _on_click(_camera: Node, event: InputEvent, _click_position: Vector3, _clic
 	if !self.collider.disabled and event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and self.roomNode.toolSelected == Globals.TOOL.CONNECTION:
 		self.connection_list.add_connection(self)
 	elif !self.collider.disabled and event is InputEventMouseButton and event.button_index == BUTTON_LEFT and self.roomNode.toolSelected == Globals.TOOL.PLACEENTITY:
+		# todo: remove this entity from self.roomNode
 		self.queue_free()
 
 func set_collider_disabled(disabled: bool) -> void:

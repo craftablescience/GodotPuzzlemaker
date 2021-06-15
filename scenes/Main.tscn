@@ -1286,6 +1286,7 @@ autoplay = true
 ]]
 stream = ExtResource( 21 )
 script = ExtResource( 29 )
+
 [connection signal="play_button_pressed" from="Menu/Control/TopBar/CenterMenu/Play" to="Scene/CameraPivot/Camera" method="_on_play_button_pressed"]
 [connection signal="toggled" from="Menu/Control/TopBar/CenterMenu/Play" to="Menu/Control/TopBar/CenterMenu/Play" method="_on_toggled"]
 [connection signal="text_changed" from="Menu/Control/TopBar/CenterMenu/LevelName" to="Menu/Control/TopBar/CenterMenu/LevelName" method="_on_text_changed"]
@@ -1298,16 +1299,16 @@ script = ExtResource( 29 )
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelBuild" to="Scene/Room" method="_on_VoxelBuild_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/VoxelTextured" to="Scene/Room" method="_on_VoxelTextured_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_entity_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/PlaceEntity" to="Scene/Room" method="_on_PlaceEntity_pressed"]
 [connection signal="mouse_entered" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_grow"]
 [connection signal="mouse_exited" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ToolBar" method="_on_shrink"]
-[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Scene/Room" method="_on_Connection_pressed"]
 [connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Menu/Control/ContextPanel/TabContainer/Connections/List" method="_on_connection_button_pressed"]
+[connection signal="pressed" from="Menu/Control/ToolBar/VBoxContainer/Connect" to="Scene/Room" method="_on_Connection_pressed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_search_text_changed"]
 [connection signal="text_changed" from="Menu/Control/ContextPanel/HBoxContainer/Search" to="Menu/Control/ContextPanel/TabContainer/Textures/Tree" method="_on_search_text_changed"]
 [connection signal="pressed" from="Menu/Control/ContextPanel/HBoxContainer/Remove" to="Menu/Control/ContextPanel/TabContainer/Entities/Tree" method="_on_Remove_pressed"]
